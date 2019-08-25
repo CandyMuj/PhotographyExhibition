@@ -18,7 +18,11 @@
         <java.version>1.8</java.version>
     </properties>
 
+    <!-- 添加本地jar -->
+
+
     <dependencies>
+        <!-- 基础包 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -46,6 +50,53 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- 其他包 -->
+        <!-- 本地包 -->
+        <dependency>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bouncycastle</artifactId>
+            <version>1.4.3</version>
+            <scope>system</scope>
+            <!--本地jar的路径,相对或者绝对都可以 -->
+            <systemPath>${project.basedir}/lib/bcprov-jdk15-143.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>it.sauronsoftware</groupId>
+            <artifactId>base64</artifactId>
+            <version>1.3.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/javabase64-1.3.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>sun.misc</groupId>
+            <artifactId>BASE64Decoder</artifactId>
+            <version>1.1.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/sun.misc.BASE64Decoder.jar</systemPath>
+        </dependency>
+
+        <!-- 仓库包 -->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>1.2.15</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpcore</artifactId>
+            <version>4.2.1</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-lang</groupId>
+            <artifactId>commons-lang</artifactId>
+            <version>2.6</version>
         </dependency>
     </dependencies>
 
