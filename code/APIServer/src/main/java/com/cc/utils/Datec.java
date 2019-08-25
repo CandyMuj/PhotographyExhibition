@@ -6,6 +6,7 @@ import java.util.Date;
 
 public class Datec {
     public static final String DATEFORMAT = "yyyy-MM-dd";
+    public static final String DATEFORMAT_A = "yyyyMMdd";
     public static final String DATETIMEFORMAT = "yyyy-MM-dd HH:mm:ss";
     public Calendar calendar = Calendar.getInstance();
 
