@@ -3,6 +3,20 @@ server:
 
 
 spring:
+  devtools:
+    restart:
+      enabled: false
+  servlet:
+    multipart:
+      max-file-size: 1000MB
+      max-request-size: 1000MB
+
+
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    password:
+
   datasource:
     url: jdbc:mysql://127.0.0.1:3307/photography?serverTimezone=UTC&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
     username: root
