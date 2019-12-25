@@ -1,4 +1,4 @@
-package com.cc.pic.api.config;
+package com.cc.pic.api.config.sys;
 
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
