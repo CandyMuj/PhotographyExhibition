@@ -3,6 +3,7 @@ package com.cc.pic.api.utils.sys;
 import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.date.DateField;
 import cn.hutool.core.date.DateUtil;
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import io.jsonwebtoken.Claims;
@@ -44,6 +45,8 @@ public class JwtUtil {
 
     public static User parse(String jwtToken) {
         try {
+            if (StrUtil.isBlank(jwtToken)) return null;
+
             Claims claims = Jwts.parser()
                     .setSigningKey(JWT_SECRET.getBytes())
                     .parseClaimsJws(jwtToken)

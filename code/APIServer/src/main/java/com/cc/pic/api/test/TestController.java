@@ -1,5 +1,7 @@
 package com.cc.pic.api.test;
 
+import com.cc.pic.api.annotations.Ann;
+import com.cc.pic.api.pojo.sys.Result;
 import com.cc.pic.api.pojo.sys.User;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,8 +30,18 @@ public class TestController {
             @ApiParam(required = false, name = "参数2") String par2,
             @ApiIgnore User user
     ) {
-
         return "Hello World！";
+    }
+
+    @Ann
+    @ApiOperation("测试专用接口1")
+    @RequestMapping("/test1")
+    public Result test1(
+            @ApiParam(required = true, name = "参数1") @RequestParam(defaultValue = "默认值") String par1,
+            @ApiParam(required = false, name = "参数2") String par2,
+            @ApiIgnore User user
+    ) {
+        return Result.OK();
     }
 
 }
