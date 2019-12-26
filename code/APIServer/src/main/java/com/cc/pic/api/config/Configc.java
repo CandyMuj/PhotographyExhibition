@@ -1,4 +1,4 @@
-package com.cc.pic.api.enumc;
+package com.cc.pic.api.config;
 
 /**
  * @ProJectName APIServer

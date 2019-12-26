@@ -1,7 +1,7 @@
 package com.cc.pic.api.pojo.sys;
 
-import static com.cc.pic.api.enumc.StatusCode.FAIL;
-import static com.cc.pic.api.enumc.StatusCode.SUCCESS;
+import static com.cc.pic.api.config.StatusCode.FAIL;
+import static com.cc.pic.api.config.StatusCode.SUCCESS;
 
 /**
  * @ProJectName APIServer

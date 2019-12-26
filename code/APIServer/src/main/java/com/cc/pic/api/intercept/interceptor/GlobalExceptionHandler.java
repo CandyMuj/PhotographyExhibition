@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.cc.pic.api.enumc.StatusCode.NO_AUTH;
+import static com.cc.pic.api.config.StatusCode.NO_AUTH;
 
 
 /**
