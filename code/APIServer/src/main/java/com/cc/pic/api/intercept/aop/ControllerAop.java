@@ -34,6 +34,20 @@ public class ControllerAop {
     public void cutOfAll() {
     }
 
+    /**
+     * 定义一个切点
+     * 拦截返回值为Result的请求；用于返回值的二次处理
+     */
+//    @Pointcut("execution(public com.cc.pic.api.pojo.sys.Result *(..))")
+//    public void cutOfResult() {
+//    }
+//
+//
+//    @AfterReturning(returning = "result", pointcut = "cutOfResult()")
+//    public void cutOfResult(Object result) {
+//
+//        System.out.println(result);
+//    }
 
     /**
      * 拦截器具体实现
