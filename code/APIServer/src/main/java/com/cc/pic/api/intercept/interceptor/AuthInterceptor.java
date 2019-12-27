@@ -1,5 +1,6 @@
 package com.cc.pic.api.intercept.interceptor;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.annotations.Ann;
 import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.exception.AuthException;
@@ -45,7 +46,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                     log.info("AUTH : true");
 
                     String token = request.getHeader(REQ_HEADER);
-                    if (!redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
+                    if (StrUtil.isBlank(token) || !redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
                         log.error("AUTH : validation failed");
                         throw new AuthException("validation failed");
                     }
