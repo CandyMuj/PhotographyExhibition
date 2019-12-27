@@ -1,14 +1,20 @@
 package com.cc.pic.api.config.sys.c;
 
 import cn.hutool.core.util.StrUtil;
+import com.cc.pic.api.config.CacheKey;
+import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.JwtUtil;
+import com.cc.pic.api.utils.sys.utilsbean.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
+
+import javax.annotation.Resource;
 
 import static com.cc.pic.api.config.SecurityConstants.REQ_HEADER;
 
@@ -21,7 +27,11 @@ import static com.cc.pic.api.config.SecurityConstants.REQ_HEADER;
  * @Version 1.0
  */
 @Slf4j
+@Component
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
+    @Resource
+    private RedisUtil redisUtil;
+
 
     /**
      * 1. 入参筛选
@@ -53,6 +63,11 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
         if (StrUtil.isBlank(token)) {
             log.warn("resolveArgument error token is empty");
             return null;
+        }
+
+        if (!redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
+            log.error("resolveArgument error token is not exist");
+            throw new AuthException("validation failed");
         }
 
         return JwtUtil.parse(token);

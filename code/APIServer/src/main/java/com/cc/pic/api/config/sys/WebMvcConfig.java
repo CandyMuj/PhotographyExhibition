@@ -21,12 +21,14 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
     @Resource
+    private TokenArgumentResolver tokenArgumentResolver;
+    @Resource
     private AuthInterceptor authInterceptor;
 
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(new TokenArgumentResolver());
+        argumentResolvers.add(tokenArgumentResolver);
     }
 
     @Override

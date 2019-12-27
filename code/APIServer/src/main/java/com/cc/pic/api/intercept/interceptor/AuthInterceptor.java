@@ -1,14 +1,17 @@
 package com.cc.pic.api.intercept.interceptor;
 
 import com.cc.pic.api.annotations.Ann;
+import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.JwtUtil;
+import com.cc.pic.api.utils.sys.utilsbean.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -25,6 +28,9 @@ import static com.cc.pic.api.config.SecurityConstants.REQ_HEADER;
 @Slf4j
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
+    @Resource
+    private RedisUtil redisUtil;
+
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -38,7 +44,13 @@ public class AuthInterceptor implements HandlerInterceptor {
                 if (ann.au()) {
                     log.info("AUTH : true");
 
-                    User user = JwtUtil.parse(request.getHeader(REQ_HEADER));
+                    String token = request.getHeader(REQ_HEADER);
+                    if (!redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
+                        log.error("AUTH : validation failed");
+                        throw new AuthException("validation failed");
+                    }
+
+                    User user = JwtUtil.parse(token);
                     if (user == null || user.getUserId() <= 0) {
                         log.error("AUTH : validation failed");
                         throw new AuthException("validation failed");
