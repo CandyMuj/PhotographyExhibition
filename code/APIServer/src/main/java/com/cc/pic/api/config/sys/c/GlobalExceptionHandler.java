@@ -1,4 +1,4 @@
-package com.cc.pic.api.intercept.interceptor;
+package com.cc.pic.api.config.sys.c;
 
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.Result;
