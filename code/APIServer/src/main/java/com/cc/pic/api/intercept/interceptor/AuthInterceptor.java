@@ -5,6 +5,7 @@ import com.cc.pic.api.annotations.Ann;
 import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
+import com.cc.pic.api.utils.sys.AuthUtil;
 import com.cc.pic.api.utils.sys.JwtUtil;
 import com.cc.pic.api.utils.sys.utilsbean.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.cc.pic.api.config.SecurityConstants.REQ_HEADER;
+import static com.cc.pic.api.config.SecurityConstants.TOKEN_SPLIT;
 
 /**
  * @ProJectName APIServer
@@ -35,6 +37,15 @@ public class AuthInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String authorization = request.getHeader(REQ_HEADER);
+
+        // 进行接口鉴权
+        if (StrUtil.isBlank(authorization) || (!authorization.contains(TOKEN_SPLIT) && !AuthUtil.getBasic_token().equals(AuthUtil.getBasicToken(authorization)))) {
+            log.error("AUTH : interface auth validation failed");
+            throw new AuthException("interface auth validation failed");
+        }
+
+
         if (handler instanceof HandlerMethod) {
             HandlerMethod h = (HandlerMethod) handler;
 
@@ -45,7 +56,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                 if (ann.au()) {
                     log.info("AUTH : true");
 
-                    String token = request.getHeader(REQ_HEADER);
+                    String token = AuthUtil.getToken(authorization);
                     if (StrUtil.isBlank(token) || !redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
                         log.error("AUTH : validation failed");
                         throw new AuthException("validation failed");

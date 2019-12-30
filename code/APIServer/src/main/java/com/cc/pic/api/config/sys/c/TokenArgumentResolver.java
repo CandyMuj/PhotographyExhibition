@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
+import com.cc.pic.api.utils.sys.AuthUtil;
 import com.cc.pic.api.utils.sys.JwtUtil;
 import com.cc.pic.api.utils.sys.utilsbean.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +59,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
             NativeWebRequest nativeWebRequest,
             WebDataBinderFactory webDataBinderFactory
     ) {
-        String token = nativeWebRequest.getHeader(REQ_HEADER);
+        String token = AuthUtil.getToken(nativeWebRequest.getHeader(REQ_HEADER));
 
         if (StrUtil.isBlank(token)) {
             log.warn("resolveArgument error token is empty");

@@ -19,4 +19,17 @@ public class SecurityConstants {
     // token过期时间（天）
     public static final Integer EXPIRATION = 7;
 
+    // token分割符 用于用户接口授权
+    public static final String TOKEN_SPLIT = "Bearer ";
+
+    // 接口鉴权分割符
+    public static final String AUTH_SPLIT = "Basic ";
+
+    // 接口鉴权：用户名
+    public static final String INTERFACE_AUTH_USERNAME = "CandyMuj";
+
+    // 接口鉴权：密码
+    public static final String INTERFACE_AUTH_PASSWORD = "CandyMuj!123_";
+
+
 }
