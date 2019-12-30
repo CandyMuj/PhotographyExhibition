@@ -1,4 +1,4 @@
-package com.cc.pic.api.utils.sys.utilsbean;
+package com.cc.pic.api.utils.sys;
 
 import java.util.HashMap;
 import java.util.Map;
