@@ -1,4 +1,4 @@
-package com.cc.pic.api.utils.sys.utilsbean;
+package com.cc.pic.api.utils.sys.bean;
 
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;

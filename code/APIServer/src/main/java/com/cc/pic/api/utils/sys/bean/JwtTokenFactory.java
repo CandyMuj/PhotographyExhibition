@@ -1,4 +1,4 @@
-package com.cc.pic.api.utils.sys.utilsbean;
+package com.cc.pic.api.utils.sys.bean;
 
 import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.config.CacheKey;

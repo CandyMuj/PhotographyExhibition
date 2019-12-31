@@ -4,7 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.AuthUtil;
-import com.cc.pic.api.utils.sys.utilsbean.JwtTokenFactory;
+import com.cc.pic.api.utils.sys.bean.JwtTokenFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
