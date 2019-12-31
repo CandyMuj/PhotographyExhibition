@@ -2,12 +2,10 @@ package com.cc.pic.api.intercept.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.annotations.Ann;
-import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.AuthUtil;
-import com.cc.pic.api.utils.sys.JwtUtil;
-import com.cc.pic.api.utils.sys.utilsbean.RedisUtil;
+import com.cc.pic.api.utils.sys.utilsbean.JwtTokenFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
@@ -32,7 +30,7 @@ import static com.cc.pic.api.config.SecurityConstants.TOKEN_SPLIT;
 @Component
 public class AuthInterceptor implements HandlerInterceptor {
     @Resource
-    private RedisUtil redisUtil;
+    private JwtTokenFactory jwtTokenFactory;
 
 
     @Override
@@ -40,7 +38,7 @@ public class AuthInterceptor implements HandlerInterceptor {
         String authorization = request.getHeader(REQ_HEADER);
 
         // 进行接口鉴权
-        if (StrUtil.isBlank(authorization) || (!authorization.contains(TOKEN_SPLIT) && !AuthUtil.getBasic_token().equals(AuthUtil.getBasicToken(authorization)))) {
+        if (StrUtil.isBlank(authorization) || (!authorization.contains(TOKEN_SPLIT) && !AuthUtil.getBasicToken().equals(AuthUtil.getBasicToken(authorization)))) {
             log.error("AUTH : interface auth validation failed");
             throw new AuthException("interface auth validation failed");
         }
@@ -56,14 +54,8 @@ public class AuthInterceptor implements HandlerInterceptor {
                 if (ann.au()) {
                     log.info("AUTH : true");
 
-                    String token = AuthUtil.getToken(authorization);
-                    if (StrUtil.isBlank(token) || !redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
-                        log.error("AUTH : validation failed");
-                        throw new AuthException("validation failed");
-                    }
-
-                    User user = JwtUtil.parse(token);
-                    if (user == null || user.getUserId() <= 0) {
+                    User user = jwtTokenFactory.validateToken(AuthUtil.getToken(authorization));
+                    if (user == null) {
                         log.error("AUTH : validation failed");
                         throw new AuthException("validation failed");
                     } else {

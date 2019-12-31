@@ -1,12 +1,10 @@
 package com.cc.pic.api.config.sys.c;
 
 import cn.hutool.core.util.StrUtil;
-import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.AuthUtil;
-import com.cc.pic.api.utils.sys.JwtUtil;
-import com.cc.pic.api.utils.sys.utilsbean.RedisUtil;
+import com.cc.pic.api.utils.sys.utilsbean.JwtTokenFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -31,7 +29,7 @@ import static com.cc.pic.api.config.SecurityConstants.REQ_HEADER;
 @Component
 public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
     @Resource
-    private RedisUtil redisUtil;
+    private JwtTokenFactory jwtTokenFactory;
 
 
     /**
@@ -66,12 +64,13 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
             return null;
         }
 
-        if (!redisUtil.hasKey(CacheKey.AUTH_TOKEN_USER + token)) {
+        User user = jwtTokenFactory.validateToken(token);
+        if (user == null) {
             log.error("resolveArgument error token is not exist");
             throw new AuthException("validation failed");
         }
 
-        return JwtUtil.parse(token);
+        return user;
     }
 
 }

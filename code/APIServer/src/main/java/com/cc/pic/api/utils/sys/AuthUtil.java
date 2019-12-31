@@ -29,7 +29,7 @@ public class AuthUtil {
         return StringUtils.substringAfter(authorization, TOKEN_SPLIT);
     }
 
-    public static String getBasic_token() {
+    public static String getBasicToken() {
         return basic_token;
     }
 
@@ -41,13 +41,14 @@ public class AuthUtil {
      * 生成基本的接口鉴权的密钥
      */
     private static String generateBasic() {
-        byte[] b = new byte[0];
         try {
-            b = (INTERFACE_AUTH_USERNAME + ":" + INTERFACE_AUTH_PASSWORD).getBytes("utf-8");
+            byte[] b = (INTERFACE_AUTH_USERNAME + ":" + INTERFACE_AUTH_PASSWORD).getBytes("utf-8");
+            return new BASE64Encoder().encode(b);
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        return new BASE64Encoder().encode(b);
+
+        return null;
     }
 
 }

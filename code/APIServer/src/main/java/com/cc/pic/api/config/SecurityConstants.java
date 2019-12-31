@@ -1,5 +1,7 @@
 package com.cc.pic.api.config;
 
+import com.cc.pic.api.enumc.sys.TokenGenerateEnum;
+
 /**
  * @ProJectName APIServer
  * @FileName SecurityConstants
@@ -31,5 +33,7 @@ public class SecurityConstants {
     // 接口鉴权：密码
     public static final String INTERFACE_AUTH_PASSWORD = "CandyMuj!123_";
 
+    // TOKEN 生成策略
+    public static final TokenGenerateEnum TOKEN_GENERATE_ENUM = TokenGenerateEnum.ONLY_ALIVE;
 
 }
