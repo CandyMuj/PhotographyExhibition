@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 03/01/2020 17:56:14
+ Date: 06/01/2020 16:43:37
 */
 
 SET NAMES utf8mb4;
@@ -33,7 +33,7 @@ CREATE TABLE `article`  (
   `viewCount` int(11) NULL DEFAULT NULL COMMENT '阅读次数',
   `addTime` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`articleId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for articleattr
@@ -44,8 +44,9 @@ CREATE TABLE `articleattr`  (
   `articleId` int(11) NULL DEFAULT NULL COMMENT '文章ID',
   `itemType` int(11) NULL DEFAULT NULL COMMENT '扩展数据类别/如商品-根据业务内容配置枚举 没有就为0',
   `itemId` int(11) NULL DEFAULT NULL COMMENT '扩展数据ID/如商品ID 没有就为0',
+  `orderIndex` int(4) NULL DEFAULT NULL,
   PRIMARY KEY (`articleattrId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for articlecontent
@@ -68,7 +69,7 @@ CREATE TABLE `category`  (
   `cname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
   `orderIndex` int(11) NULL DEFAULT NULL COMMENT '排序 - 越大排序越前',
   PRIMARY KEY (`categoryId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for categoryrealation
@@ -95,7 +96,7 @@ CREATE TABLE `customer`  (
   `enable` tinyint(4) NULL DEFAULT 1 COMMENT '是否启用',
   `addTime` datetime(0) NULL DEFAULT NULL COMMENT '注册时间；添加时间',
   PRIMARY KEY (`customerId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for dict
@@ -109,10 +110,10 @@ CREATE TABLE `dict`  (
   `dicttype` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `orderindex` int(11) NULL DEFAULT NULL,
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
-  `limit` int(2) NULL DEFAULT NULL COMMENT '自身限制 默认无限制（一般是限制最顶级的父级的权限）',
+  `selfLimit` int(2) NULL DEFAULT NULL COMMENT '自身限制，一般仅根节点可自选',
   `childrenLimit` int(2) NULL DEFAULT NULL COMMENT '子级限制',
   PRIMARY KEY (`dictId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for footerinfo
@@ -121,10 +122,10 @@ DROP TABLE IF EXISTS `footerinfo`;
 CREATE TABLE `footerinfo`  (
   `footerInfoId` int(11) NOT NULL AUTO_INCREMENT COMMENT '页尾的链接和介绍相关的配置',
   `footerType` tinyint(4) NULL DEFAULT NULL COMMENT '类型 文字描述 外链等',
-  `content` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '文本 或者url',
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL COMMENT '文本 或者url',
   `enable` tinyint(4) NULL DEFAULT NULL COMMENT '1可用 0不可用',
   PRIMARY KEY (`footerInfoId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for homemodel
@@ -139,7 +140,35 @@ CREATE TABLE `homemodel`  (
   `orderIndex` int(11) NULL DEFAULT NULL COMMENT '排序 越大越靠前',
   `modelType` tinyint(4) NULL DEFAULT NULL COMMENT '模块类型 单行轮播图 多行展示 about 文章',
   PRIMARY KEY (`homeModelId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for imglist
+-- ----------------------------
+DROP TABLE IF EXISTS `imglist`;
+CREATE TABLE `imglist`  (
+  `imgListId` int(11) NOT NULL AUTO_INCREMENT,
+  `itemType` int(11) NULL DEFAULT NULL,
+  `itemId` int(11) NULL DEFAULT NULL,
+  `url` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `addTime` datetime(0) NULL DEFAULT NULL,
+  PRIMARY KEY (`imgListId`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1995 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '图片/文件信息表' ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for menu
+-- ----------------------------
+DROP TABLE IF EXISTS `menu`;
+CREATE TABLE `menu`  (
+  `menuId` int(11) NOT NULL AUTO_INCREMENT,
+  `menuName` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `pid` int(11) NOT NULL,
+  `type` tinyint(2) NOT NULL COMMENT '类别1目录，2文件',
+  `orderindex` int(11) NOT NULL,
+  `enable` int(11) NULL DEFAULT NULL COMMENT '是否可用',
+  PRIMARY KEY (`menuId`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 71 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for photoalbum
@@ -184,7 +213,19 @@ CREATE TABLE `poster`  (
   `showTime` datetime(0) NULL DEFAULT NULL COMMENT '显示时间 发布以后在这个时间后才显示',
   `addTime` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
   PRIMARY KEY (`posterId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for role
+-- ----------------------------
+DROP TABLE IF EXISTS `role`;
+CREATE TABLE `role`  (
+  `roleId` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(24) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
+  `status` int(2) NULL DEFAULT 1 COMMENT '0禁用 1启用',
+  `menuId` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单id',
+  PRIMARY KEY (`roleId`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci COMMENT = '角色表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for sysconfig
@@ -196,7 +237,7 @@ CREATE TABLE `sysconfig`  (
   `sysvalue` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `desc` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`sysId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for thirdbind
@@ -209,6 +250,6 @@ CREATE TABLE `thirdbind`  (
   `secretKey` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '对应的值',
   `addTime` datetime(0) NULL DEFAULT NULL,
   PRIMARY KEY (`thirdBindId`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
 
 SET FOREIGN_KEY_CHECKS = 1;
