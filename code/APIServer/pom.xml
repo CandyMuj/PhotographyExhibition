@@ -23,10 +23,11 @@
         <jjwt.version>0.9.0</jjwt.version>
         <spring-security-jwt.version>1.0.10.RELEASE</spring-security-jwt.version>
         <fastjson.version>1.2.46</fastjson.version>
+        <json-lib.version>2.4</json-lib.version>
+        <gson.version>2.8.5</gson.version>
         <hutool.version>5.1.0</hutool.version>
         <commons-io.version>2.6</commons-io.version>
         <jasypt.version>1.18</jasypt.version>
-        <json-lib.version>2.4</json-lib.version>
         <swagger2.version>2.9.2</swagger2.version>
         <!-- 使用较旧的版本，最新版移除了热加载，变更了字段验证策略等配置 -->
         <mybatis-plus.version>2.1.9</mybatis-plus.version>
@@ -106,6 +107,18 @@
             <artifactId>fastjson</artifactId>
             <version>${fastjson.version}</version>
         </dependency>
+        <!-- JSON Library -->
+        <dependency>
+            <groupId>net.sf.json-lib</groupId>
+            <artifactId>json-lib</artifactId>
+            <version>${json-lib.version}</version>
+        </dependency>
+        <!-- Google.gson -->
+        <dependency>
+            <groupId>com.google.code.gson</groupId>
+            <artifactId>gson</artifactId>
+            <version>${gson.version}</version>
+        </dependency>
         <!-- hutool -->
         <dependency>
             <groupId>cn.hutool</groupId>
@@ -134,12 +147,6 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
             <version>${hibernate-validator.version}</version>
-        </dependency>
-        <!-- JSON Library -->
-        <dependency>
-            <groupId>net.sf.json-lib</groupId>
-            <artifactId>json-lib</artifactId>
-            <version>${json-lib.version}</version>
         </dependency>
         <!-- swagger -->
         <dependency>
