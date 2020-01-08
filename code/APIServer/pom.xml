@@ -232,6 +232,7 @@
             <version>${jackson-dataformat-yaml.version}</version>
         </dependency>
 
+
         <!-- 第三方云服务包 -->
         <!-- 阿里云 aliyun -->
         <!-- OSS -->
