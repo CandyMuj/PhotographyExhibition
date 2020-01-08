@@ -38,6 +38,8 @@
         <commons-lang.version>2.6</commons-lang.version>
         <poi.version>3.17</poi.version>
         <jackson-dataformat-yaml.version>2.10.1</jackson-dataformat-yaml.version>
+
+        <aliyun-sdk-oss.version>3.8.0</aliyun-sdk-oss.version>
     </properties>
 
 
@@ -228,6 +230,15 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${jackson-dataformat-yaml.version}</version>
+        </dependency>
+
+        <!-- 第三方云服务包 -->
+        <!-- 阿里云 aliyun -->
+        <!-- OSS -->
+        <dependency>
+            <groupId>com.aliyun.oss</groupId>
+            <artifactId>aliyun-sdk-oss</artifactId>
+            <version>${aliyun-sdk-oss.version}</version>
         </dependency>
 
 
