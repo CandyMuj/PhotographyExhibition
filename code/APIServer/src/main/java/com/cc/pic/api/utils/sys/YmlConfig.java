@@ -58,21 +58,19 @@ public class YmlConfig {
                 } else {
                     iteratorYml((Map) value, key + "." + key2.toString());
                 }
-            }
-            if (value instanceof String) {
-                if (key == null) {
-                    config.put(key2.toString(), value.toString());
-                }
-                if (key != null) {
-                    config.put(key + "." + key2.toString(), value.toString());
-                }
-            }
-            if (value instanceof List) {
+            } else if (value instanceof List) {
                 if (key == null) {
                     config.put(key2.toString(), value);
                 }
                 if (key != null) {
                     config.put(key + "." + key2.toString(), value);
+                }
+            } else {
+                if (key == null) {
+                    config.put(key2.toString(), value.toString());
+                }
+                if (key != null) {
+                    config.put(key + "." + key2.toString(), value.toString());
                 }
             }
         }
