@@ -33,8 +33,8 @@
         <mybatis-plus.version>2.1.9</mybatis-plus.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
 
-        <httpcore.version>4.2.1</httpcore.version>
-        <httpclient.version>4.3.6</httpclient.version>
+        <httpcore.version>4.4.3</httpcore.version>
+        <httpclient.version>4.5.1</httpclient.version>
         <commons-lang.version>2.6</commons-lang.version>
         <poi.version>3.17</poi.version>
         <jackson-dataformat-yaml.version>2.10.1</jackson-dataformat-yaml.version>
