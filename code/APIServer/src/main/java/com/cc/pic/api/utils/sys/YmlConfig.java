@@ -81,6 +81,10 @@ public class YmlConfig {
         return config.get(key);
     }
 
+    public static List<String> getList(String key) {
+        return (ArrayList) get(key);
+    }
+
     public static String getString(String key) {
         Object o = get(key);
         if (o == null) {
@@ -99,7 +103,11 @@ public class YmlConfig {
         return Integer.parseInt(o.toString());
     }
 
-    public static boolean getBoolean(String key) {
+    public static int getIntValue(String key) {
+        return getInteger(key);
+    }
+
+    public static Boolean getBoolean(String key) {
         Object o = get(key);
         if (o == null) {
             return false;
@@ -108,12 +116,8 @@ public class YmlConfig {
         return Boolean.parseBoolean(o.toString());
     }
 
-    public static int getIntValue(String key) {
-        return getInteger(key).intValue();
-    }
-
-    public static List<String> getList(String key) {
-        return (ArrayList) get(key);
+    public static boolean getBooleanValue(String key) {
+        return getBoolean(key);
     }
 
 }
