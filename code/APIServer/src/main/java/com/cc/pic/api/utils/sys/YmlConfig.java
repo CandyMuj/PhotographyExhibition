@@ -52,6 +52,7 @@ public class YmlConfig {
             Map.Entry entry = (Map.Entry) o;
             Object key2 = entry.getKey();
             Object value = entry.getValue();
+            if (value == null) continue;
             if (value instanceof LinkedHashMap) {
                 if (key == null) {
                     iteratorYml((Map) value, key2.toString());
