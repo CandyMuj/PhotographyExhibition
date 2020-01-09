@@ -99,6 +99,15 @@ public class YmlConfig {
         return Integer.parseInt(o.toString());
     }
 
+    public static Boolean getBoolean(String key) {
+        Object o = get(key);
+        if (o == null) {
+            return false;
+        }
+
+        return Boolean.parseBoolean(o.toString());
+    }
+
     public static int getIntValue(String key) {
         return getInteger(key).intValue();
     }
