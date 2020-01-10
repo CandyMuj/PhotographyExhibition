@@ -63,14 +63,37 @@ public class Methodc {
         return (int) Mathc.multipy(Mathc.noroundDouble(dollar), 100);
     }
 
-    public static String InputStreamTOString(InputStream in) throws Exception {
+    public static String InputStream2String(InputStream in, String encode) {
         ByteArrayOutputStream outStream = new ByteArrayOutputStream();
-        byte[] data = new byte[4096];
-        int count = -1;
-        while ((count = in.read(data, 0, data.length)) != -1)
-            outStream.write(data, 0, count);
-        data = null;
-        return new String(outStream.toByteArray(), Configc.GLOBAL_ENCODING);
+        try {
+            byte[] data = new byte[4096];
+            int count = -1;
+            while ((count = in.read(data, 0, data.length)) != -1){
+                outStream.write(data, 0, count);
+            }
+            data = null;
+            outStream.flush();
+            return new String(outStream.toByteArray(), encode);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (outStream != null) {
+                    outStream.close();
+                }
+                if (in != null) {
+                    in.close();
+                }
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        }
+
+        return null;
+    }
+
+    public static String InputStream2String(InputStream in) {
+        return InputStream2String(in, Configc.GLOBAL_ENCODING);
     }
 
     /**

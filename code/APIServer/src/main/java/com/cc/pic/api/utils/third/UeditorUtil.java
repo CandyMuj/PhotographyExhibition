@@ -24,12 +24,8 @@ public class UeditorUtil {
 
     static {
         // 初始化json配置文件，转为json对象
-        try {
-            if (CONFIG_JSON == null) {
-                CONFIG_JSON = JSONObject.parseObject(Methodc.InputStreamTOString(UeditorUtil.class.getClassLoader().getResourceAsStream(CONFIG_FILE)));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+        if (CONFIG_JSON == null) {
+            CONFIG_JSON = JSONObject.parseObject(Methodc.InputStream2String(UeditorUtil.class.getClassLoader().getResourceAsStream(CONFIG_FILE)));
         }
     }
 
