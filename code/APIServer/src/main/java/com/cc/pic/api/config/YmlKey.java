@@ -9,4 +9,8 @@ package com.cc.pic.api.config;
  * @Version 1.0
  */
 public class YmlKey {
+
+    // 系统全局编码
+    public static final String GLOBAL_ENCODING = "global.encoding";
+
 }

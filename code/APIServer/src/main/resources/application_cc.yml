@@ -1,0 +1,27 @@
+# 系统全局配置
+global:
+  # 系统全局默认编码
+  encoding: UTF-8
+
+
+# 第三方云服务配置
+third:
+  aliyun:
+    oss:
+      # 默认项目，如果没有自定义的项目则此项目必须存在，且key值不可更改
+      # accessKeyId和accessKeySecret在访问控制中添加RAM用户并授予权限
+      # endpoint的格式形如“http://oss-cn-hangzhou.aliyuncs.com/”，注意http://后不带bucket名称，
+      # bucketName即存储单元
+      # https bucket域名是否使用https协议;为空则为false
+      default:
+        accessKeyId: LTAI4Fs16UD7iE4CfDu7F93x
+        accessKeySecret: 3kpdqQHCv1dnoDyNuSgy4r534qpomW
+        endpoint: oss-cn-chengdu.aliyuncs.com
+        bucketName: photographyexhibition
+        https: true
+      # 自定义项目，可以随意编辑名称；建议项目名与bucket一致方便管理；使用时，使用有参构造进行初始化即可
+      customerName:
+        endpoint:
+        accessKeyId:
+        accessKeySecret:
+        bucketName:
