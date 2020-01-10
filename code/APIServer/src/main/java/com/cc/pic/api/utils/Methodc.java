@@ -84,8 +84,8 @@ public class Methodc {
                 if (in != null) {
                     in.close();
                 }
-            } catch (Exception e1) {
-                e1.printStackTrace();
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
 
