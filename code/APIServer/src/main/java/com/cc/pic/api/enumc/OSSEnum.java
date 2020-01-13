@@ -46,7 +46,7 @@ public enum OSSEnum {
     /**
      * 根据上传文件命名类型生成上传到oss的文件key
      *
-     * @param type   OSSUtil.UpFileNameType  枚举
+     * @param type   OSSEnum  枚举
      * @param source 原始文件名
      */
     public static String buildFileName(OSSEnum type, String source) throws Exception {
