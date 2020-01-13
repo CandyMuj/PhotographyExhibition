@@ -1,7 +1,11 @@
 package com.cc.pic.api.enumc;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.utils.Methodc;
+import lombok.extern.slf4j.Slf4j;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -12,6 +16,7 @@ import java.util.UUID;
  * @Date 2020/1/10 11:08
  * @Version 1.0
  */
+@Slf4j
 public enum OSSEnum {
     /**
      * 本地命名
@@ -47,14 +52,18 @@ public enum OSSEnum {
 
 
     /**
+     * 没有前缀和策略，直接生成传入策略的新文件名（相当于在根目录下生成新的文件名）
+     * <p>
      * 根据上传文件命名类型生成上传到oss的文件key
      *
-     * @param type   OSSEnum  枚举
-     * @param source 原始文件名
+     * @param type     OSSEnum  枚举
+     * @param fileName 原始文件名
      */
-    public static String buildFileName(OSSEnum type, String source) throws Exception {
-        String fileName = source;
-        String fileExt = Methodc.getFileExt(source).toLowerCase();
+    public static String buildKey(OSSEnum type, String fileName) {
+        if (StrUtil.isBlank(fileName)) return null;
+        if (type == null) return fileName;
+
+        String fileExt = Methodc.getFileExt(fileName).toLowerCase();
         switch (type) {
             case LOCAL:
                 return fileName;
@@ -98,6 +107,52 @@ public enum OSSEnum {
         }
         fileName += fileExt;
         return fileName;
+    }
+
+    /**
+     * 没有前缀和策略，直接是传入的文件名（相当于在根目录下存放传入的文件名）
+     *
+     * @param fileName
+     * @return
+     */
+    public static String buildKey(String fileName) {
+        return buildKey((OSSEnum) null, fileName);
+    }
+
+    /**
+     * 前缀+（目录处理策略）+根据传入的策略生成新的文件名
+     */
+    public static String buildKey(OSSEnum type, String prefix, String fileName) {
+        StringBuilder key = new StringBuilder();
+
+        if (StrUtil.isNotBlank(prefix)) {
+            char first = prefix.charAt(0);
+            if (first == '/' || first == '\\') {
+                log.error("不能以“/”或者“\\”字符开头。");
+                return null;
+            }
+            key.append(prefix).append("/");
+        }
+
+        key.append(new SimpleDateFormat("yyyy-MM").format(new Date())).append("/");
+        if (type != null) {
+            key.append(buildKey(type, fileName));
+        } else {
+            key.append(fileName);
+        }
+
+        return key.toString();
+    }
+
+    /**
+     * 前缀+（目录处理策略）+传入的文件名
+     *
+     * @param prefix
+     * @param fileName
+     * @return
+     */
+    public static String buildKey(String prefix, String fileName) {
+        return buildKey(null, prefix, fileName);
     }
 
 }
