@@ -1,6 +1,5 @@
 package com.cc.pic.api.utils;
 
-import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.config.Configc;
 
 import java.io.ByteArrayOutputStream;
@@ -230,9 +229,6 @@ public class Methodc {
      * @return
      */
     public static String getFileExt(String fileName) {
-        if (StrUtil.isBlank(fileName))
-            return null;
-
         int index = fileName.lastIndexOf(".");
         return index != -1 ? fileName.substring(index) : "";
     }
