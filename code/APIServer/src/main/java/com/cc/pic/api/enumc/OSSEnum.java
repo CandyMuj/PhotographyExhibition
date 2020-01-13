@@ -33,7 +33,10 @@ public enum OSSEnum {
     /**
      * UUID-时间戳命名
      */
-    UUID_TIMESTAMP(5, "UUID-时间戳命名");
+    UID(5, "uuid 不去除-"),
+    UID_ID(6, "去除-"),
+    UID_TIMESTAMP(7, "UUID-时间戳命名 不去除-"),
+    UID_IDTIMESTAMP(8, "UUID-时间戳命名 去除-");
 
     private int value;
     private String text;
@@ -76,9 +79,18 @@ public enum OSSEnum {
             case TIMESTAMP:
                 fileName = String.valueOf(System.currentTimeMillis());
                 break;
-            case UUID_TIMESTAMP:
+            case UID:
+                fileName = UUID.randomUUID().toString();
+                break;
+            case UID_ID:
+                fileName = UUID.randomUUID().toString().replace("-", "");
+                break;
+            case UID_TIMESTAMP:
+                fileName = UUID.randomUUID().toString()
+                        + String.valueOf(System.currentTimeMillis());
+                break;
+            case UID_IDTIMESTAMP:
                 fileName = UUID.randomUUID().toString().replace("-", "")
-                        .toLowerCase()
                         + String.valueOf(System.currentTimeMillis());
                 break;
             default:
