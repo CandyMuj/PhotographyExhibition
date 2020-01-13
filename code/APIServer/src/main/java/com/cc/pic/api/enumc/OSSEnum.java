@@ -135,6 +135,7 @@ public enum OSSEnum {
         }
 
         key.append(new SimpleDateFormat("yyyy-MM").format(new Date())).append("/");
+
         if (type != null) {
             key.append(buildKey(type, fileName));
         } else {
@@ -153,6 +154,27 @@ public enum OSSEnum {
      */
     public static String buildKey(String prefix, String fileName) {
         return buildKey(null, prefix, fileName);
+    }
+
+    /**
+     * 无前缀 （目录处理策略）+根据传入的策略生成新的文件名（相当于在根目录根据目录策略生成目录再生成新的文件名）
+     *
+     * @param type
+     * @param fileName
+     * @return
+     */
+    public static String buildkey(OSSEnum type, String fileName) {
+        return buildKey(type, null, fileName);
+    }
+
+    /**
+     * 无前缀 （目录处理策略）+传入的文件名（相当于在根目录根据目录策略生成目录再根据传入的文件名）
+     *
+     * @param fileName
+     * @return
+     */
+    public static String buildkey(String fileName) {
+        return buildKey((String) null, fileName);
     }
 
 }
