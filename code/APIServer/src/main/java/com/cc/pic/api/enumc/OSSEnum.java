@@ -121,6 +121,8 @@ public enum OSSEnum {
 
     /**
      * 前缀+（目录处理策略）+根据传入的策略生成新的文件名
+     * <p>
+     * 后缀末尾无需加 '/' 我会自动加
      */
     public static String buildKey(OSSEnum type, String prefix, String fileName) {
         StringBuilder key = new StringBuilder();
@@ -131,9 +133,10 @@ public enum OSSEnum {
                 log.error("不能以“/”或者“\\”字符开头。");
                 return null;
             }
-            key.append(prefix).append("/");
+            key.append(prefix).append(prefix.lastIndexOf("/") != prefix.length() - 1 ? "/" : "");
         }
 
+        // 目录处理策略 这是必须的，无论是否有前缀，这个都必须有，不允许所有文件全部扔在一个目录下
         key.append(new SimpleDateFormat("yyyy-MM").format(new Date())).append("/");
 
         if (type != null) {
@@ -175,6 +178,37 @@ public enum OSSEnum {
      */
     public static String buildkey(String fileName) {
         return buildKey((String) null, fileName);
+    }
+
+    /**
+     * 前缀+（目录处理策略）+根据传入的策略生成新的文件名
+     * <p>
+     * 前缀是根据文件后缀自动生成的
+     *
+     * @param fileName
+     * @return
+     */
+    public static String buildKeyByext(OSSEnum type, String fileName) {
+        String fileExt = Methodc.getFileExt(fileName).toLowerCase();
+        if (StrUtil.isNotBlank(fileExt)) {
+            fileExt = fileExt.replaceFirst(".", "");
+        } else {
+            fileExt = "unknown";
+        }
+
+        return buildKey(type, fileExt, fileName);
+    }
+
+    /**
+     * 前缀+（目录处理策略）+传入的文件名
+     * <p>
+     * 前缀是根据文件后缀自动生成的
+     *
+     * @param fileName
+     * @return
+     */
+    public static String buildKeyByext(String fileName) {
+        return buildKeyByext(null, fileName);
     }
 
 }
