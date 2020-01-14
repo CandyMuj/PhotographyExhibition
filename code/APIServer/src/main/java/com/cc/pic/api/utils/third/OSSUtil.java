@@ -5,11 +5,13 @@ import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
 import com.aliyun.oss.model.ObjectMetadata;
 import com.aliyun.oss.model.PutObjectRequest;
+import com.cc.pic.api.enumc.OSSEnum;
 import com.cc.pic.api.exception.CandyException;
 import com.cc.pic.api.utils.sys.YmlConfig;
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -91,13 +93,37 @@ public class OSSUtil {
      *
      * @return
      */
-    public String uploadFile(InputStream inputStream, ObjectMetadata metadata, String key) {
+    public String uploadFile(InputStream inputStream, ObjectMetadata metadata, String key, String original) {
         try {
-            PutObjectRequest request = new PutObjectRequest(bucketName, key, inputStream);
-            if (metadata != null) {
-                request.setMetadata(metadata);
+            String fileName = key;
+            int index = key.lastIndexOf("/");
+            if (index != -1) {
+                fileName = key.substring(index + 1);
             }
 
+            if (metadata == null) {
+                metadata = new ObjectMetadata();
+            }
+            // 设置自定义元数据
+            Map<String, String> userMetadata = new HashMap<>();
+            if (StrUtil.isNotBlank(original)) {
+                fileName = original;
+                // 真实文件名
+                userMetadata.put("original", original);
+            }
+            if (userMetadata.size() > 0) {
+                metadata.setUserMetadata(userMetadata);
+            }
+
+            metadata.setContentLength(inputStream.available());
+            metadata.setCacheControl("no-cache");
+            metadata.setHeader("Pragma", "no-cache");
+            // metadata.setContentType(MimeType.getContentType(Methodc.getFileExt(fileName)));
+            metadata.setContentDisposition("inline;filename=" + fileName);
+
+
+            PutObjectRequest request = new PutObjectRequest(bucketName, key, inputStream);
+            request.setMetadata(metadata);
             ossClient.putObject(request);
             log.info("Object：{} 存入OSS成功!", key);
             return key;
@@ -116,28 +142,66 @@ public class OSSUtil {
         return null;
     }
 
-    public String uploadFile(InputStream inputStream, String key, String original) {
-        ObjectMetadata metadata = new ObjectMetadata();
-
-        // 设置自定义元数据
-        Map<String, String> userMetadata = new HashMap<>();
-        if (StrUtil.isNotBlank(original)) {
-            // 真实文件名
-            userMetadata.put("original", original);
-        }
-        metadata.setUserMetadata(userMetadata);
-
-
-        return uploadFile(inputStream, metadata, key);
+    public String uploadFile(InputStream inputStream, ObjectMetadata metadata, String key) {
+        return uploadFile(inputStream, metadata, key, null);
     }
 
-    public String uploadFile(InputStream inputStream, String key) {
-        return uploadFile(inputStream, (ObjectMetadata) null, key);
+    public String uploadfile(InputStream inputStream, String key) {
+        return uploadFile(inputStream, (ObjectMetadata) null, key, null);
+    }
+
+    /**
+     * 使用默认的key生成策略
+     *
+     * @param inputStream
+     * @return
+     */
+    public String uploadFile(InputStream inputStream, OSSEnum ossEnum, String prefix, String original) {
+        String key = OSSEnum.buildKey(ossEnum != null ? ossEnum : OSSEnum.RANDOM_R, prefix, original);
+        return uploadFile(inputStream, (ObjectMetadata) null, key, original);
+    }
+
+    public String uploadFile(InputStream inputStream, String original) {
+        return uploadFile(inputStream, (OSSEnum) null, "file", original);
+    }
+
+    public String uploadImg(InputStream inputStream, String original) {
+        return uploadFile(inputStream, (OSSEnum) null, "img", original);
+    }
+
+    /**
+     * 文件前缀根目录根据文件的扩展名自动生成
+     */
+    public String uploadFileByext(InputStream inputStream, OSSEnum ossEnum, String original) {
+        String key = OSSEnum.buildKeyByext(ossEnum != null ? ossEnum : OSSEnum.RANDOM_R, original);
+        return uploadFile(inputStream, (ObjectMetadata) null, key, original);
+    }
+
+    public String uploadFileByext(InputStream inputStream, String original) {
+        return uploadFileByext(inputStream, null, original);
+    }
+
+
+    /**
+     * 获取对象
+     */
+    public InputStream getObject(String key) {
+        return ossClient.getObject(bucketName, key).getObjectContent();
+    }
+
+    /**
+     * 删除对象
+     *
+     * @param key
+     * @return
+     */
+    public void deleteObject(String key) {
+        ossClient.deleteObject(bucketName, key);
     }
 
 
     public static void main(String[] s) {
-        new OSSUtil().uploadFile(new ByteArrayInputStream("Hello OSS".getBytes()), "key1", "这是原文件名");
+        new OSSUtil().uploadFile(new ByteArrayInputStream("Hello OSS!".getBytes()), "这是原文件名");
     }
 
 }
