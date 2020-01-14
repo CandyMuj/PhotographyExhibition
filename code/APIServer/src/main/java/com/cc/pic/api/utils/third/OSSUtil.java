@@ -3,16 +3,22 @@ package com.cc.pic.api.utils.third;
 import cn.hutool.core.util.StrUtil;
 import com.aliyun.oss.OSS;
 import com.aliyun.oss.OSSClientBuilder;
+import com.aliyun.oss.common.utils.BinaryUtil;
+import com.aliyun.oss.model.MatchMode;
 import com.aliyun.oss.model.ObjectMetadata;
+import com.aliyun.oss.model.PolicyConditions;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.cc.pic.api.enumc.OSSEnum;
 import com.cc.pic.api.exception.CandyException;
+import com.cc.pic.api.pojo.sys.Result;
 import com.cc.pic.api.utils.sys.YmlConfig;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -37,10 +43,13 @@ import java.util.Map;
  */
 @Slf4j
 public class OSSUtil {
+    // 上传签证超时时间
+    private final static long expireTime = 1800;
     // 获取配置的前缀
     private static final String CONFIG_PREFIX = "third.aliyun.oss.";
     // 配置的后缀，及项目名;默认为default
     private String config_project = "default";
+
 
     // oss配置
     private String accessKeyId;
@@ -191,6 +200,43 @@ public class OSSUtil {
 
     public String uploadFileByext(InputStream inputStream, String original) {
         return uploadFileByext(inputStream, null, original);
+    }
+
+
+    /**
+     * 获取文件上传签证
+     * 通过前端上传文件的时候需要用到，但是一般不会使用
+     */
+    public Result uploadFilePolicy() {
+        try {
+            long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
+            Date expiration = new Date(expireEndTime);
+            PolicyConditions policyConds = new PolicyConditions();
+            policyConds.addConditionItem(PolicyConditions.COND_CONTENT_LENGTH_RANGE, 0, 1048576000);
+
+            // 这里的filename随便输一个不含有后缀的字符串即可，目的是为了绕过方法内的非空校验（因为不想写重载方法了太麻烦了，这个方法就随便写一下了）
+            // 因为获取签名的时候还没有选择文件，所以这里不会有后缀产生，后缀需要前端选择文件后再拼接
+            String key = OSSEnum.buildKey(OSSEnum.RANDOM_R, "policy", "x");
+            policyConds.addConditionItem(MatchMode.StartWith, PolicyConditions.COND_KEY, key.substring(0, key.lastIndexOf("/")));
+
+            String postPolicy = ossClient.generatePostPolicy(expiration, policyConds);
+            byte[] binaryData = postPolicy.getBytes("utf-8");
+            String encodedPolicy = BinaryUtil.toBase64String(binaryData);
+            String postSignature = ossClient.calculatePostSignature(postPolicy);
+
+            Map<String, String> respMap = new LinkedHashMap<>();
+            respMap.put("accessid", accessKeyId);
+            respMap.put("policy", encodedPolicy);
+            respMap.put("signature", postSignature);
+            respMap.put("host", this.getBucketDomain());
+            respMap.put("key", key);
+            respMap.put("expire", String.valueOf(expireEndTime / 1000));
+            return new Result<>(respMap);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return Result.Error();
     }
 
 
