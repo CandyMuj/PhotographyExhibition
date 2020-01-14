@@ -11,7 +11,9 @@ import java.util.UUID;
 /**
  * @ProJectName APIServer
  * @FileName OSSEnum
- * @Description
+ * @Description 一般来说，不会使用传入的源文件名直接存，一般都是处理过的
+ * 因为你不能保证分级后的同一个目录不存在重复的文件，多个用户可能上传的文件名就是一样的，文件类型或者内容可能都不一样
+ * 除非一个文件一个文件夹，文件夹使用随机的生成规则生成，但是那样就很low
  * @Author CandyMuj
  * @Date 2020/1/10 11:08
  * @Version 1.0
