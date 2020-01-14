@@ -122,7 +122,7 @@ public enum OSSEnum {
     /**
      * 前缀+（目录处理策略）+根据传入的策略生成新的文件名
      * <p>
-     * 后缀末尾无需加 '/' 我会自动加
+     * 后缀末尾无需加 '/' 我会自动加,当然加也不会报错，我会处理，只是方便传值罢了
      */
     public static String buildKey(OSSEnum type, String prefix, String fileName) {
         StringBuilder key = new StringBuilder();
