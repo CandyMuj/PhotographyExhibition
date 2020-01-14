@@ -10,7 +10,6 @@ import com.aliyun.oss.model.PolicyConditions;
 import com.aliyun.oss.model.PutObjectRequest;
 import com.cc.pic.api.enumc.OSSEnum;
 import com.cc.pic.api.exception.CandyException;
-import com.cc.pic.api.pojo.sys.Result;
 import com.cc.pic.api.utils.sys.YmlConfig;
 import lombok.extern.slf4j.Slf4j;
 
@@ -207,7 +206,7 @@ public class OSSUtil {
      * 获取文件上传签证
      * 通过前端上传文件的时候需要用到，但是一般不会使用
      */
-    public Result uploadFilePolicy() {
+    public Map<String, String> uploadFilePolicy() {
         try {
             long expireEndTime = System.currentTimeMillis() + expireTime * 1000;
             Date expiration = new Date(expireEndTime);
@@ -231,12 +230,12 @@ public class OSSUtil {
             respMap.put("host", this.getBucketDomain());
             respMap.put("key", key);
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
-            return new Result<>(respMap);
+            return respMap;
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return Result.Error();
+        return null;
     }
 
 
