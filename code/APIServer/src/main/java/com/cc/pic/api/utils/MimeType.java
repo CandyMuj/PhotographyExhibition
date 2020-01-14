@@ -37,7 +37,7 @@ public class MimeType {
     public static String getContentType(String fileExt) {
         String mime = null;
         if (StrUtil.isNotBlank(fileExt)) {
-            fileExt = fileExt.replace(".", "").toLowerCase();
+            fileExt = fileExt.replaceFirst(".", "").toLowerCase();
             mime = CONFIG_JSON.getString(fileExt);
         }
 
