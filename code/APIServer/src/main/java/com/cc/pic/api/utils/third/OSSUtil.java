@@ -22,6 +22,18 @@ import java.util.Map;
  * @Author CandyMuj
  * @Date 2020/1/8 17:08
  * @Version 1.0
+ * <p>
+ * 不建议再对此类上传文件相关方法进行扩展！！！ 若有其他类型的方法可在uploadFileByext 后方继续扩展。
+ * 为什么上传文件不建议再做扩展？
+ * 剩下的基本都是不常用的所以我也就难得写了，很多杂七杂八的方法
+ * 1、比如根据传入文件名不做处理直接存不常用，根据file对象自己转流再传就行了
+ * 2、如果是根据链接（字符串）
+ * 3、那么就又会有根据url（对象），也完全可以自己外面处理了转成流即可
+ * 如果出现上诉情况，就又要把所有的上传方法都重载一次，那样就会很麻烦，而且还可能有很多我没考虑到的类型，那样就更多了，没必要的
+ * 我不可能把所有的情况都写出来，包括官方设计框架的都是，把基础的写出来，更多的都是你自己去扩展调用底层的基础法方法自己处理逻辑，如果什么都给你封装了那还要你开发人员什么事？
+ * 都是自定义扩展
+ * <p>
+ * 在此我把底层方法都是开放出来的，实在觉得提供的方法不够用自己在业务层自定义处理调用底层基础方法即可  ！！！
  */
 @Slf4j
 public class OSSUtil {
@@ -122,8 +134,8 @@ public class OSSUtil {
             metadata.setContentDisposition("inline;filename=" + fileName);
 
 
-            PutObjectRequest request = new PutObjectRequest(bucketName, key, inputStream);
-            request.setMetadata(metadata);
+            PutObjectRequest request = new PutObjectRequest(bucketName, key, inputStream, metadata);
+            // request.setMetadata(metadata);
             ossClient.putObject(request);
             log.info("Object：{} 存入OSS成功!", key);
             return key;
