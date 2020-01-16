@@ -25,6 +25,7 @@ public class Articleattr extends Model<Articleattr> {
     private Integer articleId;
     private Integer itemType;
     private Integer itemId;
+    private Integer location;
     private Integer orderIndex;
 
     @Override
