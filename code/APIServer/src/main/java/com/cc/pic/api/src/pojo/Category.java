@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -10,22 +10,21 @@ import java.io.Serializable;
 
 /**
  * @ProJectName APIServer
- * @FileName Articleattr
+ * @FileName Category
  * @Description
  * @Author CandyMuj
- * @Date 2020/1/6 14:37
+ * @Date 2020/1/6 14:58
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Articleattr extends Model<Articleattr> {
+public class Category extends Model<Category> {
     @TableId
-    private Integer articleattrId;
-    private Integer articleId;
-    private Integer itemType;
-    private Integer itemId;
-    private String location;
+    private Integer categoryId;
+    private Integer pid;
+    private Integer moduleType;
+    private String cname;
     private Integer orderIndex;
 
     @Override

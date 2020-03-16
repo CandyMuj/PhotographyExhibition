@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -11,22 +11,20 @@ import java.util.Date;
 
 /**
  * @ProJectName APIServer
- * @FileName PictureLibrary
+ * @FileName PhotoAlbum
  * @Description
  * @Author CandyMuj
- * @Date 2020/1/6 16:04
+ * @Date 2020/1/6 15:54
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PictureLibrary extends Model<PictureLibrary> {
+public class PhotoAlbum extends Model<PhotoAlbum> {
     @TableId
-    private Integer pictureLibraryId;
     private Integer photoAlbumId;
-    private String picName;
-    private String picDesc;
-    private String picUri;
+    private String albumName;
+    private String albumDesc;
     private Date addTime;
 
     @Override

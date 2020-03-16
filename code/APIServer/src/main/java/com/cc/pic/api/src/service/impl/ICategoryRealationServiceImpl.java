@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.pojo.CategoryRealation;
+import com.cc.pic.api.src.pojo.CategoryRealation;
 import com.cc.pic.api.src.mapper.CategoryRealationMapper;
 import com.cc.pic.api.src.service.ICategoryRealationService;
 import lombok.extern.slf4j.Slf4j;

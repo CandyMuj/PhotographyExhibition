@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -10,21 +10,23 @@ import java.io.Serializable;
 
 /**
  * @ProJectName APIServer
- * @FileName FooterInfo
+ * @FileName Articleattr
  * @Description
  * @Author CandyMuj
- * @Date 2020/1/6 15:22
+ * @Date 2020/1/6 14:37
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FooterInfo extends Model<FooterInfo> {
+public class Articleattr extends Model<Articleattr> {
     @TableId
-    private Integer footerInfoId;
-    private Integer footerType;
-    private String content;
-    private Integer enable;
+    private Integer articleattrId;
+    private Integer articleId;
+    private Integer itemType;
+    private Integer itemId;
+    private String location;
+    private Integer orderIndex;
 
     @Override
     protected Serializable pkVal() {

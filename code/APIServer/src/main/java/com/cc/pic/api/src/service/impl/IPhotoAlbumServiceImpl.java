@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.pojo.PhotoAlbum;
+import com.cc.pic.api.src.pojo.PhotoAlbum;
 import com.cc.pic.api.src.mapper.PhotoAlbumMapper;
 import com.cc.pic.api.src.service.IPhotoAlbumService;
 import lombok.extern.slf4j.Slf4j;

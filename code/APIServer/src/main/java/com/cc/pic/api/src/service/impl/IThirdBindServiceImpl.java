@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.pojo.ThirdBind;
+import com.cc.pic.api.src.pojo.ThirdBind;
 import com.cc.pic.api.src.mapper.ThirdBindMapper;
 import com.cc.pic.api.src.service.IThirdBindService;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;

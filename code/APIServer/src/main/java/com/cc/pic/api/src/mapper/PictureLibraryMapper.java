@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
-import com.cc.pic.api.pojo.PictureLibrary;
+import com.cc.pic.api.src.pojo.PictureLibrary;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -10,26 +10,24 @@ import java.io.Serializable;
 
 /**
  * @ProJectName APIServer
- * @FileName Dict
+ * @FileName Menu
  * @Description
  * @Author CandyMuj
- * @Date 2020/1/6 15:20
+ * @Date 2020/1/6 15:53
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Dict extends Model<Dict> {
+public class Menu extends Model<Menu> {
     @TableId
-    private Integer dictId;
-    private Integer dictpid;
-    private String dictname;
-    private String dictcode;
-    private String dicttype;
+    private Integer menuId;
+    private String menuName;
+    private String url;
+    private Integer pid;
+    private Integer type;
     private Integer orderindex;
-    private String remark;
-    private Integer selfLimit;
-    private Integer childrenLimit;
+    private Integer enable;
 
     @Override
     protected Serializable pkVal() {

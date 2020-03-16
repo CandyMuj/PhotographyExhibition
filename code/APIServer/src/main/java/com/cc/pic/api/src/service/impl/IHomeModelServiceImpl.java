@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.pojo.HomeModel;
+import com.cc.pic.api.src.pojo.HomeModel;
 import com.cc.pic.api.src.mapper.HomeModelMapper;
 import com.cc.pic.api.src.service.IHomeModelService;
 import lombok.extern.slf4j.Slf4j;

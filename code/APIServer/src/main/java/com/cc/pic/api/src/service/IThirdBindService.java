@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.service;
 
 import com.baomidou.mybatisplus.service.IService;
-import com.cc.pic.api.pojo.ThirdBind;
+import com.cc.pic.api.src.pojo.ThirdBind;
 
 /**
  * @ProJectName APIServer

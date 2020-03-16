@@ -6,6 +6,8 @@ import com.cc.pic.api.enumc.sys.TokenGenerateEnum;
  * @ProJectName APIServer
  * @FileName SecurityConstants
  * @Description 关于安全 token 相关的一些配置
+ * 注意 ！！！！
+ * 此类是鉴权相关的配置，最好只做修改，且改该改的，不要新增和删除。。。
  * @Author CandyMuj
  * @Date 2019/12/24 18:03
  * @Version 1.0

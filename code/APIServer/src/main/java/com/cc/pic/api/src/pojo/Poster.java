@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -11,21 +11,27 @@ import java.util.Date;
 
 /**
  * @ProJectName APIServer
- * @FileName Imglist
+ * @FileName Poster
  * @Description
  * @Author CandyMuj
- * @Date 2020/1/6 16:38
+ * @Date 2020/1/6 16:06
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ImgList extends Model<ImgList> {
+public class Poster extends Model<Poster> {
     @TableId
-    private Integer imgListId;
+    private Integer posterId;
+    private Integer postion;
+    private String title;
+    private String face;
     private Integer itemType;
     private Integer itemId;
     private String url;
+    private Integer enable;
+    private Integer orderIndex;
+    private Date showTime;
     private Date addTime;
 
     @Override

@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo;
+package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
 import com.baomidou.mybatisplus.annotations.TableId;
@@ -7,24 +7,27 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * @ProJectName APIServer
- * @FileName Role
+ * @FileName PictureLibrary
  * @Description
  * @Author CandyMuj
- * @Date 2020/1/6 16:24
+ * @Date 2020/1/6 16:04
  * @Version 1.0
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role extends Model<Role> {
+public class PictureLibrary extends Model<PictureLibrary> {
     @TableId
-    private Integer roleId;
-    private String name;
-    private Integer status;
-    private String menuId;
+    private Integer pictureLibraryId;
+    private Integer photoAlbumId;
+    private String picName;
+    private String picDesc;
+    private String picUri;
+    private Date addTime;
 
     @Override
     protected Serializable pkVal() {

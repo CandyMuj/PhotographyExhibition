@@ -1,7 +1,7 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.pojo.FooterInfo;
+import com.cc.pic.api.src.pojo.FooterInfo;
 import com.cc.pic.api.src.mapper.FooterInfoMapper;
 import com.cc.pic.api.src.service.IFooterInfoService;
 import lombok.extern.slf4j.Slf4j;
