@@ -17,6 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class IFooterInfoServiceImpl extends ServiceImpl<FooterInfoMapper, FooterInfo> implements IFooterInfoService {
+public class FooterInfoServiceImpl extends ServiceImpl<FooterInfoMapper, FooterInfo> implements IFooterInfoService {
 
 }

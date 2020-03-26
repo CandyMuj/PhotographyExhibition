@@ -17,6 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class IArticleContentServiceImpl extends ServiceImpl<ArticleContentMapper, ArticleContent> implements IArticleContentService {
+public class ArticleContentServiceImpl extends ServiceImpl<ArticleContentMapper, ArticleContent> implements IArticleContentService {
 
 }

@@ -1,15 +1,15 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.src.pojo.Dict;
-import com.cc.pic.api.src.mapper.DictMapper;
-import com.cc.pic.api.src.service.IDictService;
+import com.cc.pic.api.src.pojo.Menu;
+import com.cc.pic.api.src.mapper.MenuMapper;
+import com.cc.pic.api.src.service.IMenuService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
  * @ProJectName APIServer
- * @FileName IDictServiceImpl
+ * @FileName IMenuServiceImpl
  * @Description
  * @Author CandyMuj
  * @Date 2020/1/7 15:48
@@ -17,6 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class IDictServiceImpl extends ServiceImpl<DictMapper, Dict> implements IDictService {
+public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
 }

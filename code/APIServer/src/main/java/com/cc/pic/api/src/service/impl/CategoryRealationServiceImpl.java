@@ -17,6 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class ICategoryRealationServiceImpl extends ServiceImpl<CategoryRealationMapper, CategoryRealation> implements ICategoryRealationService {
+public class CategoryRealationServiceImpl extends ServiceImpl<CategoryRealationMapper, CategoryRealation> implements ICategoryRealationService {
 
 }

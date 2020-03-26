@@ -1,15 +1,15 @@
 package com.cc.pic.api.src.service.impl;
 
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
-import com.cc.pic.api.src.pojo.ThirdBind;
-import com.cc.pic.api.src.mapper.ThirdBindMapper;
-import com.cc.pic.api.src.service.IThirdBindService;
+import com.cc.pic.api.src.pojo.Articleattr;
+import com.cc.pic.api.src.mapper.ArticleattrMapper;
+import com.cc.pic.api.src.service.IArticleattrService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 /**
  * @ProJectName APIServer
- * @FileName IThirdBindServiceImpl
+ * @FileName IArticleattrServiceImpl
  * @Description
  * @Author CandyMuj
  * @Date 2020/1/7 15:48
@@ -17,6 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class IThirdBindServiceImpl extends ServiceImpl<ThirdBindMapper, ThirdBind> implements IThirdBindService {
+public class ArticleattrServiceImpl extends ServiceImpl<ArticleattrMapper, Articleattr> implements IArticleattrService {
 
 }

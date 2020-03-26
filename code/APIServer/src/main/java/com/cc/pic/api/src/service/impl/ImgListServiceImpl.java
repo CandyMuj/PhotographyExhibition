@@ -17,6 +17,6 @@ import org.springframework.stereotype.Service;
  */
 @Slf4j
 @Service
-public class IImgListServiceImpl extends ServiceImpl<ImgListMapper, ImgList> implements IImgListService {
+public class ImgListServiceImpl extends ServiceImpl<ImgListMapper, ImgList> implements IImgListService {
 
 }
