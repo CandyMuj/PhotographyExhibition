@@ -32,6 +32,7 @@
         <!-- 使用较旧的版本，最新版移除了热加载，变更了字段验证策略等配置 -->
         <mybatis-plus.version>2.1.9</mybatis-plus.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
+        <pagehelper.version>1.2.12</pagehelper.version>
 
         <httpcore.version>4.4.3</httpcore.version>
         <httpclient.version>4.5.1</httpclient.version>
@@ -191,6 +192,12 @@
             <groupId>org.apache.velocity</groupId>
             <artifactId>velocity-engine-core</artifactId>
             <version>${velocity-engine-core.version}</version>
+        </dependency>
+        <!-- pagehelper 分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
         </dependency>
         <!-- 数据库配置 end -->
 

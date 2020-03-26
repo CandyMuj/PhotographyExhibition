@@ -58,5 +58,14 @@ mybatis-plus:
     #map-underscore-to-camel-case: true
     cache-enabled: true
 
+pagehelper:
+  # 禁用合理化时，如果pageNum<1或pageNum>pages会返回空数据
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql
+  row-bounds-with-count: true
+  helper-dialect: mysql
+
+
 logging:
   config: classpath:logback.xml
