@@ -29,6 +29,8 @@
         <commons-io.version>2.6</commons-io.version>
         <jasypt.version>1.18</jasypt.version>
         <swagger2.version>2.9.2</swagger2.version>
+        <!-- 解决进入swagger页面报类型转换错误，排除2.9.2中两个模块的引用，手动增加1.5.21版本 -->
+        <io-swagger.version>1.5.22</io-swagger.version>
         <!-- 使用较旧的版本，最新版移除了热加载，变更了字段验证策略等配置 -->
         <mybatis-plus.version>2.1.9</mybatis-plus.version>
         <velocity-engine-core.version>2.0</velocity-engine-core.version>
@@ -157,6 +159,27 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>${swagger2.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-annotations</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>swagger-models</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--解决进入swagger页面报类型转换错误，排除2.9.2中的引用，手动增加1.5.21版本-->
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-annotations</artifactId>
+            <version>${io-swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.swagger</groupId>
+            <artifactId>swagger-models</artifactId>
+            <version>${io-swagger.version}</version>
         </dependency>
         <!-- swagger-ui -->
         <dependency>
