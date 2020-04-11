@@ -38,16 +38,17 @@ public class JwtTokenFactory {
             // 剔除过期校验失败的token；实际就无效的token
             delInvalidFailed(tokenSet);
             tokenSet.add(token);
+
             if (saveToRedis(user, token, tokenSet)) {
                 return token;
             }
-
         }
         // 生成新的token 且之前的失效（即此用户永远只有一个唯一的token 且每次生成的都是新的）
         else if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.ONLY_DEATH)) {
             String token = JwtUtil.create(user);
             Set<Object> tokenSet = new HashSet<>();
             tokenSet.add(token);
+
             if (saveToRedis(user, token, tokenSet)) {
                 return token;
             }
@@ -60,6 +61,11 @@ public class JwtTokenFactory {
 
             if (tokenSet.size() > 0) {
                 if (tokenSet.size() == 1) {
+                    // 这里直接获取列表的第一个，第一个是最后添加的，先进后出，后进先出，所以获取的都是最新的
+                    // 其实新旧也无所谓，哪怕你这次获取的最新的，但是新的如果过期了，旧的没过期，但是如果这期间数据更新了，用到了旧的token，旧数据可能就有问题
+                    // 但又不太可能，只要按规定使用user中的对象：尽量只使用id，因为这个永远不可变
+                    // 还有一点如果不在这期间不修改过期时间，那么就不会出现这些问题，因为新的都过期了，旧的肯定早就过期了
+                    // 还有一点，如果真的修改了时间，那么每次修改时务必同步把缓存清完，就不会出现问题，但是会影响已登录的token会全部失效，所以尽量修改过期时间即可，其实就算修改这个影响也小，重新登录多正常的事，没有固定的时间，我也经常遇到这些问题，有些网站重新登录的时间就不同，很正常的
                     return tokenSet.iterator().next().toString();
                 } else {
                     throw new TokenGenerateException("generate error has vaild token size more than 1 size:" + tokenSet.size());
@@ -67,6 +73,7 @@ public class JwtTokenFactory {
             } else {
                 String token = JwtUtil.create(user);
                 tokenSet.add(token);
+
                 if (saveToRedis(user, token, tokenSet)) {
                     return token;
                 }
