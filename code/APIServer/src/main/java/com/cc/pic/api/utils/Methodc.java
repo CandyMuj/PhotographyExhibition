@@ -168,7 +168,7 @@ public class Methodc {
         return new ArrayList<>(Arrays.asList(array));
     }
 
-    public static String[] ListToArray(ArrayList<String> list) {
+    public static String[] ListToArray(List<String> list) {
         return (list != null && list.size() > 0) ? list.toArray(new String[list.size()]) : null;
     }
 
