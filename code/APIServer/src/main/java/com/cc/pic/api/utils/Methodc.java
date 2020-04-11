@@ -169,11 +169,13 @@ public class Methodc {
     }
 
     public static String[] ListToArray(List<String> list) {
-        return (list != null && list.size() > 0) ? list.toArray(new String[list.size()]) : null;
+        return (list != null && list.size() > 0) ? list.toArray(new String[0]) : null;
     }
 
     /**
      * 将list转成字符串
+     * <p>
+     * 使用迭代器，不适用for，迭代器性能更佳
      *
      * @param split 指定分隔符
      * @return
