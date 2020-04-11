@@ -1,5 +1,7 @@
 package com.cc.pic.api.pojo.sys;
 
+import com.cc.pic.api.utils.DB;
+
 import static com.cc.pic.api.config.StatusCode.FAIL;
 import static com.cc.pic.api.config.StatusCode.SUCCESS;
 
@@ -14,7 +16,7 @@ import static com.cc.pic.api.config.StatusCode.SUCCESS;
 public class Result<T> {
     public int code;
     public Integer curPage;
-    public Integer totalCount;
+    public Long totalCount;
     public Integer pageSize;
     public String msg;
     public T data;
@@ -65,6 +67,7 @@ public class Result<T> {
     }
 
     public static Result Error(String msg) {
+        DB.setRollbackOnly();
         return new Result(FAIL, msg);
     }
 

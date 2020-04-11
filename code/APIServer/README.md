@@ -16,3 +16,6 @@
 
 - [ ] com.cc.pic.api.utils.sys.MybatisPlusCodeGenerator 完善Mybatis逆向工程
 
+- [ ] 关于接口鉴权，需要做一个优化，现在是所有的接口都鉴权了，但有些东西并不需要鉴权，也不能鉴权，比如swagger内置的文档或接口等
+
+- [ ] 自己写一个数据库表生成java代码的工具，关于此框架

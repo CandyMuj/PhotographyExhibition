@@ -65,7 +65,7 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
         }
 
         User user = jwtTokenFactory.validateToken(token);
-        if (user == null) {
+        if (user == null || user.getUserId() <= 0) {
             log.error("resolveArgument error token is not exist");
             throw new AuthException("validation failed");
         }

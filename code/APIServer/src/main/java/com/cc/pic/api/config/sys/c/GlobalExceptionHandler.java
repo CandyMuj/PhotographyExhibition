@@ -1,5 +1,6 @@
 package com.cc.pic.api.config.sys.c;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +39,9 @@ public class GlobalExceptionHandler {
     public Result exception(Exception exception) {
         log.error("software running error...");
         exception.printStackTrace();
-        return Result.ErrorBusy();
+
+        String msg = exception.getMessage();
+        return StrUtil.isNotBlank(msg) ? Result.Error(msg) : Result.ErrorBusy();
     }
 
 }

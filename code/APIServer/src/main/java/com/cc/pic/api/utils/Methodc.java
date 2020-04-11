@@ -1,25 +1,24 @@
 package com.cc.pic.api.utils;
 
 import com.cc.pic.api.config.Configc;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.*;
 import java.util.regex.Pattern;
 
 /**
  * @ProJectName server
  * @FileName Methodc
- * @Description 本项目所需要的一些公用的方法 TODO
+ * @Description 本项目所需要的一些公用的方法
  * @Author CandyMuj
  * @Date 2019/5/27 14:06
  * @Version 1.0
  */
+@Slf4j
 public class Methodc {
-
-    public static List<String> array2list(String[] array) {
-        return new ArrayList<>(Arrays.asList(array));
-    }
 
     /**
      * 根据排序字符串，返回排序sql
@@ -40,6 +39,43 @@ public class Methodc {
             }
         }
         return s;
+    }
+
+    /**
+     * 判断bigdecimal是否是整数
+     */
+    public static boolean bigDecimalIsInteger(BigDecimal number) {
+        if (!"".equals(number + "") && number != null) {
+            return new BigDecimal(number.intValue()).compareTo(number) == 0;
+        }
+
+        throw new NullPointerException("BigDecimal 传入为空");
+    }
+
+    /**
+     * 比较两个数组是否完全相等，含长度和内容，是实际的内容，要去重才行
+     * <p>
+     * 只有相同的类型比较才有意义，类型都不同那么肯定什么都不同了
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public static <T> boolean containsArray(T[] a, T[] b) {
+        // 去重
+        TreeSet<T> aset = new TreeSet<>(Arrays.asList(a));
+        TreeSet<T> bset = new TreeSet<>(Arrays.asList(b));
+
+        // 长度比较
+        if (aset.size() != bset.size()) return false;
+
+        for (T item : aset) {
+            if (!bset.contains(item)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**
@@ -128,8 +164,12 @@ public class Methodc {
         }
     }
 
+    public static <T> List<T> array2list(T[] array) {
+        return new ArrayList<>(Arrays.asList(array));
+    }
+
     public static String[] ListToArray(ArrayList<String> list) {
-        return list != null && list.size() != 0 ? list.toArray(new String[list.size()]) : null;
+        return (list != null && list.size() > 0) ? list.toArray(new String[list.size()]) : null;
     }
 
     /**
@@ -138,10 +178,10 @@ public class Methodc {
      * @param split 指定分隔符
      * @return
      */
-    public static String ListToString(List<Integer> list, String split) {
+    public static String ListToString(List<?> list, String split) {
         if (list == null) return null;
         StringBuilder str = new StringBuilder();
-        Iterator<Integer> iterator = list.iterator();
+        Iterator<?> iterator = list.iterator();
         while (iterator.hasNext()) {
             str.append(iterator.next()).append(split);
         }
@@ -154,7 +194,7 @@ public class Methodc {
     /**
      * 默认以逗号为分隔符
      */
-    public static String ListToString(List<Integer> list) {
+    public static String ListToString(List<?> list) {
         return ListToString(list, ",");
     }
 

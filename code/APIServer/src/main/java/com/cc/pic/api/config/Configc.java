@@ -19,6 +19,9 @@ public class Configc {
     // 系统全局编码
     public static final String GLOBAL_ENCODING = YmlConfig.getString(YmlKey.GLOBAL_ENCODING);
 
+    // 全局统一返回数据针对日期的处理 日期格式定义
+    public static final String RESPONSE_DATEFORMAT = "yyyy-MM-dd HH:mm:ss";
+
 
     /**
      * 下方写关于自己业务的一些配置，避免建过多的重复文件，造成冗余 （若只需要框架，此处的配置可全部删除，可视具体情况保留需要的）

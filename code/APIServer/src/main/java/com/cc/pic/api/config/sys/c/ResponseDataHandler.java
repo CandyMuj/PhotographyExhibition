@@ -1,6 +1,7 @@
 package com.cc.pic.api.config.sys.c;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cc.pic.api.config.Configc;
 import com.cc.pic.api.pojo.sys.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
@@ -31,7 +32,7 @@ public class ResponseDataHandler implements ResponseBodyAdvice {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         if (o != null) {
             log.info("handle responseData...");
-            return JSONObject.parseObject(JSONObject.toJSONString(o));
+            return JSONObject.parseObject(JSONObject.toJSONStringWithDateFormat(o, Configc.RESPONSE_DATEFORMAT));
         }
 
         return null;

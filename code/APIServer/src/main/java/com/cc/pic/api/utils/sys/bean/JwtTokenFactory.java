@@ -38,18 +38,19 @@ public class JwtTokenFactory {
             // 剔除过期校验失败的token；实际就无效的token
             delInvalidFailed(tokenSet);
             tokenSet.add(token);
-            saveToRedis(user, token, tokenSet);
+            if (saveToRedis(user, token, tokenSet)) {
+                return token;
+            }
 
-            return token;
         }
         // 生成新的token 且之前的失效（即此用户永远只有一个唯一的token 且每次生成的都是新的）
         else if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.ONLY_DEATH)) {
             String token = JwtUtil.create(user);
             Set<Object> tokenSet = new HashSet<>();
             tokenSet.add(token);
-            saveToRedis(user, token, tokenSet);
-
-            return token;
+            if (saveToRedis(user, token, tokenSet)) {
+                return token;
+            }
         }
         // 如果含有未过期的token那么就用它，否则就生成新的（即此用户永远只有一个唯一的token 如果旧的token没过期那么每次获取的token都是相同的）
         else if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.OLD)) {
@@ -66,13 +67,15 @@ public class JwtTokenFactory {
             } else {
                 String token = JwtUtil.create(user);
                 tokenSet.add(token);
-                saveToRedis(user, token, tokenSet);
-
-                return token;
+                if (saveToRedis(user, token, tokenSet)) {
+                    return token;
+                }
             }
         } else {
             throw new TokenGenerateException("unsupported generate type");
         }
+
+        return null;
     }
 
     private Set<Object> getTokens(int userId) {
@@ -84,9 +87,9 @@ public class JwtTokenFactory {
         return tokenSet;
     }
 
-    private void saveToRedis(User user, String token, Set<Object> tokenSet) {
-        redisUtil.set(CacheKey.AUTH_TOKEN_USER + token, user, EXPIRATION * 86400);
-        redisUtil.set(CacheKey.AUTH_USER_TOKEN + user.getUserId(), tokenSet);
+    private boolean saveToRedis(User user, String token, Set<Object> tokenSet) {
+        return redisUtil.set(CacheKey.AUTH_TOKEN_USER + token, user, EXPIRATION * 86400) &&
+                redisUtil.set(CacheKey.AUTH_USER_TOKEN + user.getUserId(), tokenSet);
     }
 
     /**
