@@ -42,6 +42,38 @@ public class Methodc {
     }
 
     /**
+     * 获取当前日历对象，修改小时和分钟
+     *
+     * @param hour
+     * @param minute
+     * @param zeroSecond 是否设置秒和毫秒为0 true:是
+     * @return
+     */
+    public static Calendar setCalendar(int hour, int minute, boolean zeroSecond) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+
+        if (zeroSecond) {
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+        }
+
+        return calendar;
+    }
+
+    /**
+     * 获取日历对象 默认设置秒和毫秒为0
+     *
+     * @param hour
+     * @param minute
+     * @return
+     */
+    public static Calendar setCalendar(int hour, int minute) {
+        return setCalendar(hour, minute, true);
+    }
+
+    /**
      * 判断bigdecimal是否是整数
      */
     public static boolean bigDecimalIsInteger(BigDecimal number) {
