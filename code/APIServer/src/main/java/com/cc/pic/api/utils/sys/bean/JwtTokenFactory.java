@@ -43,7 +43,7 @@ public class JwtTokenFactory {
                 return token;
             }
         }
-        // 生成新的token 且之前的失效（即此用户永远只有一个唯一的token 且每次生成的都是新的）
+        // 生成新的token 且之前的失效（即此用户永远只有一个唯一的token 且每次生成的都是新的,有且仅有一个有效token）
         else if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.ONLY_DEATH)) {
             String token = JwtUtil.create(user);
             Set<Object> tokenSet = new HashSet<>();
@@ -53,7 +53,7 @@ public class JwtTokenFactory {
                 return token;
             }
         }
-        // 如果含有未过期的token那么就用它，否则就生成新的（即此用户永远只有一个唯一的token 如果旧的token没过期那么每次获取的token都是相同的）
+        // 如果含有未过期的token那么就用它，否则就生成新的（即此用户永远只有一个唯一的token 如果旧的token没过期那么每次获取的token都是相同的,有且仅有一个有效token）
         else if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.OLD)) {
             Set<Object> tokenSet = getTokens(user.getUserId());
             // 剔除过期校验失败的token；实际就无效的token
