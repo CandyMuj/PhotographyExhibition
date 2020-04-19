@@ -52,7 +52,9 @@ spring:
 
 # mybaits-plus配置，修改主键类型，mapper.xml、type 别名等
 mybatis-plus:
+  # mapper xml地址
   mapper-locations: classpath:/mapper/*Mapper.xml
+  # 别名配置，实体扫描，多个package用逗号或者分号分隔
   typeAliasesPackage: com.cc.pic.api.src.pojo
   global-config:
     # 主键类型  0:"数据库ID自增", 1:"用户输入ID",2:"全局唯一ID (数字类型唯一ID)", 3:"全局唯一ID UUID";
@@ -70,7 +72,12 @@ mybatis-plus:
     # 逻辑未删除值(默认为 0)
     logic-not-delete-value: 0
   configuration:
+    # 开启驼峰映射
     #map-underscore-to-camel-case: true
+    # 返回map时，true:当查询数据为空时字段返回为null；false:不加这个查询数据为空时，字段将被隐藏
+    #call-setters-on-nulls: true
+    # sql日志打印 这个配置会将执行的sql打印出来，在开发或测试的时候可以用
+    #log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
     cache-enabled: true
 
 pagehelper:
