@@ -5,7 +5,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -23,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 public class RedisUtil {
 
     @Resource
-    private RedisTemplate<String, Serializable> redisTemplate;
+    private RedisTemplate<String, Object> redisTemplate;
 
     //=============================common============================
 
@@ -95,7 +94,7 @@ public class RedisUtil {
      * @param key 键
      * @return 值
      */
-    public Serializable get(String key) {
+    public Object get(String key) {
         return key == null ? null : redisTemplate.opsForValue().get(key);
     }
 
@@ -106,7 +105,7 @@ public class RedisUtil {
      * @param value 值
      * @return true成功 false失败
      */
-    public boolean set(String key, Serializable value) {
+    public boolean set(String key, Object value) {
         try {
             redisTemplate.opsForValue().set(key, value);
             return true;
@@ -125,7 +124,7 @@ public class RedisUtil {
      * @param time  时间(秒) time要大于0 如果time小于等于0 将设置无限期
      * @return true成功 false 失败
      */
-    public boolean set(String key, Serializable value, long time) {
+    public boolean set(String key, Object value, long time) {
         try {
             if (time > 0) {
                 redisTemplate.opsForValue().set(key, value, time, TimeUnit.SECONDS);
@@ -319,7 +318,7 @@ public class RedisUtil {
      * @param key 键
      * @return
      */
-    public Set<Serializable> sGet(String key) {
+    public Set<Object> sGet(String key) {
         try {
             return redisTemplate.opsForSet().members(key);
         } catch (Exception e) {
@@ -335,7 +334,7 @@ public class RedisUtil {
      * @param value 值
      * @return true 存在 false不存在
      */
-    public boolean sHasKey(String key, Serializable value) {
+    public boolean sHasKey(String key, Object value) {
         try {
             return redisTemplate.opsForSet().isMember(key, value);
         } catch (Exception e) {
@@ -351,7 +350,7 @@ public class RedisUtil {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public long sSet(String key, Serializable... values) {
+    public long sSet(String key, Object... values) {
         try {
             return redisTemplate.opsForSet().add(key, values);
         } catch (Exception e) {
@@ -368,7 +367,7 @@ public class RedisUtil {
      * @param values 值 可以是多个
      * @return 成功个数
      */
-    public long sSetAndTime(String key, long time, Serializable... values) {
+    public long sSetAndTime(String key, long time, Object... values) {
         try {
             Long count = redisTemplate.opsForSet().add(key, values);
             if (time > 0) {
@@ -403,7 +402,7 @@ public class RedisUtil {
      * @param values 值 可以是多个
      * @return 移除的个数
      */
-    public long setRemove(String key, Serializable... values) {
+    public long setRemove(String key, Object... values) {
         try {
             Long count = redisTemplate.opsForSet().remove(key, values);
             return count;
@@ -422,7 +421,7 @@ public class RedisUtil {
      * @param end   结束  0 到 -1代表所有值
      * @return
      */
-    public List<Serializable> lGet(String key, long start, long end) {
+    public List<Object> lGet(String key, long start, long end) {
         try {
             return redisTemplate.opsForList().range(key, start, end);
         } catch (Exception e) {
@@ -453,7 +452,7 @@ public class RedisUtil {
      * @param index 索引  index>=0时， 0 表头，1 第二个元素，依次类推；index<0时，-1，表尾，-2倒数第二个元素，依次类推
      * @return
      */
-    public Serializable lGetIndex(String key, long index) {
+    public Object lGetIndex(String key, long index) {
         try {
             return redisTemplate.opsForList().index(key, index);
         } catch (Exception e) {
@@ -469,7 +468,7 @@ public class RedisUtil {
      * @param value 值
      * @return
      */
-    public boolean lSet(String key, Serializable value) {
+    public boolean lSet(String key, Object value) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             return true;
@@ -487,7 +486,7 @@ public class RedisUtil {
      * @param time  时间(秒)
      * @return
      */
-    public boolean lSet(String key, Serializable value, long time) {
+    public boolean lSet(String key, Object value, long time) {
         try {
             redisTemplate.opsForList().rightPush(key, value);
             if (time > 0) {
@@ -507,7 +506,7 @@ public class RedisUtil {
      * @param value 值
      * @return
      */
-    public boolean lSet(String key, List<Serializable> value) {
+    public boolean lSet(String key, List<Object> value) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             return true;
@@ -525,7 +524,7 @@ public class RedisUtil {
      * @param time  时间(秒)
      * @return
      */
-    public boolean lSet(String key, List<Serializable> value, long time) {
+    public boolean lSet(String key, List<Object> value, long time) {
         try {
             redisTemplate.opsForList().rightPushAll(key, value);
             if (time > 0) {
@@ -546,7 +545,7 @@ public class RedisUtil {
      * @param value 值
      * @return
      */
-    public boolean lUpdateIndex(String key, long index, Serializable value) {
+    public boolean lUpdateIndex(String key, long index, Object value) {
         try {
             redisTemplate.opsForList().set(key, index, value);
             return true;
@@ -564,7 +563,7 @@ public class RedisUtil {
      * @param value 值
      * @return 移除的个数
      */
-    public long lRemove(String key, long count, Serializable value) {
+    public long lRemove(String key, long count, Object value) {
         try {
             Long remove = redisTemplate.opsForList().remove(key, count, value);
             return remove;
