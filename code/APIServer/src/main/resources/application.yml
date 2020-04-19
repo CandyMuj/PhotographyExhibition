@@ -16,6 +16,21 @@ spring:
     host: 127.0.0.1
     port: 6379
     password:
+    # 单位：毫秒
+    timeout: 5000
+    # 默认库
+    database: 0
+    # 如果使用的jedis 则将lettuce改成jedis即可
+    jedis:
+      pool:
+        # 最大活跃链接数 默认8（使用负值表示没有限制）
+        max-active: 10
+        # 最大空闲连接数 默认8
+        max-idle: 8
+        # 最小空闲连接数 默认0
+        min-idle: 5
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
 
   datasource:
     url: jdbc:mysql://127.0.0.1:3307/photography?serverTimezone=UTC&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false

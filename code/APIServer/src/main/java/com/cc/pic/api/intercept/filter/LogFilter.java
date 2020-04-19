@@ -31,15 +31,15 @@ import java.io.IOException;
  * 7、切点下如果包含，哪怕是拦截器或者过滤器的定义，只要是使用ioc注入的方式加入到spring中那么每次执行一个拦截器或过滤器也都会进入一次aop，除非你是直接new的
  * 8、如果过滤器的定义也在切点下且过滤器是通过ioc注入，按理说是先执行过滤器，确实是，但是这个时候由于也在切点下，就会认为是在执行切点下的dofilter（包括其他方法）方法，也会被aop拦截，所以就会先执行aop了
  * 9、过滤器和拦截器的定义注入方式一般都有 new的方式和直接注入的方式，ioc有个最大的特点，注入的对象只有一个相当于此对象只被new了一次，如果是哟共new的方式注入，那么就是一个全新的对象，哪怕执行注入操作的那个对象是ioc注入的，但是注入的是一个new的，那么被注入的就是new的和外层无关，他就是一个全新的对象手动new的和spring脱离关系脱离控制，所以切面无法拦截无任何关系，就只是单纯的注册了一个对象进去而已
- *  Filter：
- *      1、（ioc）加@Component注解，springboot会自动扫描并注入（需要@ComponentScan支持）
- *      2、（new）通过配置类中使用FilterRegistrationBean进行注册，直接new一个进行注册
- *      3、（ioc）通过配置类中使用FilterRegistrationBean进行注册，使用ioc注入后再将注入的对象拿去注册（被注入对象需使用注解注册@Component）
- *      3、（ioc）使用@WebFilter + @ServletComponentScan进行注入，与法一类似，使用注解自动扫描，但是既然基础的注解能实现注入（法一），那么没必要使用过多的注解或不常用的注解。不建议使用
- *  Interceptor：
- *      1、（new）通过配置类WebMvcConfigurer，实现方法addInterceptors,直接new一个进行注册
- *      2、（ioc）通过配置类WebMvcConfigurer，实现方法addInterceptors,使用ioc注入后再将注入的对象拿去注册（被注入对象需使用注解注册@Component）
- *
+ * * Filter：
+ * *     1、（ioc）加@Component注解，springboot会自动扫描并注入（需要@ComponentScan支持）
+ * *     2、（new）通过配置类中使用FilterRegistrationBean进行注册，直接new一个进行注册
+ * *     3、（ioc）通过配置类中使用FilterRegistrationBean进行注册，使用ioc注入后再将注入的对象拿去注册（被注入对象需使用注解注册@Component）
+ * *     4、（ioc）使用@WebFilter + @ServletComponentScan进行注入，与法一类似，使用注解自动扫描，但是既然基础的注解能实现注入（法一），那么没必要使用过多的注解或不常用的注解。不建议使用
+ * * Interceptor：
+ * *     1、（new）通过配置类WebMvcConfigurer，实现方法addInterceptors,直接new一个进行注册
+ * *     2、（ioc）通过配置类WebMvcConfigurer，实现方法addInterceptors,使用ioc注入后再将注入的对象拿去注册（被注入对象需使用注解注册@Component）
+ * *
  * 10、既然是使用的spring，那么还是建议使用ioc，尽量减少new的操作
  */
 @Slf4j

@@ -1,5 +1,6 @@
 package com.cc.pic.api.utils;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.config.Configc;
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +40,37 @@ public class Methodc {
             }
         }
         return s;
+    }
+
+    /**
+     * 是否含有为空或空串的内容
+     *
+     * @param obj
+     * @return true 有为空的
+     */
+    public static boolean hasBlank(Object... obj) {
+        if (obj == null || obj.length <= 0) {
+            return true;
+        }
+
+        for (Object o : obj) {
+            if (o == null) {
+                return true;
+            }
+            if (o instanceof Integer) {
+                if ((Integer) o < 0) {
+                    return true;
+                }
+            } else if (o instanceof String) {
+                if (StrUtil.isBlank((String) o)) {
+                    return true;
+                }
+            } else {
+                throw new IllegalArgumentException("Unsupported");
+            }
+        }
+
+        return false;
     }
 
     /**

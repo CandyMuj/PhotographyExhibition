@@ -96,7 +96,7 @@ public class JwtTokenFactory {
 
     private boolean saveToRedis(User user, String token, Set<Object> tokenSet) {
         return redisUtil.set(CacheKey.AUTH_TOKEN_USER + token, user, EXPIRATION * 86400) &&
-                redisUtil.set(CacheKey.AUTH_USER_TOKEN + user.getUserId(), tokenSet);
+                redisUtil.sSet(CacheKey.AUTH_USER_TOKEN + user.getUserId(), tokenSet.toArray()) >= 0;
     }
 
     /**

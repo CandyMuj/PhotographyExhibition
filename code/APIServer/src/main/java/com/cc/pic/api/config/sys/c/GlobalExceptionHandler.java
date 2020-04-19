@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     public Result authException(AuthException authException) {
         log.error("auth failed...");
         authException.printStackTrace();
-        return new Result(NO_AUTH, "认证失败");
+        return new Result(NO_AUTH, "Authentication failed");
     }
 
     /**

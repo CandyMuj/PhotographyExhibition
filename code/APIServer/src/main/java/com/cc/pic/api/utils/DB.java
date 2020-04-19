@@ -2,6 +2,7 @@ package com.cc.pic.api.utils;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.cc.pic.api.pojo.sys.Result;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
@@ -39,6 +40,20 @@ public class DB {
         result.curPage = page.getCurrent();
         result.pageSize = page.getSize();
         result.totalCount = (long) page.getTotal();
+        return result;
+    }
+
+    /**
+     * pagehelper 根据pageinfo解析成Result
+     *
+     * @param pageInfo
+     * @return
+     */
+    public static Result getPageRes(PageInfo pageInfo) {
+        Result result = new Result<>(pageInfo.getList());
+        result.curPage = pageInfo.getPageNum();
+        result.pageSize = pageInfo.getPageSize();
+        result.totalCount = pageInfo.getTotal();
         return result;
     }
 
