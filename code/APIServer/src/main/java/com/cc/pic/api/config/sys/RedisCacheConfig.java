@@ -9,6 +9,8 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
+import java.io.Serializable;
+
 /**
  * @ProjectName api
  * @FileName RedisCacheConfig
@@ -25,12 +27,12 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
      * 如果不设置序列化，那么存入的数据就是编码后的数据，不方便人为查看和维护
      */
     @Bean
-    public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory factory) {
-        RedisTemplate<String, Object> template = new RedisTemplate<>();
+    public RedisTemplate<String, Serializable> redisTemplate(RedisConnectionFactory factory) {
+        RedisTemplate<String, Serializable> template = new RedisTemplate<>();
 
         // fastJson序列化：缺点存入Redis中的内容直接都是明文，确实方便查看，但是不安全
         // value值的序列化采用fastJsonRedisSerializer
-        // FastJsonRedisSerializer<Object> serializer = new FastJsonRedisSerializer<>(Object.class);
+        // FastJsonRedisSerializer<Serializable> serializer = new FastJsonRedisSerializer<>(Serializable.class);
         // 使用这个序列化，存入的内容是编译后的内容，非明文更安全些
         JdkSerializationRedisSerializer serializer = new JdkSerializationRedisSerializer();
         template.setValueSerializer(serializer);
