@@ -148,14 +148,14 @@ public class OSSUtil {
             log.info("Object：{} 存入OSS成功!", key);
             return key;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("OSSUtil Exception...", e);
         } finally {
             try {
                 if (inputStream != null) {
                     inputStream.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("OSSUtil Exception...", e);
             }
         }
 
@@ -232,7 +232,7 @@ public class OSSUtil {
             respMap.put("expire", String.valueOf(expireEndTime / 1000));
             return respMap;
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("OSSUtil Exception...", e);
         }
 
         return null;

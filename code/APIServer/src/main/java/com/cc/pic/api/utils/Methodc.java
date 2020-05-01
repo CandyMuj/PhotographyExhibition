@@ -175,7 +175,7 @@ public class Methodc {
             outStream.flush();
             return new String(outStream.toByteArray(), encode);
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("Methodc Exception...", e);
         } finally {
             try {
                 if (outStream != null) {
@@ -185,7 +185,7 @@ public class Methodc {
                     in.close();
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                log.error("Methodc Exception...", e);
             }
         }
 

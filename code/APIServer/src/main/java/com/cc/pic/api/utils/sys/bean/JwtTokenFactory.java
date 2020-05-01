@@ -6,6 +6,7 @@ import com.cc.pic.api.enumc.sys.TokenGenerateEnum;
 import com.cc.pic.api.exception.TokenGenerateException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.JwtUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
@@ -23,6 +24,7 @@ import static com.cc.pic.api.config.SecurityConstants.TOKEN_GENERATE_ENUM;
  * @Date 2019/12/30 17:16
  * @Version 1.0
  */
+@Slf4j
 @Component
 public class JwtTokenFactory {
     @Resource
@@ -135,7 +137,7 @@ public class JwtTokenFactory {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("JwtTokenFactory Exception...", e);
         }
 
         return null;

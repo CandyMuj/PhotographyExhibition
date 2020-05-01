@@ -27,8 +27,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AuthException.class)
     public Result authException(AuthException authException) {
-        log.error("auth failed...");
-        authException.printStackTrace();
+        log.error("auth failed...", authException);
         return new Result(NO_AUTH, "Authentication failed");
     }
 
@@ -37,8 +36,7 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(Exception.class)
     public Result exception(Exception exception) {
-        log.error("software running error...");
-        exception.printStackTrace();
+        log.error("software running error...", exception);
 
         String msg = exception.getMessage();
         return StrUtil.isNotBlank(msg) ? Result.Error(msg) : Result.ErrorBusy();

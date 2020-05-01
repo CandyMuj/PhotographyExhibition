@@ -1,5 +1,7 @@
 package com.cc.pic.api.utils;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.security.MessageDigest;
 
 /**
@@ -10,6 +12,7 @@ import java.security.MessageDigest;
  * @Date 2020/4/11 14:14
  * @Version 1.0
  */
+@Slf4j
 public class MD5 {
 
     private static final String[] hexDigits = new String[]{"0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "a", "b", "c", "d", "e", "f"};
@@ -48,7 +51,7 @@ public class MD5 {
             MessageDigest md = MessageDigest.getInstance("MD5");
             resultString = byteArrayToHexString(md.digest(origin.getBytes("utf-8")));
         } catch (Exception var3) {
-            var3.printStackTrace();
+            log.error("MD5 Exception...", var3);
         }
 
         return resultString;
