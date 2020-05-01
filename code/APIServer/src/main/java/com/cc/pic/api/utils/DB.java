@@ -71,4 +71,12 @@ public class DB {
         return result;
     }
 
+    public static Result getPageRes(org.springframework.data.domain.Page page) {
+        Result result = new Result<>(page.getContent());
+        result.curPage = page.getPageable().getPageNumber();
+        result.pageSize = page.getPageable().getPageSize();
+        result.totalCount = page.getTotalElements();
+        return result;
+    }
+
 }

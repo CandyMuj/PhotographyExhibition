@@ -54,6 +54,10 @@ public class Result<T> {
         return new Result(SUCCESS);
     }
 
+    public static <T> Result OK(T data) {
+        return new Result<>(data);
+    }
+
     public static Result OK(String msg) {
         return new Result(SUCCESS, msg);
     }
