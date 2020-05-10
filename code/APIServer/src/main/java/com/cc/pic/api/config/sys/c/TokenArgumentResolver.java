@@ -1,6 +1,7 @@
 package com.cc.pic.api.config.sys.c;
 
 import cn.hutool.core.util.StrUtil;
+import com.cc.pic.api.config.SecurityConstants;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.sys.AuthUtil;
@@ -57,8 +58,16 @@ public class TokenArgumentResolver implements HandlerMethodArgumentResolver {
             NativeWebRequest nativeWebRequest,
             WebDataBinderFactory webDataBinderFactory
     ) {
-        String token = AuthUtil.getToken(nativeWebRequest.getHeader(REQ_HEADER));
+        String authorization = nativeWebRequest.getHeader(REQ_HEADER);
 
+        // 如果是接口鉴权，那么直接返回空，后方就不做解析，否则会报错，因为token是auth的并不是token的
+        if (AuthUtil.realAuthSplit(authorization)) {
+            log.warn("This token is Auth {}", SecurityConstants.AUTH_SPLIT);
+            return null;
+        }
+
+
+        String token = AuthUtil.getToken(authorization);
         if (StrUtil.isBlank(token)) {
             log.warn("resolveArgument error token is empty");
             return null;
