@@ -120,6 +120,18 @@ public class JwtTokenFactory {
         });
     }
 
+    /**
+     * 根据鉴权对象user中的userId清空其token
+     *
+     * @param userId
+     */
+    public void cleanToken(Integer userId) {
+        Set<Object> tokenSet = getTokens(userId);
+        for (Object o : tokenSet) {
+            redisUtil.del(CacheKey.AUTH_TOKEN_USER + o.toString());
+        }
+        redisUtil.del(CacheKey.AUTH_USER_TOKEN + userId);
+    }
 
     /**
      * 从持久化处进行真实性验证
