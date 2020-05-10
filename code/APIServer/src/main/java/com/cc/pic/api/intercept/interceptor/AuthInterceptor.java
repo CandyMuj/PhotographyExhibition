@@ -1,6 +1,5 @@
 package com.cc.pic.api.intercept.interceptor;
 
-import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.annotations.Ann;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import static com.cc.pic.api.config.SecurityConstants.REQ_HEADER;
-import static com.cc.pic.api.config.SecurityConstants.TOKEN_SPLIT;
 
 /**
  * @ProJectName APIServer
@@ -37,8 +35,8 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authorization = request.getHeader(REQ_HEADER);
 
-        // 进行接口鉴权
-        if (StrUtil.isBlank(authorization) || (!authorization.contains(TOKEN_SPLIT) && !AuthUtil.getBasicToken().equals(AuthUtil.getBasicToken(authorization)))) {
+        // 进行接口鉴权 及 格式验证
+        if (!auth(authorization)) {
             log.error("AUTH : interface auth validation failed");
             throw new AuthException("interface auth validation failed");
         }
@@ -70,6 +68,16 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         return true;
+    }
+
+
+    /**
+     * 接口鉴权
+     *
+     * @return true: 成功
+     */
+    private static boolean auth(String authorization) {
+        return (!AuthUtil.realSplit(authorization) && !AuthUtil.realAuthSplit(authorization)) || AuthUtil.getAuthToken().equals(AuthUtil.getAuthToken(authorization));
     }
 
 }
