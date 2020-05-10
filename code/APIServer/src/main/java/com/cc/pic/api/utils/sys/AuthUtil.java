@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import sun.misc.BASE64Encoder;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 
 import static com.cc.pic.api.config.SecurityConstants.*;
 
@@ -44,9 +44,9 @@ public class AuthUtil {
      */
     private static String generateBasic() {
         try {
-            byte[] b = (INTERFACE_AUTH_USERNAME + ":" + INTERFACE_AUTH_PASSWORD).getBytes("utf-8");
+            byte[] b = (INTERFACE_AUTH_USERNAME + ":" + INTERFACE_AUTH_PASSWORD).getBytes(StandardCharsets.UTF_8);
             return new BASE64Encoder().encode(b);
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             log.error("AuthUtil Exception...", e);
         }
 

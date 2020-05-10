@@ -2,6 +2,7 @@ package com.cc.pic.api.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 
 /**
@@ -49,7 +50,7 @@ public class MD5 {
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            resultString = byteArrayToHexString(md.digest(origin.getBytes("utf-8")));
+            resultString = byteArrayToHexString(md.digest(origin.getBytes(StandardCharsets.UTF_8)));
         } catch (Exception var3) {
             log.error("MD5 Exception...", var3);
         }
