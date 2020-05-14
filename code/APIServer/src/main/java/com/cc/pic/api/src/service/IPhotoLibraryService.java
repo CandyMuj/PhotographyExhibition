@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.cc.pic.api.src.pojo.PhotoLibrary;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName IPhotoLibraryService
  * @Description
  * @Author CandyMuj

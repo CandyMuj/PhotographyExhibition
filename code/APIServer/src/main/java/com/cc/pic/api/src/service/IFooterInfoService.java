@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.cc.pic.api.src.pojo.FooterInfo;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName IFooterInfoService
  * @Description
  * @Author CandyMuj

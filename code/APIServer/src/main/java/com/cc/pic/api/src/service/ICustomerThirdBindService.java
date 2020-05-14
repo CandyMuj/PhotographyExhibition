@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.cc.pic.api.src.pojo.CustomerThirdBind;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName ICustomerThirdBindService
  * @Description
  * @Author CandyMuj

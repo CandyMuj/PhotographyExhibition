@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName PageModelController
  * @Description
  * @Author CandyMuj

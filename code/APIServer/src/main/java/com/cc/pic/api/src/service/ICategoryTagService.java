@@ -4,7 +4,7 @@ import com.baomidou.mybatisplus.service.IService;
 import com.cc.pic.api.src.pojo.CategoryTag;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName ICategoryTagService
  * @Description
  * @Author CandyMuj

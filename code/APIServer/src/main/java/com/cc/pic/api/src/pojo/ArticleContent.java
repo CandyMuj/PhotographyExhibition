@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
     import com.baomidou.mybatisplus.enums.IdType;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName ArticleContent
  * @Description
  * @Author CandyMuj

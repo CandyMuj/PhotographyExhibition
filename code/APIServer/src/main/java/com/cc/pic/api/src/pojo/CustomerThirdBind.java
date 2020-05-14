@@ -10,7 +10,7 @@ import com.baomidou.mybatisplus.annotations.TableId;
     import java.util.Date;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName CustomerThirdBind
  * @Description
  * @Author CandyMuj

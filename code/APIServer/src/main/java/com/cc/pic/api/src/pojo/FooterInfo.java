@@ -9,7 +9,7 @@ import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
 
 /**
- * @ProjectName MyTest
+ * @ProjectName PhotographyExhibition
  * @FileName FooterInfo
  * @Description
  * @Author CandyMuj
