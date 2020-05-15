@@ -1,13 +1,13 @@
 package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+import java.util.Date;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -29,9 +29,8 @@ public class Article extends Model<Article> {
     private Integer articleType2;
     private String coverImg;
     private Integer articleType;
-    private Integer userType;
     private Date addTime;
-    private Long userId;
+    private Long customerId;
 
 
     @Override
