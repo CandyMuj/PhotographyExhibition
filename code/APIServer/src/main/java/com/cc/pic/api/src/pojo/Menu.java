@@ -1,12 +1,12 @@
 package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import com.baomidou.mybatisplus.annotations.TableId;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -27,7 +27,7 @@ public class Menu extends Model<Menu> {
     private Integer enabled;
     private String menuUrl;
     private String menuName;
-    private Integer orderIndex;
+    private Long orderIndex;
 
 
     @Override

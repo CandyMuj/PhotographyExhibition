@@ -27,7 +27,7 @@ public class PageModel extends Model<PageModel> {
     private String btnConfig;
     private String extData;
     private String modelName;
-    private Integer orderIndex;
+    private Long orderIndex;
     private String modelDesc;
 
 

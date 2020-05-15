@@ -1,12 +1,12 @@
 package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import com.baomidou.mybatisplus.annotations.TableId;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -30,7 +30,7 @@ public class Dict extends Model<Dict> {
     private String extData;
     private Long dictPid;
     private Integer childrenLimit;
-    private Integer orderIndex;
+    private Long orderIndex;
 
 
     @Override

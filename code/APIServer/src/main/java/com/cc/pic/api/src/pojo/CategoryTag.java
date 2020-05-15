@@ -24,7 +24,7 @@ public class CategoryTag extends Model<CategoryTag> {
     private Long categoryTagId;
     private Long pid;
     private Integer moduleType;
-    private Integer orderIndex;
+    private Long orderIndex;
     private String categoryName;
 
 

@@ -28,7 +28,7 @@ public class Poster extends Model<Poster> {
     private String title;
     private String coverImg;
     private String itemUrl;
-    private Integer orderIndex;
+    private Long orderIndex;
     private Date showTime;
     private Date addTime;
     private Integer itemType;

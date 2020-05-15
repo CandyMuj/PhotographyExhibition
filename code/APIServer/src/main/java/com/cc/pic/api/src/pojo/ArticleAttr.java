@@ -1,12 +1,12 @@
 package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import com.baomidou.mybatisplus.annotations.TableId;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -24,7 +24,7 @@ public class ArticleAttr extends Model<ArticleAttr> {
     private Long articleAttrId;
     private Long itemId;
     private String location;
-    private Integer orderIndex;
+    private Long orderIndex;
     private Integer itemType;
     private Long articleId;
 
