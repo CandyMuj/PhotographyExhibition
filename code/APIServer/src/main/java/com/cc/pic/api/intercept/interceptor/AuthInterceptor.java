@@ -37,8 +37,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 
     // 将接口鉴权uri的鉴权结果做一个缓存，不用每次都去循环配置内的排除鉴权项
-    // {uri:{exclude:auth}}
-    private static final Map<String, Boolean> INTERFACE_AUTH_RES = new HashMap<>();
+    private static final Map<String, Boolean> INTERFACE_EXCLUDE_RES = new HashMap<>();
 
 
     @Override
@@ -118,7 +117,7 @@ public class AuthInterceptor implements HandlerInterceptor {
      * 验证是否在排除列表，若是直接鉴权成功
      */
     private boolean exclude(String uri) {
-        Boolean res = INTERFACE_AUTH_RES.get(uri);
+        Boolean res = INTERFACE_EXCLUDE_RES.get(uri);
 
         if (res == null) {
             res = false;
@@ -138,7 +137,7 @@ public class AuthInterceptor implements HandlerInterceptor {
                 }
             }
 
-            INTERFACE_AUTH_RES.put(uri, res);
+            INTERFACE_EXCLUDE_RES.put(uri, res);
         }
 
         return res;
