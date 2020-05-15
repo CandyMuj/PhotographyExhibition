@@ -8,3 +8,19 @@ global:
   encoding: UTF-8
 
 
+interface:
+  auth:
+    # 接口鉴权 排除列表，支持通配符 *
+    exclude:
+      # 静态资源
+      - /*.html
+      - /*.css
+      - /*.js
+      - /*.png
+      # swagger
+      - /swagger-resources*
+      - /webjars*
+      - /v2/api-docs
+      - /csrf
+      # 其他
+      - /test
