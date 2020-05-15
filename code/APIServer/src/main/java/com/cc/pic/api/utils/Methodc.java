@@ -22,6 +22,20 @@ import java.util.regex.Pattern;
 public class Methodc {
 
     /**
+     * 位运算
+     */
+    public static Integer getRole(Integer a, Integer b) {
+        return a | b;
+    }
+
+    /**
+     * 判断a是否有b的权限
+     */
+    public static boolean hasRole(Integer a, Integer b) {
+        return ((a & b) == b);
+    }
+
+    /**
      * 根据排序字符串，返回排序sql
      *
      * @param orderbyList
