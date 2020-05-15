@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : local-3307
+ Source Server         : local
  Source Server Type    : MySQL
- Source Server Version : 80020
- Source Host           : localhost:3307
+ Source Server Version : 80019
+ Source Host           : 127.0.0.1:3306
  Source Schema         : photography
 
  Target Server Type    : MySQL
- Target Server Version : 80020
+ Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 04/05/2020 18:04:46
+ Date: 15/05/2020 15:49:22
 */
 
 SET NAMES utf8mb4;
@@ -45,7 +45,7 @@ CREATE TABLE `article_attr`  (
   `item_type` int(0) NULL DEFAULT NULL COMMENT '扩展数据类别/如商品-根据业务内容配置枚举 没有就为0',
   `item_id` bigint(0) NULL DEFAULT NULL COMMENT '扩展数据ID/如商品ID 没有就为0',
   `location` varchar(125) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '定位标识，方便前端定位做展示 文章中使用 <loc></loc> 标识',
-  `order_index` int(0) NULL DEFAULT NULL COMMENT '结合location确定位置',
+  `order_index` bigint(0) NULL DEFAULT NULL COMMENT '结合location确定位置',
   PRIMARY KEY (`article_attr_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '文章属性关联表，如果有关联或属性此表才有对应的数据' ROW_FORMAT = Dynamic;
 
@@ -79,7 +79,7 @@ CREATE TABLE `category_tag`  (
   `pid` bigint(0) NULL DEFAULT NULL COMMENT '上级分类',
   `module_type` int(0) NULL DEFAULT NULL COMMENT '分类类型/位置',
   `category_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '名称',
-  `order_index` int(0) NULL DEFAULT NULL COMMENT '排序 - 越大排序越前',
+  `order_index` bigint(0) NULL DEFAULT NULL COMMENT '排序 - 越大排序越前',
   PRIMARY KEY (`category_tag_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '分类和标签' ROW_FORMAT = Dynamic;
 
@@ -125,7 +125,7 @@ CREATE TABLE `customer_user`  (
   `user_real_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户真实姓名 用于图片署名作者',
   `add_time` datetime(0) NULL DEFAULT NULL COMMENT '新增时间',
   PRIMARY KEY (`customer_user_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表-普通用户' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表-普通用户' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for dict
@@ -137,13 +137,13 @@ CREATE TABLE `dict`  (
   `dict_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典名称',
   `dict_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典编码',
   `dict_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '字典类型；即与根节点code保持一致',
-  `order_index` int(0) NULL DEFAULT NULL COMMENT '排序',
+  `order_index` bigint(0) NULL DEFAULT NULL COMMENT '排序-越大越靠前',
   `remark` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '备注',
   `ext_data` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '扩展数据 推荐使用json格式数据',
   `self_limit` int(0) NULL DEFAULT NULL COMMENT '自身限制，一般仅根节点可自选;可读可写，只读，不可新增',
   `children_limit` int(0) NULL DEFAULT NULL COMMENT '子级限制',
   PRIMARY KEY (`dict_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '字典表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for file_list
@@ -182,7 +182,7 @@ CREATE TABLE `menu`  (
   `menu_type` tinyint(0) NOT NULL COMMENT '菜单类型：管理端菜单，首页菜单...',
   `menu_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `menu_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `order_index` int(0) NOT NULL,
+  `order_index` bigint(0) NOT NULL,
   `enabled` int(0) NULL DEFAULT NULL COMMENT '是否可用',
   PRIMARY KEY (`menu_id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
@@ -199,7 +199,7 @@ CREATE TABLE `page_model`  (
   `model_desc` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '描述',
   `btn_config` varchar(500) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '按钮配置 非必须，若为空则没有按钮 （格式：{text:按钮文字,key:关联类型,val:关联值}',
   `ext_data` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '扩展数据，推荐使用json格式；如：about中的图片',
-  `order_index` int(0) NULL DEFAULT NULL COMMENT '排序 越大越靠前',
+  `order_index` bigint(0) NULL DEFAULT NULL COMMENT '排序 越大越靠前',
   PRIMARY KEY (`page_model_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '页面模块配置' ROW_FORMAT = Dynamic;
 
@@ -246,7 +246,7 @@ CREATE TABLE `poster`  (
   `item_id` bigint(0) NULL DEFAULT 0 COMMENT '业务实体ID，如果没有对象，则为0',
   `item_url` varchar(200) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT 'url链接',
   `enabled` tinyint(0) NULL DEFAULT 0 COMMENT '是否启用',
-  `order_index` int(0) NULL DEFAULT NULL COMMENT '排序 越大排序越靠前',
+  `order_index` bigint(0) NULL DEFAULT NULL COMMENT '排序 越大排序越靠前',
   `show_time` datetime(0) NULL DEFAULT NULL COMMENT '显示时间 发布以后在这个时间后才显示',
   `add_time` datetime(0) NULL DEFAULT NULL COMMENT '发布时间',
   PRIMARY KEY (`poster_id`) USING BTREE
