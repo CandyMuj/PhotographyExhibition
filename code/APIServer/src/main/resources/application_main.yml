@@ -1,3 +1,4 @@
 ymllist:
   - application.yml
   - application_cc.yml
+  - application_src.yml
