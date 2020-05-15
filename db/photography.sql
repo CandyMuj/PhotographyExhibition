@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 15/05/2020 15:49:22
+ Date: 15/05/2020 16:23:57
 */
 
 SET NAMES utf8mb4;
@@ -25,10 +25,9 @@ CREATE TABLE `article`  (
   `article_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '文章表',
   `title` varchar(125) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '文章标题',
   `cover_img` varchar(125) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '封面',
-  `article_type` int(0) NULL DEFAULT NULL COMMENT '文章类型 1系统文章 2系统广告文章，系统内部使用，外部不可编辑(和广告表进行关联的，在添加广告时自动添加一篇文章）',
+  `article_type` int(0) NULL DEFAULT NULL COMMENT '文章类型 1系统文章，系统内部使用，外部不可编辑(和广告表进行关联的，在添加广告时自动添加一篇文章）',
   `article_type2` int(0) NULL DEFAULT NULL COMMENT '文章二级类别 dictcode:sysarticle_type 仅系统文章有/ 帮助反馈，关于我们...',
-  `user_type` int(0) NULL DEFAULT NULL COMMENT '发布人用户角色',
-  `user_id` bigint(0) NULL DEFAULT NULL COMMENT '此用户角色对应的用户id',
+  `customer_id` bigint(0) NULL DEFAULT NULL COMMENT '发布人用户id',
   `read_num` int(0) NULL DEFAULT NULL COMMENT '阅读次数',
   `add_time` datetime(0) NULL DEFAULT NULL COMMENT '新增时间',
   `enabled` tinyint(0) NULL DEFAULT 1 COMMENT '是否启用/展示',
