@@ -24,4 +24,16 @@ public enum DictLimitEnum {
     public Integer getType() {
         return type;
     }
+
+    public static DictLimitEnum val(Integer type) {
+        if (type != null) {
+            for (DictLimitEnum e : DictLimitEnum.values()) {
+                if (e.getType().equals(type)) {
+                    return e;
+                }
+            }
+        }
+
+        return null;
+    }
 }

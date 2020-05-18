@@ -2,6 +2,8 @@ package com.cc.pic.api.src.controller;
 
 import com.cc.pic.api.annotations.Ann;
 import com.cc.pic.api.pojo.sys.Result;
+import com.cc.pic.api.src.enumc.DictLimitEnum;
+import com.cc.pic.api.src.pojo.Dict;
 import com.cc.pic.api.src.service.IDictService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -45,8 +47,23 @@ public class DictController {
             @ApiParam(required = true, name = "自身限制 枚举值") @RequestParam Integer selfLimit,
             @ApiParam(required = true, name = "子级限制 枚举值") @RequestParam Integer childrenLimit
     ) {
+        if (DictLimitEnum.val(selfLimit) == null || DictLimitEnum.val(childrenLimit) == null) {
+            return Result.Error("错误的限制级别");
+        }
 
-        return null;
+
+        Dict dict = new Dict();
+        dict.setDictId(dictId);
+        dict.setDictPid((dictPid == null || dictPid < 0) ? 0 : dictPid);
+        dict.setDictName(dictName);
+        dict.setDictCode(dictCode);
+        dict.setOrderIndex(orderIndex);
+        dict.setRemark(remark);
+        dict.setExtData(extData);
+        dict.setSelfLimit(selfLimit);
+        dict.setChildrenLimit(childrenLimit);
+
+        return dictService.addOrUpd(dict);
     }
 
 

@@ -1,6 +1,7 @@
 package com.cc.pic.api.src.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.cc.pic.api.pojo.sys.Result;
 import com.cc.pic.api.src.pojo.Dict;
 
 /**
@@ -13,4 +14,7 @@ import com.cc.pic.api.src.pojo.Dict;
  */
 public interface IDictService extends IService<Dict> {
 
+    Result addOrUpd(Dict dict);
+
+    Dict getParent(Long dictId);
 }
