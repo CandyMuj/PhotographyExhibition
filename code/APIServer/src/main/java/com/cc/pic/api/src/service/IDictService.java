@@ -17,4 +17,8 @@ public interface IDictService extends IService<Dict> {
     Result addOrUpd(Dict dict);
 
     Dict getParent(Long dictId);
+
+    Result all();
+
+    Result del(Long dictId);
 }

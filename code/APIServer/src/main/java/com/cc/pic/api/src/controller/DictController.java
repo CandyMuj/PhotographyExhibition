@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -66,5 +63,19 @@ public class DictController {
         return dictService.addOrUpd(dict);
     }
 
+    @ApiOperation("获取字典列表-获取所有,前端根据缓存再做其他的获取")
+    @GetMapping("/all")
+    public Result all() {
+        return dictService.all();
+    }
+
+    @Ann
+    @ApiOperation("删除字典-若删除的是父节点，那么子节点将同步删除")
+    @PostMapping("/del")
+    public Result del(
+            @ApiParam(required = true, name = "字典id") @RequestParam Long dictId
+    ) {
+        return dictService.del(dictId);
+    }
 
 }
