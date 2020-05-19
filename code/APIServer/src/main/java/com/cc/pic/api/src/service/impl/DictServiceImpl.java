@@ -70,7 +70,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
             }
 
             // 清缓存
-            redisUtil.del(CacheKey.DICT_CACHE);
+            this.delCache();
             return dict.updateById() ? Result.OK() : Result.Error("修改失败");
         }
         // 新增
@@ -88,7 +88,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
             }
 
             // 清缓存
-            redisUtil.del(CacheKey.DICT_CACHE);
+            this.delCache();
             return dict.insert() ? Result.OK() : Result.Error("新增失败");
         }
     }
@@ -119,10 +119,11 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
      */
     @Override
     public Result all() {
-        List<Object> list = redisUtil.lGet(CacheKey.DICT_CACHE);
+        List<Object> list = redisUtil.lGet(CacheKey.DICT_CACHE_ALL);
         if (list == null || list.size() <= 0) {
-            list = Arrays.asList(super.selectList(new EntityWrapper<Dict>().orderBy("order_index", false)).toArray());
-            redisUtil.lSet(CacheKey.DICT_CACHE, list);
+            List<Dict> dictList = super.selectList(new EntityWrapper<Dict>().orderBy("order_index", false));
+            list = Arrays.asList(dictList.toArray());
+            saveCache(dictList);
         }
 
         return new Result<>(list);
@@ -166,11 +167,25 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
 
         if (dict.deleteById() && super.delete(new EntityWrapper<Dict>().eq("dict_pid", dict.getDictId()))) {
             // 清缓存
-            redisUtil.del(CacheKey.DICT_CACHE);
+            this.delCache();
             return Result.OK();
         }
 
         return Result.Error("删除失败");
+    }
+
+    /**
+     * 清除缓存
+     */
+    private void delCache() {
+        redisUtil.del(CacheKey.DICT_CACHE + "*");
+    }
+
+    /**
+     * 保存缓存
+     */
+    private void saveCache(List<Dict> dictList) {
+//        redisUtil.lSet(CacheKey.DICT_CACHE_ALL, dictList.toArray());
     }
 
 }
