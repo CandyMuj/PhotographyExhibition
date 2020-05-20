@@ -1,5 +1,7 @@
 package com.cc.pic.api.src.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.cc.pic.api.pojo.sys.Result;
@@ -14,8 +16,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -119,11 +122,15 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
      */
     @Override
     public Result all() {
-        List<Object> list = redisUtil.lGet(CacheKey.DICT_CACHE_ALL);
+        Object allStr = redisUtil.get(CacheKey.DICT_CACHE_ALL);
+        List<Dict> list = null;
+        if (allStr != null) {
+            list = JSONArray.parseArray(allStr.toString(), Dict.class);
+        }
+
         if (list == null || list.size() <= 0) {
-            List<Dict> dictList = super.selectList(new EntityWrapper<Dict>().orderBy("order_index", false));
-            list = Arrays.asList(dictList.toArray());
-            saveCache(dictList);
+            list = super.selectList(new EntityWrapper<Dict>().orderBy("order_index", false));
+            saveCache(list);
         }
 
         return new Result<>(list);
@@ -185,7 +192,20 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
      * 保存缓存
      */
     private void saveCache(List<Dict> dictList) {
-//        redisUtil.lSet(CacheKey.DICT_CACHE_ALL, dictList.toArray());
+        if (dictList != null && dictList.size() > 0) {
+            // 所有的list
+            redisUtil.set(CacheKey.DICT_CACHE_ALL, JSONObject.toJSONString(dictList));
+
+
+            Map<String, Dict> codeMap = new HashMap<>();
+            Map<String, List<Dict>> typeMap = new HashMap<>();
+            Map<Integer, List<Dict>> pidMap = new HashMap<>();
+            Map<Integer, Dict> idMap = new HashMap<>();
+            for (Dict dict : dictList) {
+
+
+            }
+        }
     }
 
 }
