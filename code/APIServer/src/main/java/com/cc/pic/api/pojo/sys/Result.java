@@ -1,6 +1,8 @@
 package com.cc.pic.api.pojo.sys;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.utils.DB;
+import lombok.extern.slf4j.Slf4j;
 
 import static com.cc.pic.api.config.StatusCode.FAIL;
 import static com.cc.pic.api.config.StatusCode.SUCCESS;
@@ -13,6 +15,7 @@ import static com.cc.pic.api.config.StatusCode.SUCCESS;
  * @Date 2019/12/25 11:49
  * @Version 1.0
  */
+@Slf4j
 public class Result<T> {
     public int code;
     public Integer curPage;
@@ -37,16 +40,28 @@ public class Result<T> {
         this.code = SUCCESS;
         this.data = data;
         this.msg = msg;
+
+        printLog();
     }
 
     public Result(int code, String msg) {
         this.code = code;
         this.msg = msg;
+
+        printLog();
     }
 
     public Result(Throwable e) {
         this.code = FAIL;
         this.msg = e.getMessage();
+
+        printLog();
+    }
+
+    private void printLog() {
+        if (StrUtil.isNotBlank(this.msg)) {
+            log.info("Result Msg ===> {}", this.msg);
+        }
     }
 
 
