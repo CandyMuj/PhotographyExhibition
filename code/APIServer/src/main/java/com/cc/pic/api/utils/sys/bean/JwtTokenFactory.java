@@ -52,6 +52,7 @@ public class JwtTokenFactory {
             String token = JwtUtil.create(user);
             Set<Object> tokenSet = new HashSet<>();
             tokenSet.add(token);
+
             // 删除之前的token
             this.delToRedis(user);
             if (this.saveToRedis(user, token, tokenSet)) {
