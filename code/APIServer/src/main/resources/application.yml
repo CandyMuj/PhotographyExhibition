@@ -61,10 +61,10 @@ mybatis-plus:
     id-type: 0
     # 字段验证策略 0:"忽略判断",1:"非 NULL 判断"),2:"非空判断"
     field-strategy: 1
-    # 驼峰下划线转换
-    #db-column-underline: true
-    # 数据库大写下划线转换
-    #capital-mode: true
+    # 驼峰下划线转换，表名和字段名是否使用下划线命名，默认false
+    db-column-underline: true
+    # 是否开启大写命名，默认不开启（开启后mybatisplus生成的sql中表名和id字段将变为大写）
+    capital-mode: false
     # 刷新mapper 调试神器
     refresh-mapper: true
     # 逻辑已删除值(默认为 1)
@@ -72,7 +72,7 @@ mybatis-plus:
     # 逻辑未删除值(默认为 0)
     logic-not-delete-value: 0
   configuration:
-    # 开启驼峰映射
+    # 是否开启自动驼峰命名规则（camel case）映射，默认true
     #map-underscore-to-camel-case: true
     # 返回map时，true:当查询数据为空时字段返回为null；false:不加这个查询数据为空时，字段将被隐藏
     #call-setters-on-nulls: true
