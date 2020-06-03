@@ -90,7 +90,7 @@ public class JwtTokenFactory {
         return null;
     }
 
-    private Set<Object> getTokens(int userId) {
+    private Set<Object> getTokens(Object userId) {
         Set<Object> tokenSet = new HashSet<>();
         Object setStr = redisUtil.get(CacheKey.AUTH_USER_TOKEN + userId);
         if (setStr != null) {
@@ -119,7 +119,7 @@ public class JwtTokenFactory {
      *
      * @param userId
      */
-    public void delToRedis(Integer userId) {
+    public void delToRedis(Object userId) {
         Set<Object> tokenSet = this.getTokens(userId);
         for (Object o : tokenSet) {
             this.delToRedis(o.toString());
