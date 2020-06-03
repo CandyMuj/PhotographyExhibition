@@ -1,6 +1,8 @@
 package com.cc.pic.api.utils.sys.bean;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.cc.pic.api.config.CacheKey;
 import com.cc.pic.api.enumc.sys.TokenGenerateEnum;
 import com.cc.pic.api.exception.TokenGenerateException;
@@ -36,12 +38,12 @@ public class JwtTokenFactory {
         if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.ONLY_ALIVE)) {
             String token = JwtUtil.create(user);
 
-            Set<Object> tokenSet = getTokens(user.getUserId());
+            Set<Object> tokenSet = this.getTokens(user.getUserId());
             // 剔除过期校验失败的token；实际就无效的token
-            delInvalidFailed(tokenSet);
+            this.delInvalidFailed(tokenSet);
             tokenSet.add(token);
 
-            if (saveToRedis(user, token, tokenSet)) {
+            if (this.saveToRedis(user, token, tokenSet)) {
                 return token;
             }
         }
@@ -50,16 +52,17 @@ public class JwtTokenFactory {
             String token = JwtUtil.create(user);
             Set<Object> tokenSet = new HashSet<>();
             tokenSet.add(token);
-
-            if (saveToRedis(user, token, tokenSet)) {
+            // 删除之前的token
+            this.delToRedis(user);
+            if (this.saveToRedis(user, token, tokenSet)) {
                 return token;
             }
         }
         // 如果含有未过期的token那么就用它，否则就生成新的（即此用户永远只有一个唯一的token 如果旧的token没过期那么每次获取的token都是相同的,有且仅有一个有效token）
         else if (TOKEN_GENERATE_ENUM.equals(TokenGenerateEnum.OLD)) {
-            Set<Object> tokenSet = getTokens(user.getUserId());
+            Set<Object> tokenSet = this.getTokens(user.getUserId());
             // 剔除过期校验失败的token；实际就无效的token
-            delInvalidFailed(tokenSet);
+            this.delInvalidFailed(tokenSet);
 
             if (tokenSet.size() > 0) {
                 if (tokenSet.size() == 1) {
@@ -76,7 +79,7 @@ public class JwtTokenFactory {
                 String token = JwtUtil.create(user);
                 tokenSet.add(token);
 
-                if (saveToRedis(user, token, tokenSet)) {
+                if (this.saveToRedis(user, token, tokenSet)) {
                     return token;
                 }
             }
@@ -88,9 +91,10 @@ public class JwtTokenFactory {
     }
 
     private Set<Object> getTokens(int userId) {
-        Set<Object> tokenSet = redisUtil.sGet(CacheKey.AUTH_USER_TOKEN + userId);
-        if (tokenSet == null) {
-            tokenSet = new HashSet<>();
+        Set<Object> tokenSet = new HashSet<>();
+        Object setStr = redisUtil.get(CacheKey.AUTH_USER_TOKEN + userId);
+        if (setStr != null) {
+            tokenSet.addAll(JSONArray.parseArray(setStr.toString()));
         }
 
         return tokenSet;
@@ -98,7 +102,38 @@ public class JwtTokenFactory {
 
     private boolean saveToRedis(User user, String token, Set<Object> tokenSet) {
         return redisUtil.set(CacheKey.AUTH_TOKEN_USER + token, user, EXPIRATION * 86400) &&
-                redisUtil.sSet(CacheKey.AUTH_USER_TOKEN + user.getUserId(), tokenSet.toArray()) >= 0;
+                redisUtil.set(CacheKey.AUTH_USER_TOKEN + user.getUserId(), JSONObject.toJSONString(tokenSet));
+    }
+
+    /**
+     * 删除指定token
+     *
+     * @param token
+     */
+    private void delToRedis(String token) {
+        redisUtil.del(CacheKey.AUTH_TOKEN_USER + token);
+    }
+
+    /**
+     * 根据鉴权对象user中的userId清空其token
+     *
+     * @param userId
+     */
+    public void delToRedis(Integer userId) {
+        Set<Object> tokenSet = this.getTokens(userId);
+        for (Object o : tokenSet) {
+            this.delToRedis(o.toString());
+        }
+        redisUtil.del(CacheKey.AUTH_USER_TOKEN + userId);
+    }
+
+    /**
+     * 根据鉴权user对象清除token，实质也是通过userId
+     *
+     * @param user
+     */
+    public void delToRedis(User user) {
+        this.delToRedis(user.getUserId());
     }
 
     /**
@@ -116,21 +151,10 @@ public class JwtTokenFactory {
                 JwtUtil.parse(token);
             } catch (Exception e) {
                 tokenSet.remove(obj);
+                // 同时删除redis中的token
+                this.delToRedis(token);
             }
         });
-    }
-
-    /**
-     * 根据鉴权对象user中的userId清空其token
-     *
-     * @param userId
-     */
-    public void cleanToken(Integer userId) {
-        Set<Object> tokenSet = getTokens(userId);
-        for (Object o : tokenSet) {
-            redisUtil.del(CacheKey.AUTH_TOKEN_USER + o.toString());
-        }
-        redisUtil.del(CacheKey.AUTH_USER_TOKEN + userId);
     }
 
     /**
@@ -142,7 +166,7 @@ public class JwtTokenFactory {
      */
     public User validateToken(String token) {
         try {
-            if (StrUtil.isNotBlank(token) && hasToken(token)) {
+            if (StrUtil.isNotBlank(token) && this.hasToken(token)) {
                 User user = JwtUtil.parse(token);
                 if (user != null && user.getUserId() > 0) {
                     return user;
