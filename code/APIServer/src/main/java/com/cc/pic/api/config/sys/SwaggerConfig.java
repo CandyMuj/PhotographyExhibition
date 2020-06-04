@@ -1,5 +1,6 @@
 package com.cc.pic.api.config.sys;
 
+import com.cc.pic.api.config.SecurityConstants;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,7 +35,7 @@ public class SwaggerConfig {
     public Docket createRestApi() {
         ParameterBuilder tokenBuilder = new ParameterBuilder();
         List<Parameter> parameterList = new ArrayList<>();
-        tokenBuilder.name("Authorization")
+        tokenBuilder.name(SecurityConstants.REQ_HEADER)
                 .defaultValue("去其他请求中获取heard中token参数")
                 .description("令牌")
                 .modelRef(new ModelRef("string"))
