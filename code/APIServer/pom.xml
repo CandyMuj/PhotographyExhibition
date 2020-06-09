@@ -113,12 +113,12 @@
             <version>${fastjson.version}</version>
         </dependency>
         <!-- JSON Library -->
-        <dependency>
+        <!--<dependency>
             <groupId>net.sf.json-lib</groupId>
             <artifactId>json-lib</artifactId>
             <version>${json-lib.version}</version>
             <classifier>jdk15</classifier>
-        </dependency>
+        </dependency>-->
         <!-- Google.gson -->
         <dependency>
             <groupId>com.google.code.gson</groupId>
