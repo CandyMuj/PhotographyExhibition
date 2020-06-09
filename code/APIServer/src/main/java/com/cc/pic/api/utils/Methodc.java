@@ -15,6 +15,8 @@ import java.time.ZoneOffset;
 import java.util.*;
 import java.util.regex.Pattern;
 
+import static com.cc.pic.api.config.Configc.DEFAULT_DATEFORMAT;
+
 /**
  * @ProJectName server
  * @FileName Methodc
@@ -64,12 +66,11 @@ public class Methodc {
             if (offset == null) {
                 return null;
             }
-            String pattern = "yyyy-MM-dd HH:mm:ss";
-            SimpleDateFormat zoneFormat = new SimpleDateFormat(pattern);
+            SimpleDateFormat zoneFormat = new SimpleDateFormat(DEFAULT_DATEFORMAT);
             zoneFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.ofOffset("GMT", ZoneOffset.ofHours(-offset))));
             String localDateStr = zoneFormat.format(date);
 
-            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            SimpleDateFormat format = new SimpleDateFormat(DEFAULT_DATEFORMAT);
             return format.parse(localDateStr);
         } catch (Exception e) {
             log.error("日期时区转换异常-->", e);
