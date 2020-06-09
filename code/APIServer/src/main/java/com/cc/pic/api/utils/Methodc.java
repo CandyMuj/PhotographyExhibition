@@ -3,10 +3,15 @@ package com.cc.pic.api.utils;
 import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.config.Configc;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -20,6 +25,89 @@ import java.util.regex.Pattern;
  */
 @Slf4j
 public class Methodc {
+
+    /**
+     * 当地时间小时转UTC小时
+     *
+     * @param hour
+     * @return
+     */
+    public static Integer offsetHouser(Integer hour) {
+        try {
+            Integer offset = getTimeZoneOffset();
+            if (offset == null) {
+                return null;
+            }
+
+            int time = hour + offset;
+            if (time > 24) {
+                time = time - 24;
+            } else if (time < 0) {
+                time = time + 24;
+            }
+
+            return time;
+        } catch (Exception e) {
+            log.error("小时日期时区转换异常-->", e);
+            return null;
+        }
+    }
+
+    /**
+     * 标准时间UTC转当地时间
+     *
+     * @param date
+     * @return
+     */
+    public static Date parseDateByZone(Date date, Integer offset) {
+        try {
+            if (offset == null) {
+                return null;
+            }
+            String pattern = "yyyy-MM-dd HH:mm:ss";
+            SimpleDateFormat zoneFormat = new SimpleDateFormat(pattern);
+            zoneFormat.setTimeZone(TimeZone.getTimeZone(ZoneId.ofOffset("GMT", ZoneOffset.ofHours(-offset))));
+            String localDateStr = zoneFormat.format(date);
+
+            SimpleDateFormat format = new SimpleDateFormat(pattern);
+            return format.parse(localDateStr);
+        } catch (Exception e) {
+            log.error("日期时区转换异常-->", e);
+            return null;
+        }
+    }
+
+    public static Date parseDateByZone(Date date) {
+        return parseDateByZone(date, getTimeZoneOffset());
+    }
+
+    public static Integer getTimeZoneOffset() {
+        try {
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attributes == null) {
+                log.error("attributes为空");
+                return null;
+            }
+            String timeZoneStr = attributes.getRequest().getHeader("ATime-Zone");
+
+//            Enumeration<String> s = attributes.getRequest().getHeaderNames();
+//            while (s.hasMoreElements()) {
+//                log.info("header --- > {}", s.nextElement());
+//            }
+
+            log.info("时区---> {}", timeZoneStr);
+
+            if (StrUtil.isBlank(timeZoneStr)) {
+                log.error("时区为空");
+                return null;
+            }
+
+            return Integer.parseInt(timeZoneStr);
+        } catch (Exception e) {
+            log.error("时区获取出错", e);
+            return null;
+        }
+    }
 
     /**
      * 位运算
