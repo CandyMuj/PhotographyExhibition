@@ -49,7 +49,7 @@ public class JSONUtil {
     }
 
     public static JSONObject parseObjectWithDateFormat(Object object) {
-        return parseObject(object, true, null);
+        return parseObjectWithDateFormat(object, null);
     }
 
 
@@ -62,7 +62,7 @@ public class JSONUtil {
     }
 
     public static JSONArray parseArrayWithDateFormat(Object object) {
-        return parseArray(object, true, null);
+        return parseArrayWithDateFormat(object, null);
     }
 
 }
