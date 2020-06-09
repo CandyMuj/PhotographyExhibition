@@ -32,7 +32,7 @@ public class ResponseDataHandler implements ResponseBodyAdvice {
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
         if (o != null) {
             log.info("handle responseData...");
-            return JSONObject.parseObject(JSONObject.toJSONStringWithDateFormat(o, Configc.RESPONSE_DATEFORMAT));
+            return JSONObject.parseObject(JSONObject.toJSONStringWithDateFormat(o, Configc.DEFAULT_DATEFORMAT));
         }
 
         return null;
