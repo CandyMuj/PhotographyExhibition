@@ -28,8 +28,8 @@ public class GlobalExceptionHandler {
      * 认证异常处理
      */
     @ExceptionHandler(AuthException.class)
-    public Result authException(AuthException authException) {
-        log.error("auth failed...", authException);
+    public Result authException(AuthException e) {
+        log.error("auth failed...", e);
         return new Result(NO_AUTH, "Authentication failed");
     }
 
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
      * 接口参数校验异常处理
      */
     @ExceptionHandler(ValidationException.class)
-    public Result handleValidationException(ValidationException e) {
+    public Result validationException(ValidationException e) {
         String split = ": ";
         String msg = e.getMessage();
         if (StrUtil.isNotBlank(msg)) {
@@ -64,10 +64,10 @@ public class GlobalExceptionHandler {
      * 其他所有的异常处理
      */
     @ExceptionHandler(Exception.class)
-    public Result exception(Exception exception) {
-        log.error("software running error...", exception);
+    public Result exception(Exception e) {
+        log.error("software running error...", e);
 
-        String msg = exception.getMessage();
+        String msg = e.getMessage();
         return StrUtil.isNotBlank(msg) ? Result.Error(msg) : Result.ErrorBusy();
     }
 
