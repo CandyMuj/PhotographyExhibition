@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ValidationException;
+
 import static com.cc.pic.api.config.StatusCode.NO_AUTH;
 
 
@@ -29,6 +31,33 @@ public class GlobalExceptionHandler {
     public Result authException(AuthException authException) {
         log.error("auth failed...", authException);
         return new Result(NO_AUTH, "Authentication failed");
+    }
+
+    /**
+     * 接口参数校验异常处理
+     */
+    @ExceptionHandler(ValidationException.class)
+    public Result handleValidationException(ValidationException e) {
+        String split = ": ";
+        String msg = e.getMessage();
+        if (StrUtil.isNotBlank(msg)) {
+            String[] s = msg.split(split);
+            StringBuilder msgstr = new StringBuilder();
+            if (s.length > 1) {
+                for (int i = 1; i < s.length; i++) {
+                    msgstr.append(s[i]);
+                    if (i < s.length - 1) {
+                        msgstr.append(split);
+                    }
+                }
+
+                msg = msgstr.toString();
+            }
+        } else {
+            msg = "null";
+        }
+
+        return Result.Error(msg);
     }
 
     /**
