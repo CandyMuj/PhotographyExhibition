@@ -1,5 +1,6 @@
 package com.cc.pic.api.config.sys;
 
+import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
@@ -8,6 +9,10 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import redis.clients.jedis.JedisPool;
+import redis.clients.jedis.JedisPoolConfig;
+
+import javax.annotation.Resource;
 
 /**
  * @ProjectName api
@@ -20,6 +25,9 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 @Configuration
 @EnableCaching
 public class RedisCacheConfig extends CachingConfigurerSupport {
+    @Resource
+    private RedisProperties redisProperties;
+
 
     /**
      * 如果不设置序列化，那么存入的数据就是编码后的数据，不方便人为查看和维护
@@ -42,6 +50,18 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
 
         template.setConnectionFactory(factory);
         return template;
+    }
+
+    @Bean
+    public JedisPool jedisPool() {
+        JedisPoolConfig jedisPoolConfig = new JedisPoolConfig();
+        RedisProperties.Pool pool = redisProperties.getJedis().getPool();
+        jedisPoolConfig.setMaxTotal(pool.getMaxActive());
+        jedisPoolConfig.setMaxIdle(pool.getMaxIdle());
+        jedisPoolConfig.setMinIdle(pool.getMinIdle());
+        jedisPoolConfig.setMaxWaitMillis(pool.getMaxWait().toMillis());
+
+        return new JedisPool(jedisPoolConfig, redisProperties.getHost(), redisProperties.getPort(), redisProperties.getTimeout().getNano(), redisProperties.getPassword(), redisProperties.getDatabase());
     }
 
 }
