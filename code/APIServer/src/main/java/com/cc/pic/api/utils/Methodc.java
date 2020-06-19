@@ -29,6 +29,36 @@ import static com.cc.pic.api.config.Configc.DEFAULT_DATEFORMAT;
 public class Methodc {
 
     /**
+     * 根据请求获取请求头信息
+     *
+     * @param s
+     */
+    public static String getReqHeader(String s) {
+        try {
+            if (StrUtil.isBlank(s)) {
+                log.error("header key 为空");
+                return null;
+            }
+
+            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+            if (attributes == null) {
+                log.error("attributes为空");
+                return null;
+            }
+
+//            Enumeration<String> s = attributes.getRequest().getHeaderNames();
+//            while (s.hasMoreElements()) {
+//                log.info("header --- > {}", s.nextElement());
+//            }
+
+            return attributes.getRequest().getHeader(s);
+        } catch (Exception e) {
+            log.error("解析请求头出现异常", e);
+            return null;
+        }
+    }
+
+    /**
      * 当地时间小时转UTC小时
      *
      * @param hour
@@ -84,18 +114,7 @@ public class Methodc {
 
     public static Integer getTimeZoneOffset() {
         try {
-            ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-            if (attributes == null) {
-                log.error("attributes为空");
-                return null;
-            }
-            String timeZoneStr = attributes.getRequest().getHeader("ATime-Zone");
-
-//            Enumeration<String> s = attributes.getRequest().getHeaderNames();
-//            while (s.hasMoreElements()) {
-//                log.info("header --- > {}", s.nextElement());
-//            }
-
+            String timeZoneStr = getReqHeader("ATime-Zone");
             log.info("时区---> {}", timeZoneStr);
 
             if (StrUtil.isBlank(timeZoneStr)) {
