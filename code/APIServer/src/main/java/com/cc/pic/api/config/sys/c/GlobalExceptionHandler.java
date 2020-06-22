@@ -4,6 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -31,6 +33,15 @@ public class GlobalExceptionHandler {
     public Result authException(AuthException e) {
         log.error("auth failed...", e);
         return new Result(NO_AUTH, "Authentication failed");
+    }
+
+    /**
+     * 方法参数校验 绑定参数校验
+     */
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public Result validationException(MethodArgumentNotValidException e) {
+        FieldError error = e.getBindingResult().getFieldError();
+        return Result.Error(error != null ? error.getDefaultMessage() : "null");
     }
 
     /**
