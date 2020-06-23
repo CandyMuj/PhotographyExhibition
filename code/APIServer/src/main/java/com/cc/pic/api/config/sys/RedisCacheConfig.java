@@ -1,5 +1,6 @@
 package com.cc.pic.api.config.sys;
 
+import cn.hutool.core.util.StrUtil;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.cache.annotation.CachingConfigurerSupport;
 import org.springframework.cache.annotation.EnableCaching;
@@ -61,7 +62,7 @@ public class RedisCacheConfig extends CachingConfigurerSupport {
         jedisPoolConfig.setMinIdle(pool.getMinIdle());
         jedisPoolConfig.setMaxWaitMillis(pool.getMaxWait().toMillis());
 
-        return new JedisPool(jedisPoolConfig, redisProperties.getHost(), redisProperties.getPort(), redisProperties.getTimeout().getNano(), redisProperties.getPassword(), redisProperties.getDatabase());
+        return new JedisPool(jedisPoolConfig, redisProperties.getHost(), redisProperties.getPort(), redisProperties.getTimeout().getNano(), (StrUtil.isNotBlank(redisProperties.getPassword()) ? redisProperties.getPassword() : null), redisProperties.getDatabase());
     }
 
 }
