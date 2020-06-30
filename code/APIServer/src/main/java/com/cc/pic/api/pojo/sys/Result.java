@@ -70,39 +70,39 @@ public class Result<T> {
     }
 
 
-    public static Result OK() {
-        return new Result(SUCCESS);
+    public static <T> Result<T> OK() {
+        return new Result<>(SUCCESS);
     }
 
     public static <T> Result<T> OK(T data) {
         return new Result<>(data);
     }
 
-    public static Result OK(String msg) {
-        return new Result(SUCCESS, msg);
+    public static <T> Result<T> OK(String msg) {
+        return new Result<>(SUCCESS, msg);
     }
 
-    public static Result Error() {
+    public static <T> Result<T> Error() {
         return Error("系统错误");
     }
 
-    public static Result ErrorBusy() {
+    public static <T> Result<T> ErrorBusy() {
         return Error("服务器忙，请稍后再试...");
     }
 
-    public static Result Error(String msg) {
-        return Error((Object) null, msg);
+    public static <T> Result<T> Error(String msg) {
+        return Error((T) null, msg);
     }
 
-    public static <T> Result Error(T data, String msg) {
+    public static <T> Result<T> Error(T data, String msg) {
         return Error(data, null, msg);
     }
 
-    public static Result Error(String errcode, String msg) {
+    public static <T> Result<T> Error(String errcode, String msg) {
         return Error(null, errcode, msg);
     }
 
-    public static <T> Result Error(T data, String errcode, String msg) {
+    public static <T> Result<T> Error(T data, String errcode, String msg) {
         DB.setRollbackOnly();
         // 另一种spring提供的抛出异常的方法，用来更方便的抛出异常，使事务可以捕获，执行回滚
         // 但是在我这个框架里面不能用这种方式，此框架无法做到统一处理，因为在aop中也进行了error的返回那么就是死循环了（不停地进这个方法，不停地向上抛异常）
