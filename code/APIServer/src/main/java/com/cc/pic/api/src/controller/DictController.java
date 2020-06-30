@@ -34,15 +34,15 @@ public class DictController {
     @ApiOperation("添加或修改字典")
     @PostMapping("/addOrUpd")
     public Result addOrUpd(
-            @ApiParam(required = false, name = "字典id 如果有值则表示修改") @RequestParam(required = false) Long dictId,
-            @ApiParam(required = true, name = "字典父级Id 无父级则为0") @RequestParam Long dictPid,
-            @ApiParam(required = true, name = "字典名称") @RequestParam String dictName,
-            @ApiParam(required = true, name = "字典编码") @RequestParam String dictCode,
-            @ApiParam(required = true, name = "排序 越大越靠前 默认0") @RequestParam(defaultValue = "0") Long orderIndex,
-            @ApiParam(required = false, name = "备注") @RequestParam(required = false) String remark,
-            @ApiParam(required = false, name = "扩展数据") @RequestParam(required = false) String extData,
-            @ApiParam(required = true, name = "自身限制 枚举值") @RequestParam Integer selfLimit,
-            @ApiParam(required = true, name = "子级限制 枚举值") @RequestParam Integer childrenLimit
+            @ApiParam(required = false, value = "字典id 如果有值则表示修改") @RequestParam(required = false) Long dictId,
+            @ApiParam(required = true, value = "字典父级Id 无父级则为0") @RequestParam Long dictPid,
+            @ApiParam(required = true, value = "字典名称") @RequestParam String dictName,
+            @ApiParam(required = true, value = "字典编码") @RequestParam String dictCode,
+            @ApiParam(required = true, value = "排序 越大越靠前 默认0") @RequestParam(defaultValue = "0") Long orderIndex,
+            @ApiParam(required = false, value = "备注") @RequestParam(required = false) String remark,
+            @ApiParam(required = false, value = "扩展数据") @RequestParam(required = false) String extData,
+            @ApiParam(required = true, value = "自身限制 枚举值") @RequestParam Integer selfLimit,
+            @ApiParam(required = true, value = "子级限制 枚举值") @RequestParam Integer childrenLimit
     ) {
         if (DictLimitEnum.val(selfLimit) == null || DictLimitEnum.val(childrenLimit) == null) {
             return Result.Error("错误的限制级别");
@@ -73,7 +73,7 @@ public class DictController {
     @ApiOperation("删除字典-若删除的是父节点，那么子节点将同步删除")
     @PostMapping("/del")
     public Result del(
-            @ApiParam(required = true, name = "字典id") @RequestParam Long dictId
+            @ApiParam(required = true, value = "字典id") @RequestParam Long dictId
     ) {
         return dictService.del(dictId);
     }

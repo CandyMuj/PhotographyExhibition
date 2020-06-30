@@ -37,14 +37,14 @@ public class ArticleController {
     @ApiOperation("添加或修改文章")
     @PostMapping("/addOrUpd")
     public Result addOrUpd(
-            @ApiParam(required = false, name = "文章id 如果有值则表示更新") @RequestParam(required = false) Long articleId,
-            @ApiParam(required = true, name = "文章标题") @RequestParam String title,
-            @ApiParam(required = false, name = "封面") @RequestParam(required = false) String coverImg,
-            @ApiParam(required = true, name = "文章类型", example = "1系统文章... 枚举值") @RequestParam Integer articleType,
-            @ApiParam(required = true, name = "文章二级分类 仅系统文章有效必填 取字典表 其他传0") @RequestParam Integer articleType2,
-            @ApiParam(required = true, name = "是否展示 默认不展示", example = "1展示 0不展示") @RequestParam(defaultValue = "0") Integer enabled,
-            @ApiParam(required = false, name = "文章内关联实体", example = "{\"attrId\":1,\"itemType\":1,\"itemId\":1,\"location\":\"loc1\",\"orderIndex\":0}") @RequestParam(required = false) String attr,
-            @ApiParam(required = true, name = "文章内容") @RequestParam String content,
+            @ApiParam(required = false, value = "文章id 如果有值则表示更新") @RequestParam(required = false) Long articleId,
+            @ApiParam(required = true, value = "文章标题") @RequestParam String title,
+            @ApiParam(required = false, value = "封面") @RequestParam(required = false) String coverImg,
+            @ApiParam(required = true, value = "文章类型", example = "1系统文章... 枚举值") @RequestParam Integer articleType,
+            @ApiParam(required = true, value = "文章二级分类 仅系统文章有效必填 取字典表 其他传0") @RequestParam Integer articleType2,
+            @ApiParam(required = true, value = "是否展示 默认不展示", example = "1展示 0不展示") @RequestParam(defaultValue = "0") Integer enabled,
+            @ApiParam(required = false, value = "文章内关联实体", example = "{\"attrId\":1,\"itemType\":1,\"itemId\":1,\"location\":\"loc1\",\"orderIndex\":0}") @RequestParam(required = false) String attr,
+            @ApiParam(required = true, value = "文章内容") @RequestParam String content,
             @ApiIgnore User user
     ) {
 

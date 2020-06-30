@@ -26,8 +26,8 @@ public class TestController {
     @ApiOperation("测试专用接口")
     @RequestMapping("/test")
     public String test(
-            @ApiParam(required = true, name = "参数1") @RequestParam(defaultValue = "默认值") String par1,
-            @ApiParam(required = false, name = "参数2") String par2,
+            @ApiParam(required = true, value = "参数1") @RequestParam(defaultValue = "默认值") String par1,
+            @ApiParam(required = false, value = "参数2") String par2,
             @ApiIgnore User user
     ) {
         return "Hello World！";
@@ -37,8 +37,8 @@ public class TestController {
     @ApiOperation("测试专用接口1")
     @RequestMapping("/test1")
     public Result test1(
-            @ApiParam(required = true, name = "参数1") @RequestParam(defaultValue = "默认值") String par1,
-            @ApiParam(required = false, name = "参数2") String par2,
+            @ApiParam(required = true, value = "参数1") @RequestParam(defaultValue = "默认值") String par1,
+            @ApiParam(required = false, value = "参数2") String par2,
             @ApiIgnore User user
     ) {
         return Result.OK();
