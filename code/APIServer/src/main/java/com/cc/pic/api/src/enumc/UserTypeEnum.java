@@ -17,6 +17,7 @@ public enum UserTypeEnum {
 
     // 用作接口描述接口所在端
     public static final String ADMIN_CLIENT_STR = "管理端-";
+    public static final String PC_CLIENT_STR = "前端-";
 
 
     private Integer type;
