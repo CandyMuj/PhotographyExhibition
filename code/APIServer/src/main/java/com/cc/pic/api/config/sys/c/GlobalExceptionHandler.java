@@ -44,6 +44,7 @@ public class GlobalExceptionHandler {
         return new Result<>(e.getCode(), e.getData(), e.getErrcode(), e.getMsg());
     }
 
+
     /**
      * 方法参数校验 绑定参数校验
      */
@@ -79,6 +80,7 @@ public class GlobalExceptionHandler {
 
         return Result.Error(msg);
     }
+
 
     /**
      * 其他所有的异常处理
