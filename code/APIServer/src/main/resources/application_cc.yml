@@ -22,5 +22,7 @@ interface:
       - /webjars*
       - /v2/api-docs
       - /csrf
+      - /favicon.ico
+      - /error
       # 其他
       - /test
