@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.CategoryRelationMapper">
+    <resultMap id="CategoryRelation" type="CategoryRelation">
+        <id property="beanType" column="bean_type"/>
+        <result property="categoryId" column="category_id"/>
+        <result property="beanId" column="bean_id"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

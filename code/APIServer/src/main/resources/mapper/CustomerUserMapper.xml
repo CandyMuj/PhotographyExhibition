@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.CustomerUserMapper">
+    <resultMap id="CustomerUser" type="CustomerUser">
+        <id property="customerUserId" column="customer_user_id"/>
+        <result property="userNickName" column="user_nick_name"/>
+        <result property="userRealName" column="user_real_name"/>
+        <result property="addTime" column="add_time"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

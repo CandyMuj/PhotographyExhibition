@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.SysConfigMapper">
+    <resultMap id="SysConfig" type="SysConfig">
+        <id property="sysId" column="sys_id"/>
+        <result property="sysKey" column="sys_key"/>
+        <result property="sysValue" column="sys_value"/>
+        <result property="sysDesc" column="sys_desc"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

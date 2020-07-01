@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.FileListMapper">
+    <resultMap id="FileList" type="FileList">
+        <id property="fileListId" column="file_list_id"/>
+        <result property="itemType" column="item_type"/>
+        <result property="itemId" column="item_id"/>
+        <result property="savedUri" column="saved_uri"/>
+        <result property="addTime" column="add_time"/>
+        <result property="deleted" column="deleted"/>
+        <result property="deletedTime" column="deleted_time"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

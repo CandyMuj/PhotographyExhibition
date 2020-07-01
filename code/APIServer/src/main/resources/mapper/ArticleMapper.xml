@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.ArticleMapper">
+    <resultMap id="Article" type="Article">
+        <id property="articleId" column="article_id"/>
+        <result property="title" column="title"/>
+        <result property="coverImg" column="cover_img"/>
+        <result property="articleType" column="article_type"/>
+        <result property="articleType2" column="article_type2"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="readNum" column="read_num"/>
+        <result property="addTime" column="add_time"/>
+        <result property="enabled" column="enabled"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

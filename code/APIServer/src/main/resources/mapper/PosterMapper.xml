@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.PosterMapper">
+    <resultMap id="Poster" type="Poster">
+        <id property="posterId" column="poster_id"/>
+        <result property="postion" column="postion"/>
+        <result property="title" column="title"/>
+        <result property="coverImg" column="cover_img"/>
+        <result property="itemType" column="item_type"/>
+        <result property="itemId" column="item_id"/>
+        <result property="itemUrl" column="item_url"/>
+        <result property="enabled" column="enabled"/>
+        <result property="orderIndex" column="order_index"/>
+        <result property="showTime" column="show_time"/>
+        <result property="addTime" column="add_time"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

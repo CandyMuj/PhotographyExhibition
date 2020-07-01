@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.FooterInfoMapper">
+    <resultMap id="FooterInfo" type="FooterInfo">
+        <id property="footerInfoId" column="footer_info_id"/>
+        <result property="pageModelId" column="page_model_id"/>
+        <result property="footerData" column="footer_data"/>
+        <result property="enabled" column="enabled"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

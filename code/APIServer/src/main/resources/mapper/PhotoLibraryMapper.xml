@@ -1,5 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.PhotoLibraryMapper">
+    <resultMap id="PhotoLibrary" type="PhotoLibrary">
+        <id property="photoLibraryId" column="photo_library_id"/>
+        <result property="photoAlbumId" column="photo_album_id"/>
+        <result property="customerUserId" column="customer_user_id"/>
+        <result property="picName" column="pic_name"/>
+        <result property="picDesc" column="pic_desc"/>
+        <result property="picUri" column="pic_uri"/>
+        <result property="addTime" column="add_time"/>
+        <result property="deleted" column="deleted"/>
+        <result property="deletedTime" column="deleted_time"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cc.pic.api.src.mapper.DictMapper">
+    <resultMap id="Dict" type="Dict">
+        <id property="dictId" column="dict_id"/>
+        <result property="dictPid" column="dict_pid"/>
+        <result property="dictName" column="dict_name"/>
+        <result property="dictCode" column="dict_code"/>
+        <result property="dictType" column="dict_type"/>
+        <result property="orderIndex" column="order_index"/>
+        <result property="remark" column="remark"/>
+        <result property="extData" column="ext_data"/>
+        <result property="selfLimit" column="self_limit"/>
+        <result property="childrenLimit" column="children_limit"/>
+        <!-- 自定义 -->
+
+    </resultMap>
 
 </mapper>
