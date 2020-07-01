@@ -2,6 +2,7 @@ package com.cc.pic.api.config.sys.c;
 
 import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.exception.AuthException;
+import com.cc.pic.api.exception.ResultException;
 import com.cc.pic.api.pojo.sys.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.FieldError;
@@ -33,6 +34,14 @@ public class GlobalExceptionHandler {
     public Result authException(AuthException e) {
         log.error("auth failed...", e);
         return new Result(NO_AUTH, "Authentication failed");
+    }
+
+    /**
+     * 业务异常处理
+     */
+    @ExceptionHandler(ResultException.class)
+    public Result<Object> resultException(ResultException e) {
+        return new Result<>(e.getCode(), e.getData(), e.getErrcode(), e.getMsg());
     }
 
     /**
