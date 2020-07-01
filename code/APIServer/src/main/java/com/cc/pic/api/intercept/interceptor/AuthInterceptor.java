@@ -44,13 +44,6 @@ public class AuthInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String authorization = request.getHeader(REQ_HEADER);
 
-        // 进行接口鉴权 及 格式验证
-        // 接口鉴权和方法内的鉴权不冲突，即使接口鉴权通过了，如果是一个方法，还是得看这个方法的认证是否通过才能最终确定是否有权访问
-        if (!auth(request.getRequestURI(), authorization)) {
-            log.error("AUTH : interface auth validation failed");
-            throw new AuthException("interface auth validation failed");
-        }
-
 
         if (handler instanceof HandlerMethod) {
             HandlerMethod h = (HandlerMethod) handler;
@@ -73,16 +66,13 @@ public class AuthInterceptor implements HandlerInterceptor {
             } else {
                 log.warn("AUTH : false");
             }
-        } else {
-            // 由于此uri无对应的controller，所需需单独校验接口鉴权;因为存在一个问题，如果他使用token来校验，那么上面的校验会通过，但是他又不是一个方法，那么就会出现绕过鉴权的bug
-            // 即使把上方的校验拿下来也不行的，因为他不传auth的token，依然会存在要过鉴权
-            // 但是这里我对鉴权结果做的有缓存，多次调用也是无所谓的
-            if (!exclude(request.getRequestURI())) {
-                if (!AuthUtil.realAuthSplit(authorization) || !auth(request.getRequestURI(), authorization)) {
-                    log.error("AUTH : validation failed, not a method and interface auth validation failed");
-                    throw new AuthException("whithoutmethod interface auth validation failed");
-                }
-            }
+        }
+
+        // 进行接口鉴权 及 格式验证
+        // 接口鉴权和方法内的鉴权不冲突，即使接口鉴权通过了，如果是一个方法，还是得看这个方法的认证是否通过才能最终确定是否有权访问
+        if (!auth(request.getRequestURI(), authorization)) {
+            log.error("AUTH : interface auth validation failed");
+            throw new AuthException("interface auth validation failed");
         }
 
         log.info("AUTH : validation success");
@@ -99,14 +89,10 @@ public class AuthInterceptor implements HandlerInterceptor {
         boolean res = exclude(uri);
 
         if (!res) {
-            boolean token = AuthUtil.realSplit(authorization);
-            boolean auth = AuthUtil.realAuthSplit(authorization);
-            if (!token && !auth) {
-                res = false;
-            } else if (auth && !AuthUtil.getAuthToken().equals(AuthUtil.getAuthToken(authorization))) {
-                res = false;
-            } else {
+            if (AuthUtil.realAuthSplit(authorization) && AuthUtil.getAuthToken().equals(AuthUtil.getAuthToken(authorization))) {
                 res = true;
+            } else {
+                res = false;
             }
         }
 
