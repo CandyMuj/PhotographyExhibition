@@ -32,8 +32,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(AuthException.class)
     public Result authException(AuthException e) {
-        log.error("auth failed...", e);
-        return new Result(NO_AUTH, "Authentication failed");
+        String msg = e.getMessage();
+        return new Result(NO_AUTH, (StrUtil.isNotBlank(msg) ? msg : "Authentication failed"));
     }
 
     /**
