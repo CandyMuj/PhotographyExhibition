@@ -31,9 +31,9 @@ public class GlobalExceptionHandler {
      * 认证异常处理
      */
     @ExceptionHandler(AuthException.class)
-    public Result authException(AuthException e) {
+    public Result<Object> authException(AuthException e) {
         String msg = e.getMessage();
-        return new Result(NO_AUTH, (StrUtil.isNotBlank(msg) ? msg : "Authentication failed"));
+        return new Result<>(NO_AUTH, (StrUtil.isNotBlank(msg) ? msg : "Authentication failed"));
     }
 
     /**
