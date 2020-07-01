@@ -54,6 +54,7 @@ public class AuthInterceptor implements HandlerInterceptor {
             if (ann != null) {
                 // 验证此接口是否需要鉴权,且token是否有效
                 if (ann.au()) {
+                    token = true;
                     log.info("AUTH : true");
 
                     User user = jwtTokenFactory.validateToken(AuthUtil.getToken(authorization));
@@ -67,13 +68,11 @@ public class AuthInterceptor implements HandlerInterceptor {
             } else {
                 log.warn("AUTH : false");
             }
-
-            token = true;
         }
 
         // 进行接口鉴权 及 格式验证
         // 接口鉴权和方法内的鉴权不冲突，即使接口鉴权通过了，如果是一个方法，还是得看这个方法的认证是否通过才能最终确定是否有权访问
-        if (!auth(request.getRequestURI(), authorization) && (!AuthUtil.realSplit(authorization) || (AuthUtil.realSplit(authorization) && !token))) {
+        if (!auth(request.getRequestURI(), authorization) && (!AuthUtil.realSplit(authorization) || !token)) {
             log.error("AUTH : interface auth validation failed");
             throw new AuthException("interface auth validation failed");
         }
