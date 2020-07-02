@@ -72,6 +72,8 @@ public class AuthInterceptor implements HandlerInterceptor {
             } else {
                 log.warn("AUTH : false");
             }
+        } else {
+            token = false;
         }
 
         // 进行接口鉴权 及 格式验证
