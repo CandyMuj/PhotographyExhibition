@@ -14,6 +14,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -45,16 +46,19 @@ public class AuthInterceptor implements HandlerInterceptor {
         String authorization = request.getHeader(REQ_HEADER);
 
 
-        boolean token = false;
+        boolean token = true;
         if (handler instanceof HandlerMethod) {
             HandlerMethod h = (HandlerMethod) handler;
+
+            if (!Arrays.asList(h.getMethod().getParameterTypes()).contains(User.class)) {
+                token = false;
+            }
 
             // 获取自定义注解
             Ann ann = h.getMethod().getDeclaredAnnotation(Ann.class);
             if (ann != null) {
                 // 验证此接口是否需要鉴权,且token是否有效
                 if (ann.au()) {
-                    token = true;
                     log.info("AUTH : true");
 
                     User user = jwtTokenFactory.validateToken(AuthUtil.getToken(authorization));
