@@ -31,7 +31,7 @@ public class GlobalExceptionHandler {
      * 认证异常处理
      */
     @ExceptionHandler(AuthException.class)
-    public Result<Object> authException(AuthException e) {
+    public Result<?> authException(AuthException e) {
         String msg = e.getMessage();
         return new Result<>(NO_AUTH, (StrUtil.isNotBlank(msg) ? msg : "Authentication failed"));
     }
@@ -40,7 +40,7 @@ public class GlobalExceptionHandler {
      * 业务异常处理
      */
     @ExceptionHandler(ResultException.class)
-    public Result<Object> resultException(ResultException e) {
+    public Result<?> resultException(ResultException e) {
         return new Result<>(e.getCode(), e.getData(), e.getErrcode(), e.getMsg());
     }
 
@@ -49,7 +49,7 @@ public class GlobalExceptionHandler {
      * 方法参数校验 绑定参数校验
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result validationException(MethodArgumentNotValidException e) {
+    public Result<?> validationException(MethodArgumentNotValidException e) {
         FieldError error = e.getBindingResult().getFieldError();
         return Result.Error(error != null ? error.getDefaultMessage() : "null");
     }
@@ -58,27 +58,9 @@ public class GlobalExceptionHandler {
      * 接口参数校验异常处理
      */
     @ExceptionHandler(ValidationException.class)
-    public Result validationException(ValidationException e) {
-        String split = ": ";
+    public Result<?> validationException(ValidationException e) {
         String msg = e.getMessage();
-        if (StrUtil.isNotBlank(msg)) {
-            String[] s = msg.split(split);
-            StringBuilder msgstr = new StringBuilder();
-            if (s.length > 1) {
-                for (int i = 1; i < s.length; i++) {
-                    msgstr.append(s[i]);
-                    if (i < s.length - 1) {
-                        msgstr.append(split);
-                    }
-                }
-
-                msg = msgstr.toString();
-            }
-        } else {
-            msg = "null";
-        }
-
-        return Result.Error(msg);
+        return Result.Error(StrUtil.isNotBlank(msg) ? msg.split(", ")[0].split(": ")[1] : "null");
     }
 
 
@@ -86,7 +68,7 @@ public class GlobalExceptionHandler {
      * 其他所有的异常处理
      */
     @ExceptionHandler(Exception.class)
-    public Result exception(Exception e) {
+    public Result<?> exception(Exception e) {
         log.error("software running error...", e);
 
         String msg = e.getMessage();
