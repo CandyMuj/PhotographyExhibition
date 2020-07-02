@@ -1,6 +1,8 @@
 package com.cc.pic.api.src.service;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.service.IService;
+import com.cc.pic.api.pojo.sys.Result;
 import com.cc.pic.api.src.pojo.Customer;
 
 /**
@@ -13,4 +15,5 @@ import com.cc.pic.api.src.pojo.Customer;
  */
 public interface ICustomerService extends IService<Customer> {
 
+    Result<JSONObject> adminLogin(String account, String password);
 }

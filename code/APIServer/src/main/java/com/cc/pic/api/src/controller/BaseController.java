@@ -1,5 +1,9 @@
 package com.cc.pic.api.src.controller;
 
+import com.cc.pic.api.src.service.ICustomerService;
+
+import javax.annotation.Resource;
+
 /**
  * @ProjectName api
  * @FileName BaseController
@@ -9,6 +13,9 @@ package com.cc.pic.api.src.controller;
  * @Version 1.0
  */
 public class BaseController {
-    
+    @Resource
+    protected ICustomerService customerService;
+
+
 
 }
