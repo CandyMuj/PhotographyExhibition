@@ -22,7 +22,7 @@ import java.util.Map;
 @AllArgsConstructor
 public class User implements Serializable {
 
-    private Integer userId;
+    private Long userId;
     private String userName;
     private String phone;
     // 扩展数据
