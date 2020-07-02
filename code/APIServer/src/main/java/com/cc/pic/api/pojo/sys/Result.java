@@ -59,7 +59,7 @@ public class Result<T> {
         this.errcode = errcode;
         this.msg = msg;
 
-        printLog();
+        this.printLog();
     }
 
 
