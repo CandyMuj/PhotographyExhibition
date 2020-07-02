@@ -8,6 +8,7 @@
         <result property="userType" column="user_type"/>
         <result property="enabled" column="enabled"/>
         <result property="addTime" column="add_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
         <!-- 自定义 -->
 
     </resultMap>

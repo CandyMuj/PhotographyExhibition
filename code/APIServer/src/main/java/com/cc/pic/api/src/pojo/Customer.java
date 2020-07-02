@@ -28,6 +28,7 @@ public class Customer extends Model<Customer> {
     private String account;
     private Integer userType;
     private Date addTime;
+    private Date lastLoginTime;
 
 
     @Override
