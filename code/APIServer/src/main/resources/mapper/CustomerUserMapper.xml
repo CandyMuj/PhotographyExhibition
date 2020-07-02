@@ -5,7 +5,11 @@
         <id property="customerUserId" column="customer_user_id"/>
         <result property="userNickName" column="user_nick_name"/>
         <result property="userRealName" column="user_real_name"/>
+        <result property="frozen" column="frozen"/>
+        <result property="frozenTime" column="frozen_time"/>
+        <result property="frozenReason" column="frozen_reason"/>
         <result property="addTime" column="add_time"/>
+        <result property="lastLoginTime" column="last_login_time"/>
         <!-- 自定义 -->
 
     </resultMap>

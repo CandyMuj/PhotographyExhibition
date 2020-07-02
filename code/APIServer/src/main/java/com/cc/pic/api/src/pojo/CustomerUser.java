@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+
+import java.util.Date;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -26,6 +28,10 @@ public class CustomerUser extends Model<CustomerUser> {
     private String userRealName;
     private Date addTime;
     private String userNickName;
+    private Integer frozen;
+    private Date frozenTime;
+    private String frozenReason;
+    private Date lastLoginTime;
 
 
     @Override

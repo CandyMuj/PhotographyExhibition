@@ -11,7 +11,7 @@
  Target Server Version : 80019
  File Encoding         : 65001
 
- Date: 02/07/2020 13:47:32
+ Date: 02/07/2020 14:07:44
 */
 
 SET NAMES utf8mb4;
@@ -91,7 +91,9 @@ CREATE TABLE `customer`  (
   `account` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '用户账号',
   `passwd` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '密码',
   `user_type` int(0) NULL DEFAULT NULL COMMENT '用户类型 1管理员 2普通用户 位运算（可登陆平台的权限，通过此字段定义枚举 安全可靠些）',
-  `enabled` tinyint(0) NULL DEFAULT 1 COMMENT '是否启用',
+  `frozen` int(0) NULL DEFAULT NULL COMMENT '是否冻结',
+  `frozen_time` datetime(0) NULL DEFAULT NULL COMMENT '冻结时间',
+  `frozen_reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '冻结原因',
   `add_time` datetime(0) NULL DEFAULT NULL COMMENT '注册时间；添加时间',
   `last_login_time` datetime(0) NULL DEFAULT NULL COMMENT '最后登录时间',
   PRIMARY KEY (`customer_id`) USING BTREE
@@ -100,7 +102,7 @@ CREATE TABLE `customer`  (
 -- ----------------------------
 -- Records of customer
 -- ----------------------------
-INSERT INTO `customer` VALUES (1, 'candy', 'e10adc3949ba59abbe56e057f20f883e', 1, 1, '2019-12-18 16:32:40', NULL);
+INSERT INTO `customer` VALUES (1, 'candy', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL, NULL, NULL, '2019-12-18 16:32:40', NULL);
 
 -- ----------------------------
 -- Table structure for customer_third_bind
@@ -123,7 +125,11 @@ CREATE TABLE `customer_user`  (
   `customer_user_id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '用户表-普通用户',
   `user_nick_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户昵称 用户平台展示昵称',
   `user_real_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户真实姓名 用于图片署名作者',
+  `frozen` int(0) NULL DEFAULT NULL COMMENT '是否冻结',
+  `frozen_time` datetime(0) NULL DEFAULT NULL COMMENT '冻结时间',
+  `frozen_reason` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '冻结原因',
   `add_time` datetime(0) NULL DEFAULT NULL COMMENT '新增时间',
+  `last_login_time` datetime(0) NULL DEFAULT NULL COMMENT '最后登录时间',
   PRIMARY KEY (`customer_user_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表-普通用户' ROW_FORMAT = Dynamic;
 

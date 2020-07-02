@@ -6,8 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+
+import java.util.Date;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -23,7 +25,9 @@ import com.baomidou.mybatisplus.annotations.TableId;
 public class Customer extends Model<Customer> {
     @TableId
     private Long customerId;
-    private Integer enabled;
+    private Integer frozen;
+    private Date frozenTime;
+    private String frozenReason;
     private String passwd;
     private String account;
     private Integer userType;
