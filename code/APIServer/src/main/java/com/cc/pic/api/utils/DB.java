@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.NoTransactionException;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
 
+import java.util.List;
+
 /**
  * @ProJectName APIServer
  * @FileName DB
@@ -36,8 +38,8 @@ public class DB {
      * @param page
      * @return
      */
-    public static Result getPageRes(Page page) {
-        Result result = new Result<>(page.getRecords());
+    public static <T> Result<List<T>> getPageRes(Page<T> page) {
+        Result<List<T>> result = new Result<>(page.getRecords());
         result.curPage = page.getCurrent();
         result.pageSize = page.getSize();
         result.totalCount = (long) page.getTotal();
@@ -50,8 +52,8 @@ public class DB {
      * @param pageInfo
      * @return
      */
-    public static Result getPageRes(PageInfo pageInfo) {
-        Result result = new Result<>(pageInfo.getList());
+    public static <T> Result<List<T>> getPageRes(PageInfo<T> pageInfo) {
+        Result<List<T>> result = new Result<>(pageInfo.getList());
         result.curPage = pageInfo.getPageNum();
         result.pageSize = pageInfo.getPageSize();
         result.totalCount = pageInfo.getTotal();
@@ -64,16 +66,16 @@ public class DB {
      * @param page
      * @return
      */
-    public static Result getPageRes(com.github.pagehelper.Page page) {
-        Result result = new Result<>(page.getResult());
+    public static <T> Result<List<T>> getPageRes(com.github.pagehelper.Page<T> page) {
+        Result<List<T>> result = new Result<>(page.getResult());
         result.curPage = page.getPageNum();
         result.pageSize = page.getPageSize();
         result.totalCount = page.getTotal();
         return result;
     }
 
-    public static Result getPageRes(org.springframework.data.domain.Page page) {
-        Result result = new Result<>(page.getContent());
+    public static <T> Result<List<T>> getPageRes(org.springframework.data.domain.Page<T> page) {
+        Result<List<T>> result = new Result<>(page.getContent());
         result.curPage = page.getPageable().getPageNumber();
         result.pageSize = page.getPageable().getPageSize();
         result.totalCount = page.getTotalElements();
