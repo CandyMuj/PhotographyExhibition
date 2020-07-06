@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName CustomerThirdBind
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -22,11 +23,16 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class CustomerThirdBind extends Model<CustomerThirdBind> {
     @TableId
+    @ApiModelProperty("第三方账号关联绑定，主要用于登录，所以这里使用cusid")
     private Long customerThirdBindId;
+    @ApiModelProperty("用户id")
     private Long customerId;
-    private String secretKey;
-    private Date addTime;
+    @ApiModelProperty("密钥类型 手机号，微信，qq")
     private Integer secretType;
+    @ApiModelProperty("关联时间")
+    private Date addTime;
+    @ApiModelProperty("对应的值")
+    private String secretKey;
 
 
     @Override

@@ -6,17 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-
 import com.baomidou.mybatisplus.annotations.TableId;
-
+import io.swagger.annotations.ApiModelProperty;
 import java.util.Date;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName Customer
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -24,14 +23,23 @@ import java.util.Date;
 @AllArgsConstructor
 public class Customer extends Model<Customer> {
     @TableId
+    @ApiModelProperty("用户主表，登录信息")
     private Long customerId;
-    private Integer frozen;
+    @ApiModelProperty("冻结时间")
     private Date frozenTime;
-    private String frozenReason;
-    private String passwd;
-    private String account;
+    @ApiModelProperty("用户类型 1管理员 2普通用户 位运算（可登陆平台的权限，通过此字段定义枚举 安全可靠些）")
     private Integer userType;
+    @ApiModelProperty("冻结原因")
+    private String frozenReason;
+    @ApiModelProperty("密码")
+    private String passwd;
+    @ApiModelProperty("是否冻结")
+    private Integer frozen;
+    @ApiModelProperty("用户账号")
+    private String account;
+    @ApiModelProperty("注册时间；添加时间")
     private Date addTime;
+    @ApiModelProperty("最后登录时间")
     private Date lastLoginTime;
 
 

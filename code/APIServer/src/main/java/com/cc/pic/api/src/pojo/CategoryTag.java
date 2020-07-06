@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName CategoryTag
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -21,11 +22,16 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class CategoryTag extends Model<CategoryTag> {
     @TableId
+    @ApiModelProperty("分类和标签")
     private Long categoryTagId;
-    private Long pid;
-    private Integer moduleType;
-    private Long orderIndex;
+    @ApiModelProperty("名称")
     private String categoryName;
+    @ApiModelProperty("分类类型/位置")
+    private Integer moduleType;
+    @ApiModelProperty("上级分类")
+    private Long pid;
+    @ApiModelProperty("排序 - 越大排序越前")
+    private Long orderIndex;
 
 
     @Override

@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName PhotoLibrary
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -22,15 +23,24 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class PhotoLibrary extends Model<PhotoLibrary> {
     @TableId
+    @ApiModelProperty("图片库")
     private Long photoLibraryId;
-    private Integer deleted;
-    private String picDesc;
-    private String picUri;
+    @ApiModelProperty("逻辑删除时间")
     private Date deletedTime;
-    private String picName;
-    private Date addTime;
-    private Long photoAlbumId;
+    @ApiModelProperty("图片描述")
+    private String picDesc;
+    @ApiModelProperty("图片链接")
+    private String picUri;
+    @ApiModelProperty("创建人")
     private Long customerUserId;
+    @ApiModelProperty("逻辑删除")
+    private Integer deleted;
+    @ApiModelProperty("图片名称")
+    private String picName;
+    @ApiModelProperty("相册id 非必须")
+    private Long photoAlbumId;
+    @ApiModelProperty("新增时间")
+    private Date addTime;
 
 
     @Override

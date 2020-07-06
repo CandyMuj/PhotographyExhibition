@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName FileList
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -22,13 +23,20 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class FileList extends Model<FileList> {
     @TableId
+    @ApiModelProperty("文件统一管理库，如果是为了速度，可使用redis，但是总感觉redis不太可靠")
     private Long fileListId;
-    private Long itemId;
-    private Integer deleted;
-    private String savedUri;
-    private Date deletedTime;
-    private Date addTime;
+    @ApiModelProperty("文件关联业务类型")
     private Integer itemType;
+    @ApiModelProperty("逻辑删除时间")
+    private Date deletedTime;
+    @ApiModelProperty("保存地址")
+    private String savedUri;
+    @ApiModelProperty("业务id")
+    private Long itemId;
+    @ApiModelProperty("逻辑删除")
+    private Integer deleted;
+    @ApiModelProperty("添加时间")
+    private Date addTime;
 
 
     @Override

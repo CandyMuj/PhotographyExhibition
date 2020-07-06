@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
-    import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.enums.IdType;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName ArticleContent
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -22,7 +23,9 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class ArticleContent extends Model<ArticleContent> {
     @TableId(type = IdType.INPUT)
+    @ApiModelProperty("文章内容表 图文，对应文章id，一个文章只有一个内容")
     private Long articleId;
+    @ApiModelProperty("文章内容")
     private String content;
 
 

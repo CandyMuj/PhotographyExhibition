@@ -7,14 +7,15 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
-    import java.util.Date;
+import io.swagger.annotations.ApiModelProperty;
+import java.util.Date;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName Poster
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -22,16 +23,27 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class Poster extends Model<Poster> {
     @TableId
+    @ApiModelProperty("广告/banner")
     private Long posterId;
-    private Long itemId;
-    private Integer enabled;
-    private String title;
+    @ApiModelProperty("封面")
     private String coverImg;
-    private String itemUrl;
-    private Long orderIndex;
-    private Date showTime;
-    private Date addTime;
+    @ApiModelProperty("关联附件类别，1链接 2文章")
     private Integer itemType;
+    @ApiModelProperty("显示时间 发布以后在这个时间后才显示")
+    private Date showTime;
+    @ApiModelProperty("广告标题")
+    private String title;
+    @ApiModelProperty("是否启用")
+    private Integer enabled;
+    @ApiModelProperty("发布时间")
+    private Date addTime;
+    @ApiModelProperty("排序 越大排序越靠前")
+    private Long orderIndex;
+    @ApiModelProperty("url链接")
+    private String itemUrl;
+    @ApiModelProperty("业务实体ID，如果没有对象，则为0")
+    private Long itemId;
+    @ApiModelProperty("广告位置，dictid :adpostion")
     private Integer postion;
 
 

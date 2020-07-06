@@ -7,13 +7,14 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableId;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
- * @ProjectName PhotographyExhibition
+ * @ProjectName MyTest
  * @FileName FooterInfo
  * @Description
  * @Author CandyMuj
- * @Date 2020/05/14 14:31
+ * @Date 2020/07/06 17:28
  * @Version 1.0
  */
 @Data
@@ -21,10 +22,14 @@ import com.baomidou.mybatisplus.annotations.TableId;
 @AllArgsConstructor
 public class FooterInfo extends Model<FooterInfo> {
     @TableId
+    @ApiModelProperty("页尾的链接和介绍相关的配置")
     private Long footerInfoId;
-    private Integer enabled;
-    private String footerData;
+    @ApiModelProperty("关联页面的具体配置")
     private Long pageModelId;
+    @ApiModelProperty("1可用 0不可用")
+    private Integer enabled;
+    @ApiModelProperty("文本 或者url;或者是json数据")
+    private String footerData;
 
 
     @Override
