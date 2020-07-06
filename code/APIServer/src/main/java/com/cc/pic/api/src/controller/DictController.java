@@ -12,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -33,7 +34,7 @@ public class DictController {
     @Ann
     @ApiOperation("添加或修改字典")
     @PostMapping("/addOrUpd")
-    public Result addOrUpd(
+    public Result<?> addOrUpd(
             @ApiParam(required = false, value = "字典id 如果有值则表示修改") @RequestParam(required = false) Long dictId,
             @ApiParam(required = true, value = "字典父级Id 无父级则为0") @RequestParam Long dictPid,
             @ApiParam(required = true, value = "字典名称") @RequestParam String dictName,
@@ -65,14 +66,14 @@ public class DictController {
 
     @ApiOperation("获取字典列表-获取所有,前端根据缓存再做其他的获取")
     @GetMapping("/all")
-    public Result all() {
+    public Result<List<Dict>> all() {
         return dictService.all();
     }
 
     @Ann
     @ApiOperation("删除字典-若删除的是父节点，那么子节点将同步删除")
     @PostMapping("/del")
-    public Result del(
+    public Result<?> del(
             @ApiParam(required = true, value = "字典id") @RequestParam Long dictId
     ) {
         return dictService.del(dictId);

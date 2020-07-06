@@ -36,7 +36,7 @@ public class ArticleController {
     @Ann
     @ApiOperation("添加或修改文章")
     @PostMapping("/addOrUpd")
-    public Result addOrUpd(
+    public Result<?> addOrUpd(
             @ApiParam(required = false, value = "文章id 如果有值则表示更新") @RequestParam(required = false) Long articleId,
             @ApiParam(required = true, value = "文章标题") @RequestParam String title,
             @ApiParam(required = false, value = "封面") @RequestParam(required = false) String coverImg,

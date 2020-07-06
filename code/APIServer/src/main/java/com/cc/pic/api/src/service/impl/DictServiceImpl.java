@@ -42,7 +42,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
      * @return
      */
     @Override
-    public Result addOrUpd(Dict dict) {
+    public Result<?> addOrUpd(Dict dict) {
         Dict pdict = null;
         if (dict.getDictPid() > 0) {
             pdict = getParent(dict.getDictPid());
@@ -121,7 +121,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
      * @return
      */
     @Override
-    public Result all() {
+    public Result<List<Dict>> all() {
         Object allStr = redisUtil.get(CacheKey.DICT_CACHE_ALL);
         List<Dict> list = null;
         if (allStr != null) {
@@ -145,7 +145,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
      */
     @Override
     @Transactional
-    public Result del(Long dictId) {
+    public Result<?> del(Long dictId) {
         Dict dict = super.selectById(dictId);
         if (dict == null) {
             return Result.Error("不存在的字典");
