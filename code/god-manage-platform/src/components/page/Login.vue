@@ -2,24 +2,25 @@
     <div class="login-container" style="background-color: #141a48;margin: 0px;overflow: hidden;">
         <div id="canvascontainer" ref='can'></div>
 
-        <Form ref="loginForm" autoComplete="on" :model="param" :rules="rules" class="card-box login-form">
-            <Form-item prop="email">
-                <Input type="text" v-model="param.username" placeholder="Username" autoComplete="on">
-                    <Icon type="ios-person-outline" slot="prepend"></Icon>
-                </Input>
-            </Form-item>
-            <Form-item prop="password">
-                <Input type="password" v-model="param.password" placeholder="Password"
-                       @keyup.enter.native="submitForm">
-                    <Icon type="ios-locked-outline" slot="prepend"></Icon>
-                </Input>
-            </Form-item>
-            <Form-item>
+        <el-form ref="loginForm" autoComplete="on" :model="param" :rules="rules" class="card-box login-form">
+            <el-form-item prop="email">
+                <el-input type="text" v-model="param.username" placeholder="Username" autoComplete="on">
+                    <i class="el-icon-user" slot="prepend"></i>
+                </el-input>
+            </el-form-item>
+            <el-form-item prop="password">
+                <el-input type="password" v-model="param.password" placeholder="Password"
+                          @keyup.enter.native="submitForm">
+                    <i class="el-icon-lock" slot="prepend"></i>
+                </el-input>
+            </el-form-item>
+            <el-form-item>
                 <Button type="primary" @click="submitForm()" long>登录</Button>
-            </Form-item>
+            </el-form-item>
+
             <div class='tips'>admin账号为:admin@wz.com 密码123456</div>
             <div class='tips'>editor账号:editor@wz.com 密码123456</div>
-        </Form>
+        </el-form>
     </div>
 </template>
 
