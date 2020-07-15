@@ -5,21 +5,18 @@
         <el-form ref="loginForm" autoComplete="on" :model="param" :rules="rules" class="card-box login-form">
             <el-form-item prop="email">
                 <el-input type="text" v-model="param.username" placeholder="Username" autoComplete="on">
-                    <i class="el-icon-user" slot="prepend"></i>
+                    <i class="el-icon-user icon-login" slot="prepend"/>
                 </el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <el-input type="password" v-model="param.password" placeholder="Password"
                           @keyup.enter.native="submitForm">
-                    <i class="el-icon-lock" slot="prepend"></i>
+                    <i class="el-icon-lock icon-login" slot="prepend"/>
                 </el-input>
             </el-form-item>
             <el-form-item>
-                <Button type="primary" @click="submitForm()" long>登录</Button>
+                <el-button type="primary" @click="submitForm()">登录</el-button>
             </el-form-item>
-
-            <div class='tips'>admin账号为:admin@wz.com 密码123456</div>
-            <div class='tips'>editor账号:editor@wz.com 密码123456</div>
         </el-form>
     </div>
 </template>
@@ -244,13 +241,20 @@
             border-radius: 3px;
             padding: 12px 5px 12px 15px;
             color: #eeeeee;
-            height: 47px;
+            height: 47px !important;
         }
 
         .el-input {
-            display: inline-block;
-            height: 47px;
-            width: 85%;
+            border-left: 1px solid #dddee1;
+            border-radius: 6px;
+        }
+
+        .el-button {
+            width: 100%;
+        }
+
+        .icon-login {
+            color: #495060;
         }
 
         .svg-container {
