@@ -22,8 +22,8 @@ import java.lang.annotation.*;
  * @Date 2019/12/25 16:54
  * @Version 1.0
  */
-@Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.METHOD})
+@Retention(RetentionPolicy.RUNTIME)
 public @interface Ann {
 
     // 此接口是否需要登录鉴权
