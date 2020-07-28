@@ -1,9 +1,14 @@
 package com.cc.pic.api.config.sys;
 
+import com.cc.pic.api.annotations.ApiVersion;
 import com.cc.pic.api.config.SecurityConstants;
+import com.cc.pic.api.enumc.ApiGroup;
+import com.google.common.base.Optional;
+import com.google.common.base.Predicate;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -17,6 +22,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -49,6 +55,48 @@ public class SwaggerConfig {
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(parameterList);
+    }
+
+    @Bean
+    public Docket admin() {
+        ParameterBuilder tokenBuilder = new ParameterBuilder();
+        List<Parameter> parameterList = new ArrayList<>();
+        tokenBuilder.name(SecurityConstants.REQ_HEADER)
+                .defaultValue("去其他请求中获取heard中token参数")
+                .description("令牌")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(true).build();
+        parameterList.add(tokenBuilder.build());
+        return new Docket(DocumentationType.SWAGGER_2)
+                .apiInfo(apiInfo())
+                .groupName(ApiGroup.ADMIN.getName())
+                .select()
+                .apis(this.withGroup(ApiGroup.ADMIN))
+                .paths(PathSelectors.any())
+                .build()
+                .globalOperationParameters(parameterList);
+    }
+
+
+    private Predicate<RequestHandler> withGroup(ApiGroup apiGroup) {
+        return input -> {
+            if (input != null && input.isAnnotatedWith(ApiOperation.class)) {
+                // 如果方法和类上同时存在注解，即以方法上的注解为准
+                // 先获取方法上的分组信息
+                Optional<ApiVersion> optional = input.findAnnotation(ApiVersion.class);
+                if (optional.isPresent()) {
+                    return Arrays.asList(optional.get().apiGroup()).contains(apiGroup);
+                }
+
+                // 然后获取Controller类上的分组信息
+                optional = input.findControllerAnnotation(ApiVersion.class);
+
+                return optional.isPresent() && Arrays.asList(optional.get().apiGroup()).contains(apiGroup);
+            }
+
+            return false;
+        };
     }
 
     private ApiInfo apiInfo() {
