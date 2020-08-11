@@ -78,8 +78,15 @@ public class YmlConfig {
     }
 
     private static Object get(String key) {
-        return config.get(key);
-    }
+        Object val = null;
+
+        String env = (String) config.get("env");
+        if (env != null) {
+            val = config.get(env.concat(".").concat(key));
+        }
+
+        return val == null ? config.get(key) : val;
+  }
 
     public static List<String> getList(String key) {
         return (ArrayList) get(key);

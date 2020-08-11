@@ -2,6 +2,10 @@
 
 
 
+# 设置配置环境
+env: local
+
+
 # 第三方云服务配置
 third:
   aliyun:
