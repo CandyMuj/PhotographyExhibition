@@ -9,7 +9,9 @@ package com.cc.pic.api.enumc;
  * @Version 1.0
  */
 public enum ApiGroup {
-    ADMIN("管理员端");
+    ADMIN("管理员端 1.0"),
+    ;
+
 
     private String name;
 

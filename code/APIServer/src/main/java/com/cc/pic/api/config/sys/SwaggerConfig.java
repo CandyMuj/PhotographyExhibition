@@ -4,11 +4,9 @@ import com.cc.pic.api.annotations.ApiVersion;
 import com.cc.pic.api.config.SecurityConstants;
 import com.cc.pic.api.enumc.ApiGroup;
 import com.google.common.base.Optional;
-import com.google.common.base.Predicate;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import springfox.documentation.RequestHandler;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.ParameterBuilder;
 import springfox.documentation.builders.PathSelectors;
@@ -37,6 +35,9 @@ import java.util.List;
 @EnableSwagger2
 public class SwaggerConfig {
 
+    /**
+     * 将所有的接口都加入到默认分组中
+     */
     @Bean
     public Docket createRestApi() {
         ParameterBuilder tokenBuilder = new ParameterBuilder();
@@ -57,8 +58,19 @@ public class SwaggerConfig {
                 .globalOperationParameters(parameterList);
     }
 
+    /**
+     * todo 后续看看有没有什么办法，用一个bean来注入多个bean，根据注解自动生成分组对象，就不用每多一个分组就要来手动定义一个bean，而只需要加一个枚举，然后接口直接用就行了
+     */
     @Bean
     public Docket admin() {
+        return this.buildWithGroup(ApiGroup.ADMIN);
+    }
+
+
+    /**
+     * 通过分组注解配置，生成docket
+     */
+    private Docket buildWithGroup(ApiGroup apiGroup) {
         ParameterBuilder tokenBuilder = new ParameterBuilder();
         List<Parameter> parameterList = new ArrayList<>();
         tokenBuilder.name(SecurityConstants.REQ_HEADER)
@@ -70,33 +82,28 @@ public class SwaggerConfig {
         parameterList.add(tokenBuilder.build());
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(apiInfo())
-                .groupName(ApiGroup.ADMIN.getName())
+                .groupName(apiGroup.getName())
                 .select()
-                .apis(this.withGroup(ApiGroup.ADMIN))
+                .apis(input -> {
+                    if (input != null && input.isAnnotatedWith(ApiOperation.class)) {
+                        // 如果方法和类上同时存在注解，即以方法上的注解为准
+                        // 先获取方法上的分组信息
+                        Optional<ApiVersion> optional = input.findAnnotation(ApiVersion.class);
+                        if (optional.isPresent()) {
+                            return Arrays.asList(optional.get().value()).contains(apiGroup);
+                        }
+
+                        // 然后获取Controller类上的分组信息
+                        optional = input.findControllerAnnotation(ApiVersion.class);
+
+                        return optional.isPresent() && Arrays.asList(optional.get().value()).contains(apiGroup);
+                    }
+
+                    return false;
+                })
                 .paths(PathSelectors.any())
                 .build()
                 .globalOperationParameters(parameterList);
-    }
-
-
-    private Predicate<RequestHandler> withGroup(ApiGroup apiGroup) {
-        return input -> {
-            if (input != null && input.isAnnotatedWith(ApiOperation.class)) {
-                // 如果方法和类上同时存在注解，即以方法上的注解为准
-                // 先获取方法上的分组信息
-                Optional<ApiVersion> optional = input.findAnnotation(ApiVersion.class);
-                if (optional.isPresent()) {
-                    return Arrays.asList(optional.get().apiGroup()).contains(apiGroup);
-                }
-
-                // 然后获取Controller类上的分组信息
-                optional = input.findControllerAnnotation(ApiVersion.class);
-
-                return optional.isPresent() && Arrays.asList(optional.get().apiGroup()).contains(apiGroup);
-            }
-
-            return false;
-        };
     }
 
     private ApiInfo apiInfo() {
