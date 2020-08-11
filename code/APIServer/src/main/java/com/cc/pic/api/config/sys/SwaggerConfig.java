@@ -40,22 +40,13 @@ public class SwaggerConfig {
      */
     @Bean
     public Docket createRestApi() {
-        ParameterBuilder tokenBuilder = new ParameterBuilder();
-        List<Parameter> parameterList = new ArrayList<>();
-        tokenBuilder.name(SecurityConstants.REQ_HEADER)
-                .defaultValue("去其他请求中获取heard中token参数")
-                .description("令牌")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .required(true).build();
-        parameterList.add(tokenBuilder.build());
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+                .apiInfo(this.apiInfo())
                 .select()
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(parameterList);
+                .globalOperationParameters(this.globalParameters());
     }
 
     @Bean
@@ -68,17 +59,8 @@ public class SwaggerConfig {
      * 通过分组注解配置，生成docket
      */
     private Docket buildWithGroup(ApiGroup apiGroup) {
-        ParameterBuilder tokenBuilder = new ParameterBuilder();
-        List<Parameter> parameterList = new ArrayList<>();
-        tokenBuilder.name(SecurityConstants.REQ_HEADER)
-                .defaultValue("去其他请求中获取heard中token参数")
-                .description("令牌")
-                .modelRef(new ModelRef("string"))
-                .parameterType("header")
-                .required(true).build();
-        parameterList.add(tokenBuilder.build());
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+                .apiInfo(this.apiInfo())
                 .groupName(apiGroup.getName())
                 .select()
                 .apis(input -> {
@@ -100,7 +82,23 @@ public class SwaggerConfig {
                 })
                 .paths(PathSelectors.any())
                 .build()
-                .globalOperationParameters(parameterList);
+                .globalOperationParameters(this.globalParameters());
+    }
+
+    private List<Parameter> globalParameters() {
+        List<Parameter> parameterList = new ArrayList<>();
+
+        ParameterBuilder tokenBuilder = new ParameterBuilder();
+        tokenBuilder.name(SecurityConstants.REQ_HEADER)
+                .defaultValue("去其他请求中获取heard中token参数")
+                .description("令牌")
+                .modelRef(new ModelRef("string"))
+                .parameterType("header")
+                .required(true).build();
+
+        parameterList.add(tokenBuilder.build());
+
+        return parameterList;
     }
 
     private ApiInfo apiInfo() {
