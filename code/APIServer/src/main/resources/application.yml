@@ -19,7 +19,7 @@ spring:
     # 单位：毫秒
     timeout: 5000
     # 默认库
-    database: 5
+    database: 0
     # 如果使用的jedis 则将lettuce改成jedis即可
     jedis:
       pool:
