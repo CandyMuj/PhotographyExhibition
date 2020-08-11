@@ -58,9 +58,6 @@ public class SwaggerConfig {
                 .globalOperationParameters(parameterList);
     }
 
-    /**
-     * todo 后续看看有没有什么办法，用一个bean来注入多个bean，根据注解自动生成分组对象，就不用每多一个分组就要来手动定义一个bean，而只需要加一个枚举，然后接口直接用就行了
-     */
     @Bean
     public Docket admin() {
         return this.buildWithGroup(ApiGroup.ADMIN);
