@@ -21,7 +21,7 @@ import static com.cc.pic.api.config.SecurityConstants.*;
 public class AuthUtil {
 
     // 用作缓存，不需要每次都计算;使用get获取，不设置为public，防止篡改
-    private static String auth_token;
+    private final static String auth_token;
 
     static {
         auth_token = generateAuth();
