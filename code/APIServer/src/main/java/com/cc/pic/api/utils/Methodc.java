@@ -2,6 +2,7 @@ package com.cc.pic.api.utils;
 
 import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.config.Configc;
+import com.cc.pic.api.utils.sys.YmlConfig;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -27,6 +28,31 @@ import static com.cc.pic.api.config.Configc.DEFAULT_DATEFORMAT;
  */
 @Slf4j
 public class Methodc {
+
+    /**
+     * 生成签名. 注意，若含有sign_type字段，必须和signType参数保持一致。
+     *
+     * @param data 待签名数据
+     * @return 签名
+     */
+    public static String generateSignature(final Map<String, String> data) {
+        Set<String> keySet = data.keySet();
+        String[] keyArray = keySet.toArray(new String[0]);
+        Arrays.sort(keyArray);
+        StringBuilder sb = new StringBuilder();
+        for (String k : keyArray) {
+            if (k.equals(YmlConfig.getString("src.sign.field"))) {
+                continue;
+            }
+            String val = data.get(k);
+            if (val != null && val.trim().length() > 0) {  // 参数值为空，则不参与签名
+                sb.append(k).append("=").append(val.trim()).append("&");
+            }
+        }
+        sb.append("key=").append(YmlConfig.getString("src.sign.key"));
+
+        return MD5.MD5Encode(sb.toString()).toUpperCase();
+    }
 
     /**
      * 根据请求获取请求头信息

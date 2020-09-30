@@ -3,6 +3,7 @@ package com.cc.pic.api.intercept.interceptor;
 import com.cc.pic.api.annotations.Ann;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
+import com.cc.pic.api.utils.Methodc;
 import com.cc.pic.api.utils.sys.AuthUtil;
 import com.cc.pic.api.utils.sys.YmlConfig;
 import com.cc.pic.api.utils.sys.bean.JwtTokenFactory;
@@ -48,8 +49,18 @@ public class AuthInterceptor implements HandlerInterceptor {
 
         boolean token = true;
         if (handler instanceof HandlerMethod) {
-            HandlerMethod h = (HandlerMethod) handler;
+            // 参数签名校验
+            Map<String, String> params = new HashMap<>();
+            request.getParameterMap().forEach((k, v) -> {
+                params.put(k, v[0]);
+            });
+            if (!Methodc.generateSignature(params).equals(params.get(YmlConfig.getString("src.sign.field")))) {
+                throw new RuntimeException("非法请求");
+            }
 
+
+            // 接口及用户鉴权
+            HandlerMethod h = (HandlerMethod) handler;
             if (!Arrays.asList(h.getMethod().getParameterTypes()).contains(User.class)) {
                 token = false;
             }
