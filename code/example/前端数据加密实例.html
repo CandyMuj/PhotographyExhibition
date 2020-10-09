@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://www.jq22.com/jquery/jquery-3.3.1.js"></script>
+    <script src="http://www.gongjuji.net/Content/files/jquery.md5.js"></script>
+</head>
+<body>
+<div id="write">
+
+</div>
+</body>
+
+<script>
+    $(function () {
+        log("jquery起作用了");
+
+        let data = {
+            "c": "hh",
+            "b": "kk",
+            "a": "gg"
+        }
+
+        generateSignature(data);
+    });
+
+    /**
+     * 生成签名
+     *
+     * @param data json格式数据
+     * @returns {string}
+     */
+    function generateSignature(data) {
+        const signField = 'sign';
+        const signKey = 'SxgKESLGzlw@iH8f';
+
+        let keyArray = [];
+        $.each(data, key => {
+            keyArray.push(key)
+        })
+
+        keyArray = keyArray.sort();
+        let sb = "";
+        $.each(keyArray, i => {
+            let k = keyArray[i];
+            if (k === signField) {
+                return true;
+            }
+            let val = data[k];
+            if (val && val.trim()) {
+                sb += (k + '=' + val.trim() + '&');
+            }
+        })
+        sb += ('key=' + signKey);
+
+        return $.md5(sb).toUpperCase();
+    }
+
+    function log(log) {
+        console.log(log)
+        $("#write").append(log + "<br/>")
+    }
+</script>
+</html>
