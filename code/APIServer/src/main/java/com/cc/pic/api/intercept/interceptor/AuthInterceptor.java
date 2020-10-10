@@ -50,12 +50,14 @@ public class AuthInterceptor implements HandlerInterceptor {
         boolean token = true;
         if (handler instanceof HandlerMethod) {
             // 参数签名校验
-            Map<String, String> params = new HashMap<>();
-            request.getParameterMap().forEach((k, v) -> {
-                params.put(k, v[0]);
-            });
-            if (!Methodc.generateSignature(params).equals(params.get(YmlConfig.getString("src.sign.field")))) {
-                throw new RuntimeException("非法请求");
+            if (!exclude(request.getRequestURI())) {
+                Map<String, String> params = new HashMap<>();
+                request.getParameterMap().forEach((k, v) -> {
+                    params.put(k, v[0]);
+                });
+                if (!Methodc.generateSignature(params).equals(params.get(YmlConfig.getString("src.sign.field")))) {
+                    throw new RuntimeException("非法请求");
+                }
             }
 
 
