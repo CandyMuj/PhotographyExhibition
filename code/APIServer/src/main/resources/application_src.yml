@@ -34,3 +34,14 @@ src:
   sign:
     field: sign
     key: SxgKESLGzlw@iH8f
+    nonce: nonce_str
+  # 第三方服务配置
+  third:
+    # 短信相关
+    sms:
+      # 开关
+      enable: false
+      # 默认验证码
+      default: 0000
+      # 超时（分）
+      timeout: 5

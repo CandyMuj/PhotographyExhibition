@@ -3,6 +3,7 @@ package com.cc.pic.api.config.sys;
 import com.cc.pic.api.annotations.ApiVersion;
 import com.cc.pic.api.config.SecurityConstants;
 import com.cc.pic.api.enumc.ApiGroup;
+import com.cc.pic.api.utils.sys.YmlConfig;
 import com.google.common.base.Optional;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.context.annotation.Bean;
@@ -96,7 +97,15 @@ public class SwaggerConfig {
                 .parameterType("header")
                 .required(true).build();
 
+        ParameterBuilder nonceBuilder = new ParameterBuilder();
+        nonceBuilder.name(YmlConfig.getString("src.sign.nonce"))
+                .description("随机字符串")
+                .modelRef(new ModelRef("string"))
+                .parameterType("query")
+                .required(true).build();
+
         parameterList.add(tokenBuilder.build());
+        parameterList.add(nonceBuilder.build());
 
         return parameterList;
     }

@@ -1,5 +1,6 @@
 package com.cc.pic.api.intercept.interceptor;
 
+import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.annotations.Ann;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
@@ -38,6 +39,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private JwtTokenFactory jwtTokenFactory;
 
 
+    private static final String SIGN_NONCE = YmlConfig.getString("src.sign.nonce");
     // 将接口鉴权uri的鉴权结果做一个缓存，不用每次都去循环配置内的排除鉴权项
     private static final Map<String, Boolean> INTERFACE_EXCLUDE_RES = new HashMap<>();
 
@@ -55,6 +57,9 @@ public class AuthInterceptor implements HandlerInterceptor {
                 request.getParameterMap().forEach((k, v) -> {
                     params.put(k, v[0]);
                 });
+                if (StrUtil.isBlank(params.get(SIGN_NONCE))) {
+                    throw new RuntimeException("缺少必要参数[".concat(SIGN_NONCE).concat("]"));
+                }
                 if (!Methodc.generateSignature(params).equals(params.get(YmlConfig.getString("src.sign.field")))) {
                     throw new RuntimeException("非法请求");
                 }
