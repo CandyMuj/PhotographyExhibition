@@ -97,6 +97,13 @@ public class SwaggerConfig {
                 .parameterType("header")
                 .required(true).build();
 
+        ParameterBuilder signBuilder = new ParameterBuilder();
+        signBuilder.name(YmlConfig.getString("src.sign.field"))
+                .description("参数签名（仅可对query类型参数进行签名）")
+                .modelRef(new ModelRef("string"))
+                .parameterType("query")
+                .required(true).build();
+
         ParameterBuilder nonceBuilder = new ParameterBuilder();
         nonceBuilder.name(YmlConfig.getString("src.sign.nonce"))
                 .description("随机字符串")
@@ -105,6 +112,7 @@ public class SwaggerConfig {
                 .required(true).build();
 
         parameterList.add(tokenBuilder.build());
+        parameterList.add(signBuilder.build());
         parameterList.add(nonceBuilder.build());
 
         return parameterList;
