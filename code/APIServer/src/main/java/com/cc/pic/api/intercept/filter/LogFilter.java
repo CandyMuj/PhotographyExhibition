@@ -1,5 +1,6 @@
 package com.cc.pic.api.intercept.filter;
 
+import com.cc.pic.api.utils.IpUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -51,7 +52,7 @@ public class LogFilter implements Filter {
         if (servletRequest instanceof HttpServletRequest && servletResponse instanceof HttpServletResponse) {
             HttpServletRequest request = (HttpServletRequest) servletRequest;
 
-            log.info("IP : " + request.getRemoteAddr());
+            log.info("IP : " + IpUtil.getRealIP(request));
             log.info("URL : " + request.getRequestURL().toString());
             log.info("HTTP_METHOD : " + request.getMethod());
         }
