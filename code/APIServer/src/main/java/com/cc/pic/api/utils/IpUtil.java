@@ -30,7 +30,7 @@ public class IpUtil {
      * 192.168.1.100
      * <p>
      * 用户真实IP为： 192.168.1.110
-     * <p>使用getRealIP代替该方法</p>
+     * <p>使用 getRealIP 代替该方法</p>
      *
      * @param request req
      * @return ip
@@ -107,6 +107,12 @@ public class IpUtil {
         return isInnerIp;
     }
 
+    /**
+     * IP地址转成长整型方法
+     *
+     * @param ipAddress
+     * @return
+     */
     private static long getIpNum(String ipAddress) {
         String[] ip = ipAddress.split("\\.");
         long a = Integer.parseInt(ip[0]);
@@ -115,6 +121,53 @@ public class IpUtil {
         long d = Integer.parseInt(ip[3]);
 
         return a * 256 * 256 * 256 + b * 256 * 256 + c * 256 + d;
+    }
+
+    /**
+     * IP转成整型
+     * IP地址转成长整型方法
+     * <p>使用 getIpNum 代替该方法</p>
+     *
+     * @param ip
+     * @return
+     */
+    @Deprecated
+    public static long ip2long(String ip) {
+        long num = 0L;
+        if (ip == null) {
+            return num;
+        }
+
+        try {
+            ip = ip.replaceAll("[^0-9\\.]", ""); //去除字符串前的空字符
+            String[] ips = ip.split("\\.");
+            if (ips.length == 4) {
+                num = Long.parseLong(ips[0], 10) * 256L * 256L * 256L + Long.parseLong(ips[1], 10) * 256L * 256L + Long.parseLong(ips[2], 10) * 256L + Long.parseLong(ips[3], 10);
+                num = num >>> 0;
+            }
+        } catch (NullPointerException ex) {
+            System.out.println(ip);
+        }
+
+        return num;
+    }
+
+    /**
+     * 整型解析为IP地址
+     * 长整型转换为IP地址的方法
+     *
+     * @param num
+     * @return
+     */
+    public static String long2iP(Long num) {
+        String str = null;
+        Long[] tt = new Long[4];
+        tt[0] = (num >>> 24) >>> 0;
+        tt[1] = ((num << 8) >>> 24) >>> 0;
+        tt[2] = (num << 16) >>> 24;
+        tt[3] = (num << 24) >>> 24;
+        str = (tt[0]) + "." + (tt[1]) + "." + (tt[2]) + "." + (tt[3]);
+        return str;
     }
 
     private static boolean isInner(long userIp, long begin, long end) {
