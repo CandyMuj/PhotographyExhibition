@@ -159,7 +159,7 @@ public class IpUtil {
      * @param num
      * @return
      */
-    public static String long2iP(Long num) {
+    public static String long2iP(long num) {
         String str = null;
         Long[] tt = new Long[4];
         tt[0] = (num >>> 24) >>> 0;
