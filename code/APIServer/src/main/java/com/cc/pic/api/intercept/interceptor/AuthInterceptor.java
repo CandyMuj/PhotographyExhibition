@@ -43,7 +43,7 @@ public class AuthInterceptor implements HandlerInterceptor {
     private static final String SIGN_FIELD = YmlConfig.getString("src.sign.field");
     private static final String SIGN_NONCE = YmlConfig.getString("src.sign.nonce");
     private static final String SIGN_TIMESPAN = YmlConfig.getString("src.sign.timespan");
-    private static final long SIGN_LIMITED = YmlConfig.getLongValue("src.sign.limited");
+    private static final Long SIGN_LIMITED = YmlConfig.getLong("src.sign.limited");
 
     // 将接口鉴权uri的鉴权结果做一个缓存，不用每次都去循环配置内的排除鉴权项
     private static final Map<String, Boolean> INTERFACE_EXCLUDE_RES = new HashMap<>();
