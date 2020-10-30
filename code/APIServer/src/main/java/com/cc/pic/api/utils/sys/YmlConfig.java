@@ -86,7 +86,7 @@ public class YmlConfig {
         }
 
         return val == null ? config.get(key) : val;
-  }
+    }
 
     public static List<String> getList(String key) {
         return (ArrayList) get(key);
@@ -112,6 +112,19 @@ public class YmlConfig {
 
     public static int getIntValue(String key) {
         return getInteger(key);
+    }
+
+    public static Long getLong(String key) {
+        Object o = get(key);
+        if (o == null) {
+            return 0L;
+        }
+
+        return Long.parseLong(o.toString());
+    }
+
+    public static long getLongValue(String key) {
+        return getLong(key);
     }
 
     public static Boolean getBoolean(String key) {

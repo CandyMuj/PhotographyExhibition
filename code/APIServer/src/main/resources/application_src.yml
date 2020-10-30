@@ -35,6 +35,9 @@ src:
     field: sign
     key: SxgKESLGzlw@iH8f
     nonce: nonce_str
+    timespan: timespan
+    # 接口请求时间戳验证间隔（毫秒）
+    limited: 60000
   # 第三方服务配置
   third:
     # 短信相关
