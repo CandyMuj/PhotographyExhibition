@@ -1,5 +1,7 @@
 package com.cc.pic.api.exception;
 
+import com.cc.pic.api.config.StatusCode;
+
 /**
  * @ProJectName APIServer
  * @FileName AuthException
@@ -9,6 +11,8 @@ package com.cc.pic.api.exception;
  * @Version 1.0
  */
 public class AuthException extends RuntimeException {
+    private Integer resCode = StatusCode.NO_AUTH;
+
 
     public AuthException(String msg, Throwable t) {
         super(msg, t);
@@ -18,4 +22,14 @@ public class AuthException extends RuntimeException {
         super(msg);
     }
 
+    public AuthException(String msg, Integer resCode) {
+        super(msg);
+        if (resCode != null) {
+            this.resCode = resCode;
+        }
+    }
+
+    public int getResCode() {
+        return resCode;
+    }
 }

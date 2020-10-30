@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ValidationException;
 
-import static com.cc.pic.api.config.StatusCode.NO_AUTH;
-
 
 /**
  * @ProJectName APIServer
@@ -33,7 +31,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AuthException.class)
     public Result<?> authException(AuthException e) {
         String msg = e.getMessage();
-        return new Result<>(NO_AUTH, (StrUtil.isNotBlank(msg) ? msg : "Authentication failed"));
+        return new Result<>(e.getResCode(), (StrUtil.isNotBlank(msg) ? msg : "Authentication failed"));
     }
 
     /**

@@ -2,6 +2,7 @@ package com.cc.pic.api.intercept.interceptor;
 
 import cn.hutool.core.util.StrUtil;
 import com.cc.pic.api.annotations.Ann;
+import com.cc.pic.api.config.StatusCode;
 import com.cc.pic.api.exception.AuthException;
 import com.cc.pic.api.pojo.sys.User;
 import com.cc.pic.api.utils.Methodc;
@@ -62,17 +63,17 @@ public class AuthInterceptor implements HandlerInterceptor {
                     params.put(k, v[0]);
                 });
                 if (StrUtil.isBlank(params.get(SIGN_NONCE))) {
-                    throw new RuntimeException("缺少必要参数[".concat(SIGN_NONCE).concat("]"));
+                    throw new AuthException("缺少必要参数[".concat(SIGN_NONCE).concat("]"), StatusCode.FAIL);
                 }
                 if (StrUtil.isBlank(params.get(SIGN_TIMESPAN))) {
-                    throw new RuntimeException("缺少必要参数[".concat(SIGN_TIMESPAN).concat("]"));
+                    throw new AuthException("缺少必要参数[".concat(SIGN_TIMESPAN).concat("]"), StatusCode.FAIL);
                 }
                 if (!Methodc.generateSignature(params).equals(params.get(SIGN_FIELD))) {
-                    throw new RuntimeException("非法请求");
+                    throw new AuthException("非法请求", StatusCode.FAIL);
                 }
                 String verTimespan = verTimespan(Long.valueOf(params.get(SIGN_TIMESPAN)));
                 if (verTimespan != null) {
-                    throw new RuntimeException(verTimespan);
+                    throw new AuthException(verTimespan, StatusCode.FAIL);
                 }
             }
 
