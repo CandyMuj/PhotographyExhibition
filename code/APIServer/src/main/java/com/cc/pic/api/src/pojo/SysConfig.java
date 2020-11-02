@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+
 import com.baomidou.mybatisplus.annotations.TableId;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -24,9 +25,11 @@ public class SysConfig extends Model<SysConfig> {
     @TableId
     @ApiModelProperty("系统配置")
     private Long sysId;
+    @ApiModelProperty("配置描述")
     private String sysDesc;
+    @ApiModelProperty("配置键名")
     private String sysKey;
-    @ApiModelProperty("推荐使用json格式数据")
+    @ApiModelProperty("值 推荐使用json格式数据")
     private String sysValue;
 
 
