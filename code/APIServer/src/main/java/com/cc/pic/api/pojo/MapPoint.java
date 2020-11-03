@@ -1,4 +1,4 @@
-package com.cc.pic.api.pojo.sys;
+package com.cc.pic.api.pojo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

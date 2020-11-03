@@ -1,6 +1,6 @@
 package com.cc.pic.api.utils;
 
-import com.cc.pic.api.pojo.sys.MapPoint;
+import com.cc.pic.api.pojo.MapPoint;
 
 import java.math.BigDecimal;
 
