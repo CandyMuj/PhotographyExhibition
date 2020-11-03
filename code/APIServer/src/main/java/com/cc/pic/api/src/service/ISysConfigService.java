@@ -1,7 +1,11 @@
 package com.cc.pic.api.src.service;
 
 import com.baomidou.mybatisplus.service.IService;
+import com.cc.pic.api.pojo.sys.Result;
+import com.cc.pic.api.src.pojo.Customer;
 import com.cc.pic.api.src.pojo.SysConfig;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -13,4 +17,5 @@ import com.cc.pic.api.src.pojo.SysConfig;
  */
 public interface ISysConfigService extends IService<SysConfig> {
 
+    Result<?> addOrUpd(HttpServletRequest request, Customer customer, SysConfig sysConfig);
 }

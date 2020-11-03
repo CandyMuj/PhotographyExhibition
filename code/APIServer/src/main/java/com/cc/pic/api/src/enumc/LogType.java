@@ -11,7 +11,8 @@ package com.cc.pic.api.src.enumc;
 public enum LogType {
     IFACEO(1, "外部接口调用"),
     SYSTEM(2, "系统内部操作"),
-    ADMIN(3, "系统接口调用-管理端"),
+    IFACES(3, "系统接口调用"),
+    ADMIN(4, "系统接口调用-管理端"),
     ;
 
     private final Integer type;
