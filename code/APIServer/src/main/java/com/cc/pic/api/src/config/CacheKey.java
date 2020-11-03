@@ -24,6 +24,8 @@ public class CacheKey {
     private static final String SMS_CODE = "vercode:sms:";
     // 图形验证码缓存前缀
     private static final String IMG_CODE = "vercode:img:";
+    // 系统配置
+    private static final String SYS_CONFIG = "sys:config";
 
 
     public static String smsCode(String phone, SmsEnum smsEnum) {
@@ -34,4 +36,7 @@ public class CacheKey {
         return IMG_CODE.concat(fingerprint);
     }
 
+    public static String sysConfig() {
+        return SYS_CONFIG;
+    }
 }

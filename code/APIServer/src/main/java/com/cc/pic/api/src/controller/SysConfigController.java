@@ -11,15 +11,13 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.constraints.NotBlank;
+import java.util.List;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -64,6 +62,13 @@ public class SysConfigController extends BaseController {
         sysConfig.setSysDesc(sysDesc);
 
         return sysConfigService.addOrUpd(request, customer, sysConfig);
+    }
+
+    @ApiOperation("获取所有系统配置")
+    @GetMapping("/list")
+    public Result<List<SysConfig>> adminUserList(
+    ) {
+        return sysConfigService.list();
     }
 
 }

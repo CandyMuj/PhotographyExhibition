@@ -1,10 +1,12 @@
 package com.cc.pic.api.src.service.impl;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.cc.pic.api.pojo.sys.Result;
+import com.cc.pic.api.src.config.CacheKey;
 import com.cc.pic.api.src.enumc.LogType;
 import com.cc.pic.api.src.mapper.SysConfigMapper;
 import com.cc.pic.api.src.pojo.Customer;
@@ -17,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -59,6 +62,7 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         if (!sysConfig.insertOrUpdate()) {
             return Result.Error();
         }
+        redisUtil.del(CacheKey.sysConfig());
 
 
         // 新增日志
@@ -69,6 +73,21 @@ public class SysConfigServiceImpl extends ServiceImpl<SysConfigMapper, SysConfig
         );
 
         return Result.OK();
+    }
+
+    @Override
+    public Result<List<SysConfig>> list() {
+        Object cacheStr = redisUtil.get(CacheKey.sysConfig());
+        if (cacheStr != null) {
+            return Result.OK(JSONArray.parseArray(cacheStr.toString(), SysConfig.class));
+        }
+
+        List<SysConfig> list = super.selectList(new EntityWrapper<>());
+        if (list != null && list.size() > 0) {
+            redisUtil.set(CacheKey.sysConfig(), JSONArray.toJSONString(list));
+        }
+
+        return Result.OK(list);
     }
 
 }

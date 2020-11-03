@@ -6,6 +6,7 @@ import com.cc.pic.api.src.pojo.Customer;
 import com.cc.pic.api.src.pojo.SysConfig;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * @ProjectName PhotographyExhibition
@@ -18,4 +19,6 @@ import javax.servlet.http.HttpServletRequest;
 public interface ISysConfigService extends IService<SysConfig> {
 
     Result<?> addOrUpd(HttpServletRequest request, Customer customer, SysConfig sysConfig);
+
+    Result<List<SysConfig>> list();
 }
