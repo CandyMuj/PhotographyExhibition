@@ -1,7 +1,6 @@
 package com.cc.pic.api.src.service.impl;
 
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.cc.pic.api.pojo.sys.Result;
@@ -16,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -97,46 +97,6 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     }
 
     /**
-     * 获取最父级的那个dict，及dictpid=0的那个
-     *
-     * @param dictId
-     * @return
-     */
-    @Override
-    public Dict getParent(Long dictId) {
-        Dict dict = super.selectById(dictId);
-        if (dict == null) {
-            return null;
-        }
-        if (dict.getDictPid() == 0) {
-            return dict;
-        }
-
-        return getParent(dict.getDictPid());
-    }
-
-    /**
-     * 获取所有的字典
-     *
-     * @return
-     */
-    @Override
-    public Result<List<Dict>> all() {
-        Object allStr = redisUtil.get(CacheKey.DICT_CACHE_ALL);
-        List<Dict> list = null;
-        if (allStr != null) {
-            list = JSONArray.parseArray(allStr.toString(), Dict.class);
-        }
-
-        if (list == null || list.size() <= 0) {
-            list = super.selectList(new EntityWrapper<Dict>().orderBy("order_index", false));
-            saveCache(list);
-        }
-
-        return new Result<>(list);
-    }
-
-    /**
      * 删除字典
      * 若删除的是父节点，那么子节点将同步删除
      *
@@ -191,21 +151,137 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     /**
      * 保存缓存
      */
-    private void saveCache(List<Dict> dictList) {
+    private void saveCache() {
+        // 先清空数据，因为根据id，code获取的时候可能确实没有那个键对应的值
+        // 那么这时候来设置数据，但是之前的老数据在没有修改的情况下是没有清除的，覆盖时可能会有问题
+        delCache();
+
+        List<Dict> dictList = super.selectList(new EntityWrapper<Dict>().orderBy("order_index", false));
         if (dictList != null && dictList.size() > 0) {
             // 所有的list
-            redisUtil.set(CacheKey.DICT_CACHE_ALL, JSONObject.toJSONString(dictList));
+            redisUtil.set(CacheKey.DICT_CACHE_ALL, dictList);
 
-
-            Map<String, Dict> codeMap = new HashMap<>();
             Map<String, List<Dict>> typeMap = new HashMap<>();
-            Map<Integer, List<Dict>> pidMap = new HashMap<>();
-            Map<Integer, Dict> idMap = new HashMap<>();
+            Map<Long, List<Dict>> pidMap = new HashMap<>();
             for (Dict dict : dictList) {
+                // Map<String, Dict>
+                redisUtil.set(CacheKey.DICT_CACHE_CODE + dict.getDictCode(), dict);
+                // Map<Integer, Dict>
+                redisUtil.set(CacheKey.DICT_CACHE_ID + dict.getDictId(), dict);
+
+                List<Dict> typeList = typeMap.computeIfAbsent(dict.getDictType(), k -> new ArrayList<>());
+                typeList.add(dict);
+
+                List<Dict> pidList = pidMap.computeIfAbsent(dict.getDictPid(), k -> new ArrayList<>());
+                pidList.add(dict);
+            }
 
 
+            for (Map.Entry<String, List<Dict>> e : typeMap.entrySet()) {
+                redisUtil.set(CacheKey.DICT_CACHE_TYPE + e.getKey(), e.getValue());
+            }
+
+            for (Map.Entry<Long, List<Dict>> e : pidMap.entrySet()) {
+                redisUtil.set(CacheKey.DICT_CACHE_PID + e.getKey(), e.getValue());
             }
         }
+    }
+
+
+    /**
+     * 获取最父级的那个dict，及dictpid=0的那个
+     *
+     * @param dictId
+     * @return
+     */
+    @Override
+    public Dict getParent(Long dictId) {
+        Dict dict = byId(dictId);
+        if (dict == null) {
+            return null;
+        }
+        if (dict.getDictPid() == 0) {
+            return dict;
+        }
+
+        return getParent(dict.getDictPid());
+    }
+
+    /**
+     * 获取所有的字典
+     *
+     * @return
+     */
+    @Override
+    public List<Dict> all() {
+        List<Dict> list = (List<Dict>) redisUtil.get(CacheKey.DICT_CACHE_ALL);
+
+        if (list == null) {
+            saveCache();
+            list = (List<Dict>) redisUtil.get(CacheKey.DICT_CACHE_ALL);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Dict> byPid(Long pid) {
+        if (pid == null || pid < 0) {
+            return new ArrayList<>();
+        }
+
+        List<Dict> list = (List<Dict>) redisUtil.get(CacheKey.DICT_CACHE_PID + pid);
+        if (list == null) {
+            saveCache();
+            list = (List<Dict>) redisUtil.get(CacheKey.DICT_CACHE_PID + pid);
+        }
+
+        return list;
+    }
+
+    @Override
+    public List<Dict> byType(String type) {
+        if (StrUtil.isBlank(type)) {
+            return new ArrayList<>();
+        }
+
+        List<Dict> list = (List<Dict>) redisUtil.get(CacheKey.DICT_CACHE_TYPE + type);
+        if (list == null) {
+            saveCache();
+            list = (List<Dict>) redisUtil.get(CacheKey.DICT_CACHE_TYPE + type);
+        }
+
+        return list;
+    }
+
+    @Override
+    public Dict byId(Long id) {
+        if (id == null || id < 0) {
+            return null;
+        }
+
+        Dict dict = (Dict) redisUtil.get(CacheKey.DICT_CACHE_ID + id);
+        if (dict == null) {
+            saveCache();
+            dict = (Dict) redisUtil.get(CacheKey.DICT_CACHE_ID + id);
+        }
+
+        return dict;
+    }
+
+    @Override
+    public Dict byCode(String code) {
+        if (StrUtil.isBlank(code)) {
+            return null;
+        }
+
+        Dict dict = (Dict) redisUtil.get(CacheKey.DICT_CACHE_CODE + code);
+        if (dict == null) {
+            saveCache();
+            dict = (Dict) redisUtil.get(CacheKey.DICT_CACHE_CODE + code);
+        }
+
+        return dict;
     }
 
 }

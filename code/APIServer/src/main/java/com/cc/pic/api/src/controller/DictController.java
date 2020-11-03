@@ -67,7 +67,7 @@ public class DictController {
     @ApiOperation("获取字典列表-获取所有,前端根据缓存再做其他的获取")
     @GetMapping("/all")
     public Result<List<Dict>> all() {
-        return dictService.all();
+        return Result.OK(dictService.all());
     }
 
     @Ann
