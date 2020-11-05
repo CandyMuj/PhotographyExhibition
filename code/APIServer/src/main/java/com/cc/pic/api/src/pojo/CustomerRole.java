@@ -1,17 +1,17 @@
 package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.enums.IdType;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName CustomerRole
  * @Description
  * @Author CandyMuj

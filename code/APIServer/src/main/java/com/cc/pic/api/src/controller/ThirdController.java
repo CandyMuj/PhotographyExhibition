@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.NotBlank;
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName SystemLogController
  * @Description 第三方服务的一些接口
  * @Author CandyMuj

@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName SystemLog
  * @Description
  * @Author CandyMuj

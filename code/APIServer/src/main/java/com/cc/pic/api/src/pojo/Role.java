@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName Role
  * @Description
  * @Author CandyMuj

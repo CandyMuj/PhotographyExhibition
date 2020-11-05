@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName CustomerRole
  * @Description
  * @Author CandyMuj

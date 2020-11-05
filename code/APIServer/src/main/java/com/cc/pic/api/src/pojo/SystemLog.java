@@ -10,7 +10,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName SystemLog
  * @Description
  * @Author CandyMuj

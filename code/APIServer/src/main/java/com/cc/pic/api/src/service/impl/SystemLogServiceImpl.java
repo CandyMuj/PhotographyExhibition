@@ -22,7 +22,7 @@ import java.util.Map;
 
 
 /**
- * @ProjectName LaiDianPay
+ * @ProjectName MyTest
  * @FileName SystemLogServiceImpl
  * @Description
  * @Author CandyMuj
