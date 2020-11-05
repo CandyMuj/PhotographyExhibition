@@ -7,7 +7,6 @@
         <result property="roleName" column="role_name"/>
         <result property="enabled" column="enabled"/>
         <result property="menuId" column="menu_id"/>
-        <result property="btnId" column="btn_id"/>
         <!-- 自定义 -->
 
     </resultMap>

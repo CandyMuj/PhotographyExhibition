@@ -4,6 +4,7 @@
     <resultMap id="Menu" type="Menu">
         <id property="menuId" column="menu_id"/>
         <result property="pid" column="pid"/>
+        <result property="clientType" column="client_type"/>
         <result property="menuType" column="menu_type"/>
         <result property="menuName" column="menu_name"/>
         <result property="menuUrl" column="menu_url"/>
