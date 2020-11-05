@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cc.pic.api.src.mapper.CustomerRoleMapper">
+    <resultMap id="CustomerRoleVo" type="CustomerRoleVo">
+        <id property="customerId" column="customer_id"/>
+        <result property="userType" column="user_type"/>
+        <result property="menuId" column="menu_id"/>
+        <!-- 自定义 -->
+
+    </resultMap>
+
+</mapper>

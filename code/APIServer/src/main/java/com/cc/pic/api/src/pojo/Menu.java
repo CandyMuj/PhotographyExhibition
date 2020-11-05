@@ -22,7 +22,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class Menu extends Model<Menu> {
     @TableId
-    @ApiModelProperty("菜单表-客户端")
+    @ApiModelProperty("菜单表")
     private Long menuId;
     private Long pid;
     @ApiModelProperty("菜单类型：目录、菜单、按钮（必须区分，目录和按钮都没有url，所以不能仅通过url是否为空来判断）")

@@ -11,7 +11,7 @@
  Target Server Version : 80015
  File Encoding         : 65001
 
- Date: 05/11/2020 11:27:26
+ Date: 05/11/2020 11:53:02
 */
 
 SET NAMES utf8mb4;
@@ -105,6 +105,17 @@ CREATE TABLE `customer`  (
 INSERT INTO `customer` VALUES (1, 'candy', 'e10adc3949ba59abbe56e057f20f883e', 1, NULL, NULL, NULL, '2019-12-18 16:32:40', NULL);
 
 -- ----------------------------
+-- Table structure for customer_role
+-- ----------------------------
+DROP TABLE IF EXISTS `customer_role`;
+CREATE TABLE `customer_role`  (
+  `customer_id` bigint(20) NOT NULL COMMENT '用户与菜单id关联表（权限关联表）',
+  `user_type` int(11) NOT NULL COMMENT '用户类型 1管理员 2普通用户 位运算（可登陆平台的权限，通过此字段定义枚举 安全可靠些）',
+  `menu_id` varchar(500) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '菜单id',
+  PRIMARY KEY (`customer_id`, `user_type`) USING BTREE
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
 -- Table structure for customer_third_bind
 -- ----------------------------
 DROP TABLE IF EXISTS `customer_third_bind`;
@@ -190,7 +201,7 @@ CREATE TABLE `footer_info`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE `menu`  (
-  `menu_client_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单表-客户端',
+  `menu_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '菜单表',
   `pid` bigint(20) NOT NULL,
   `client_type` tinyint(4) NOT NULL COMMENT '客户端类型：管理端、安卓端、pc端、用户端、商家端...',
   `menu_type` tinyint(4) NOT NULL COMMENT '菜单类型：目录、菜单、按钮（必须区分，目录和按钮都没有url，所以不能仅通过url是否为空来判断）',
@@ -198,7 +209,7 @@ CREATE TABLE `menu`  (
   `menu_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `order_index` bigint(20) NOT NULL,
   `enabled` int(11) NULL DEFAULT NULL COMMENT '是否可用',
-  PRIMARY KEY (`menu_client_id`) USING BTREE
+  PRIMARY KEY (`menu_id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci COMMENT = '菜单表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
@@ -271,7 +282,7 @@ CREATE TABLE `poster`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role`  (
-  `role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色权限库-管理端',
+  `role_id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '角色权限库',
   `role_type` tinyint(4) NULL DEFAULT NULL COMMENT '角色作用的位置，如：管理端还是用户端',
   `role_name` varchar(24) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '角色名称',
   `enabled` tinyint(4) NULL DEFAULT 1 COMMENT '0禁用 1启用',

@@ -1,13 +1,13 @@
 package com.cc.pic.api.src.pojo;
 
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import com.baomidou.mybatisplus.annotations.TableId;
-import io.swagger.annotations.ApiModelProperty;
 
 /**
  * @ProjectName LaiDianPay
@@ -22,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 @AllArgsConstructor
 public class Role extends Model<Role> {
     @TableId
-    @ApiModelProperty("角色权限库-管理端")
+    @ApiModelProperty("角色权限库")
     private Long roleId;
     @ApiModelProperty("角色名称")
     private String roleName;
