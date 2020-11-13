@@ -61,13 +61,13 @@ public class ControllerAop {
         ServletRequestAttributes attributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
         MethodSignature signature = (MethodSignature) pjp.getSignature();
         if (attributes != null && signature != null) {
-            log.info("CLASS_METHOD : " + signature.getDeclaringTypeName() + "." + signature.getName());
-            log.info("ARGS : " + Arrays.toString(pjp.getArgs()));
+            log.info("CLASS_METHOD : {}.{}", signature.getDeclaringTypeName(), signature.getName());
+            log.info("ARGS : {}", Arrays.toString(pjp.getArgs()));
         }
 
         // 绝对不能因为上方判断为空就返回 Result.Error 因为这个切点是拦截的所有请求，并不是所有的都返回的是Result 有可能是其他对象，甚至是流;那样就篡改了真实的返回数据了
         Object result = pjp.proceed();
-        log.info(pjp.getSignature() + " use time: " + (System.currentTimeMillis() - startTime));
+        log.info("{} use time: {}", pjp.getSignature(), (System.currentTimeMillis() - startTime));
         return result;
     }
 
