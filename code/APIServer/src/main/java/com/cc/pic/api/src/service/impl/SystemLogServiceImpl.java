@@ -1,5 +1,6 @@
 package com.cc.pic.api.src.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
 import com.cc.pic.api.pojo.sys.Result;
@@ -46,16 +47,16 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
      */
     @Override
     public void ins(LogType logType, Long userAccountId, String describe, String restUrl, String restParam, HttpServletRequest request, String oldParam, Result<?> result) {
+        int length = 1000;
         SystemLog systemLog = new SystemLog();
         systemLog.setLogType(logType.getType());
         systemLog.setUserAccountId(userAccountId);
         systemLog.setDescribe(describe);
-        systemLog.setOldParam(oldParam);
+        systemLog.setOldParam((StrUtil.isNotBlank(oldParam) && oldParam.length() > length) ? oldParam.substring(0, length - 1) : oldParam);
         systemLog.setAddTime(new Date());
 
         if (request == null) {
             systemLog.setRestUrl(restUrl);
-            systemLog.setRestParam(restParam);
         } else {
             systemLog.setIp(IpUtil.getRealIP(request));
             systemLog.setRestUrl(request.getRequestURI());
@@ -79,9 +80,15 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
                     params.put("newpwd", new String[]{"******"});
                 }
 
-                systemLog.setRestParam(JSONObject.toJSONString(params));
+                restParam = JSONObject.toJSONString(params);
             }
         }
+
+        if (StrUtil.isNotBlank(restParam)) {
+            restParam = restParam.length() > length ? restParam.substring(0, length - 1) : restParam;
+            systemLog.setRestParam(restParam);
+        }
+
         if (result != null) {
             Result<?> result1 = new Result<>((Object) null);
             result1.code = result.code;
