@@ -71,7 +71,7 @@ public class UploadController {
                 }
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("文件上传异常", e);
         }
 
         return Result.Error("Upload failure");
