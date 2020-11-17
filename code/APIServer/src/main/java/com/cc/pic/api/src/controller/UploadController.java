@@ -36,7 +36,7 @@ public class UploadController {
 
     @ApiOperation("单文件上传-上传文件、图片")
     @PostMapping("/upload")
-    public Result upload(
+    public Result<String> upload(
             @ApiIgnore HttpServletRequest request
     ) {
         try {
