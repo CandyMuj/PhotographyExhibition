@@ -6,8 +6,16 @@
 env: local
 
 
-# 第三方云服务配置
+# 第三方服务配置
 third:
+  # 短信相关
+  sms:
+    # 开关
+    enable: false
+    # 默认验证码
+    default: 0000
+    # 超时（分）
+    timeout: 5
   aliyun:
     oss:
       # 默认项目，如果没有自定义的项目则此项目必须存在，且key值不可更改
@@ -27,24 +35,3 @@ third:
         accessKeyId:
         accessKeySecret:
         bucketName:
-
-
-src:
-  # 接口参数加密 签名设置
-  sign:
-    field: sign
-    key: SxgKESLGzlw@iH8f
-    nonce: nonce_str
-    timespan: timespan
-    # 接口请求时间戳验证间隔（毫秒）
-    limited: 60000
-  # 第三方服务配置
-  third:
-    # 短信相关
-    sms:
-      # 开关
-      enable: false
-      # 默认验证码
-      default: 0000
-      # 超时（分）
-      timeout: 5

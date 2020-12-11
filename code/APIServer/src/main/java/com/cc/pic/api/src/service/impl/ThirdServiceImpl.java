@@ -89,7 +89,7 @@ public class ThirdServiceImpl implements IThirdService {
     public Result<String> sms(HttpServletRequest request, SmsEnum smsEnum, String phone) {
         try {
             String code = RandomUtil.randomNumbers(4);
-            if (YmlConfig.getBoolean("src.third.sms.enable")) {
+            if (YmlConfig.getBoolean("third.sms.enable")) {
                 String smsres = null;   //todo TencentSmsUtil.sendSms(phone, SrcConfig.TENCENT_SMS_APPID, SrcConfig.TENCENT_SMS_SIGN, SmsTemplateCode.SMS_CODE, new String[]{code});
                 if (smsres != null) {
                     return Result.Error(smsres);
@@ -97,7 +97,7 @@ public class ThirdServiceImpl implements IThirdService {
             }
 
             // 存入redis
-            redisUtil.set(CacheKey.smsCode(phone, smsEnum), code, YmlConfig.getIntValue("src.third.sms.timeout") * 60);
+            redisUtil.set(CacheKey.smsCode(phone, smsEnum), code, YmlConfig.getIntValue("third.sms.timeout") * 60);
 
             // 新增日志
             if (request != null) {
@@ -118,7 +118,7 @@ public class ThirdServiceImpl implements IThirdService {
      */
     @Override
     public Result<String> check(HttpServletRequest request, SmsEnum smsEnum, String phone, String smsCode) {
-        String defaultCode = YmlConfig.getString("src.third.sms.default");
+        String defaultCode = YmlConfig.getString("third.sms.default");
         if (StrUtil.isNotBlank(defaultCode) && defaultCode.equals(smsCode)) {
             return Result.OK();
         } else {
