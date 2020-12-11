@@ -82,6 +82,10 @@ public class Result<T> {
         return new Result<>(SUCCESS, msg);
     }
 
+    public static <T> Result<T> OK(T data, String msg) {
+        return new Result<>(SUCCESS, data, msg);
+    }
+
     public static <T> Result<T> Error() {
         return Error("系统错误");
     }
