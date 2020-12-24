@@ -11,7 +11,7 @@ global:
 # 接口鉴权相关配置
 interface:
   auth:
-    # 接口参数加密 签名设置
+    # 接口参数签名设置
     sign:
       field: sign
       key: SxgKESLGzlw@iH8f
@@ -34,3 +34,4 @@ interface:
       - /favicon.ico
       # 其他
       - /test
+      - /third/img/code
