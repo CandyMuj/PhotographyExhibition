@@ -41,7 +41,7 @@ public class Methodc {
         Arrays.sort(keyArray);
         StringBuilder sb = new StringBuilder();
         for (String k : keyArray) {
-            if (k.equals(YmlConfig.getString("interface.sign.field"))) {
+            if (k.equals(YmlConfig.getString("interface.auth.sign.field"))) {
                 continue;
             }
             String val = data.get(k);
@@ -49,7 +49,7 @@ public class Methodc {
                 sb.append(k).append("=").append(val.trim()).append("&");
             }
         }
-        sb.append("key=").append(YmlConfig.getString("interface.sign.key"));
+        sb.append("key=").append(YmlConfig.getString("interface.auth.sign.key"));
 
         return MD5.MD5Encode(sb.toString()).toUpperCase();
     }

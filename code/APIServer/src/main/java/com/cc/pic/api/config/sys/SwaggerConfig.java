@@ -98,14 +98,14 @@ public class SwaggerConfig {
                 .required(true).build();
 
         ParameterBuilder signBuilder = new ParameterBuilder();
-        signBuilder.name(YmlConfig.getString("interface.sign.field"))
+        signBuilder.name(YmlConfig.getString("interface.auth.sign.field"))
                 .description("参数签名（仅可对query类型参数进行签名）")
                 .modelRef(new ModelRef("string"))
                 .parameterType("query")
                 .required(true).build();
 
         ParameterBuilder nonceBuilder = new ParameterBuilder();
-        nonceBuilder.name(YmlConfig.getString("interface.sign.nonce"))
+        nonceBuilder.name(YmlConfig.getString("interface.auth.sign.nonce"))
                 .description("随机字符串")
                 .modelRef(new ModelRef("string"))
                 .parameterType("query")

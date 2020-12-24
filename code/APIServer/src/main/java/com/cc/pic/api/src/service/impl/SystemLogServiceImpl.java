@@ -64,9 +64,9 @@ public class SystemLogServiceImpl extends ServiceImpl<SystemLogMapper, SystemLog
             if (params != null) {
                 params = new HashMap<>(params);
                 // 移除sign字段
-                params.put(YmlConfig.getString("interface.sign.field"), null);
+                params.put(YmlConfig.getString("interface.auth.sign.field"), null);
                 // 移除随机字符
-                params.put(YmlConfig.getString("interface.sign.nonce"), null);
+                params.put(YmlConfig.getString("interface.auth.sign.nonce"), null);
                 // 移除时间戳
                 params.put("timespan", null);
                 // 把密码删掉，因为传参是明文的不能存
