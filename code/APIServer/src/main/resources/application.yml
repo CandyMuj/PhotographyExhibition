@@ -3,6 +3,11 @@ server:
 
 
 spring:
+  profiles:
+    # 本地开发环境
+#    active: dev
+    # 生产环境
+    active: prod
   devtools:
     restart:
       enabled: false
@@ -13,13 +18,8 @@ spring:
 
 
   redis:
-    host: 127.0.0.1
-    port: 6379
-    password:
     # 单位：毫秒
     timeout: 5000
-    # 默认库
-    database: 0
     # 如果使用的jedis 则将lettuce改成jedis即可
     jedis:
       pool:
@@ -39,11 +39,6 @@ spring:
         max-wait: -1
 
   datasource:
-    url: jdbc:mysql://127.0.0.1:3306/photography?serverTimezone=Asia/Shanghai&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=false
-    username: root
-    password: 123456
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
     hikari:
       connection-test-query: SELECT 1 FROM DUAL
       minimum-idle: 5
