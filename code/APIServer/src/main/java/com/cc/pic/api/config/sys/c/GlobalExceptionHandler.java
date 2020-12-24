@@ -39,7 +39,8 @@ public class GlobalExceptionHandler {
      */
     @ExceptionHandler(ResultException.class)
     public Result<?> resultException(ResultException e) {
-        return new Result<>(e.getCode(), e.getData(), e.getErrcode(), e.getMsg());
+        String msg = e.getMessage();
+        return new Result<>(e.getResCode(), (StrUtil.isNotBlank(msg) ? msg : "error"));
     }
 
 

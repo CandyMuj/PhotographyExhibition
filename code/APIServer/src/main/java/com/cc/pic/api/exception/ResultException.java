@@ -1,6 +1,6 @@
 package com.cc.pic.api.exception;
 
-import lombok.Getter;
+import com.cc.pic.api.config.StatusCode;
 
 /**
  * @ProjectName api
@@ -13,25 +13,26 @@ import lombok.Getter;
  * @Date 2020/6/30 17:50
  * @Version 1.0
  */
-@Getter
 public class ResultException extends RuntimeException {
-    private int code;
-    private String errcode;
-    private String msg;
-    private Object data;
+    private Integer resCode = StatusCode.FAIL;
 
 
     public ResultException(String msg, Throwable t) {
         super(msg, t);
     }
 
-    public ResultException(int code, Object data, String errcode, String msg) {
+    public ResultException(String msg) {
         super(msg);
-
-        this.code = code;
-        this.data = data;
-        this.errcode = errcode;
-        this.msg = msg;
     }
 
+    public ResultException(String msg, Integer resCode) {
+        super(msg);
+        if (resCode != null) {
+            this.resCode = resCode;
+        }
+    }
+
+    public int getResCode() {
+        return resCode;
+    }
 }
