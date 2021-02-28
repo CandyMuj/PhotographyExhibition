@@ -35,23 +35,31 @@ public class Methodc {
      * @param data 待签名数据
      * @return 签名
      */
-    public static String generateSignature(final Map<String, String> data) {
+    public static String generateSignature(final Map<String, String> data, String signField, String signKey) {
         Set<String> keySet = data.keySet();
         String[] keyArray = keySet.toArray(new String[0]);
         Arrays.sort(keyArray);
         StringBuilder sb = new StringBuilder();
         for (String k : keyArray) {
-            if (k.equals(YmlConfig.getString("interface.auth.sign.field"))) {
+            if (k.equals(signField)) {
                 continue;
             }
-            String val = data.get(k);
-            if (val != null && val.trim().length() > 0) {  // 参数值为空，则不参与签名
-                sb.append(k).append("=").append(val.trim()).append("&");
+            String val = ((data.get(k) != null) ? data.get(k).trim() : null);
+            if (val != null && val.length() > 0) {  // 参数值为空，则不参与签名
+                sb.append(k).append("=").append(val).append("&");
             }
         }
-        sb.append("key=").append(YmlConfig.getString("interface.auth.sign.key"));
+        sb.append("key=").append(signKey);
 
         return MD5.MD5Encode(sb.toString()).toUpperCase();
+    }
+
+    public static String generateSignature(final Map<String, String> data, String signKey) {
+        return generateSignature(data, YmlConfig.getString("interface.auth.sign.field"), signKey);
+    }
+
+    public static String generateSignature(final Map<String, String> data) {
+        return generateSignature(data, YmlConfig.getString("interface.auth.sign.key"));
     }
 
     /**
