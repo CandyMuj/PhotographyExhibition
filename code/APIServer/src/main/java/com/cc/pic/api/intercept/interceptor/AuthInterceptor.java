@@ -125,14 +125,14 @@ public class AuthInterceptor implements HandlerInterceptor {
      * @return
      */
     private String verTimespan(Long timespan) {
-        long nowTime = System.currentTimeMillis();
+        long diff = System.currentTimeMillis() - timespan;
 
-        // 判断传入的时间戳是否大于当前系统时间
-        if (timespan > nowTime) {
-            return "错误的时间戳：超过当前系统时间";
+        // 判断传入的时间戳与当前系统时间相差是否小于一分钟
+        if (diff < -SIGN_LIMITED) {
+            return "错误的时间戳：超前的请求";
         }
         // 判断传入的时间戳与当前系统时间相差是否超过一分钟
-        if ((nowTime - timespan) >= SIGN_LIMITED) {
+        if (diff > SIGN_LIMITED) {
             return "错误的时间戳：过时的请求";
         }
 
