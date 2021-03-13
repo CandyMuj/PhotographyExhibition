@@ -16,6 +16,8 @@ public class YmlKey {
 
     // 系统全局编码
     public static final String GLOBAL_ENCODING = "global.encoding";
+    // 是否开启swagger
+    public static final String GLOBAL_SWAGGER_OPEN = "global.swagger-open";
 
 
     /**

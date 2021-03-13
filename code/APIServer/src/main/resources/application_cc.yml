@@ -6,6 +6,8 @@
 global:
   # 系统全局默认编码
   encoding: UTF-8
+  # 是否开启swagger (true/false) 默认（为空）：false
+  swagger-open: true
 
 
 # 接口鉴权相关配置
@@ -29,7 +31,7 @@ interface:
       # swagger
       - /swagger-resources*
       - /webjars*
-      - /v2/api-docs
+      #- /v2/api-docs
       - /csrf
       - /favicon.ico
       # 其他

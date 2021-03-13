@@ -1,10 +1,12 @@
 package com.cc.pic.api.config.sys;
 
+import com.cc.pic.api.config.Configc;
 import com.cc.pic.api.config.sys.c.DefaultArgumentResolver;
 import com.cc.pic.api.config.sys.c.TokenArgumentResolver;
 import com.cc.pic.api.intercept.interceptor.AuthInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -38,7 +40,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // token校验放在最上面
-        registry.addInterceptor(authInterceptor).addPathPatterns("/**");
+        InterceptorRegistration authInterceptorRegist = registry.addInterceptor(authInterceptor).addPathPatterns("/**");
+        if (Configc.GLOBAL_SWAGGER_OPEN) {
+            authInterceptorRegist.excludePathPatterns("/v2/api-docs");
+        }
     }
 
 }

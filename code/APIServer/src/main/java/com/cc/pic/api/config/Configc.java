@@ -18,6 +18,8 @@ public class Configc {
 
     // 系统全局编码
     public static final String GLOBAL_ENCODING = YmlConfig.getString(YmlKey.GLOBAL_ENCODING);
+    // 是否开启swagger
+    public static final boolean GLOBAL_SWAGGER_OPEN = YmlConfig.getBooleanValue(YmlKey.GLOBAL_SWAGGER_OPEN);
 
     // 全局统一针对日期的处理 默认日期格式定义
     public static final String DEFAULT_DATEFORMAT = "yyyy-MM-dd HH:mm:ss";
