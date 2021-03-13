@@ -1,5 +1,6 @@
 package com.cc.pic.api.utils.sys;
 
+import cn.hutool.core.util.StrUtil;
 import org.yaml.snakeyaml.Yaml;
 
 import java.io.InputStream;
@@ -43,6 +44,16 @@ public class YmlConfig {
         ymls.forEach(name -> {
             for (Object o : new Yaml().loadAll(YmlConfig.class.getClassLoader().getResourceAsStream(name))) {
                 iteratorYml((Map) o, null);
+            }
+            // 如果是spring的配置，则根据环境获取环境配置；必须要在for下面执行，因为需要先加载application.yml我才能获取到环境配置的值
+            if ("application.yml".equals(name)) {
+                String active = (String) config.get("spring.profiles.active");
+                if (StrUtil.isBlank(active)) {
+                    return;
+                }
+                for (Object o : new Yaml().loadAll(YmlConfig.class.getClassLoader().getResourceAsStream("application-".concat(active).concat(".yml")))) {
+                    iteratorYml((Map) o, null);
+                }
             }
         });
     }
