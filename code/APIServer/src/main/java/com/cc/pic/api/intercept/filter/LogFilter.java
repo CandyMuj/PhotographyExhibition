@@ -20,7 +20,7 @@ import java.io.IOException;
  * <p>
  * 三大器的执行顺序，经过测试得到的结论
  * 过滤器（filter 全局异常不可捕获）>拦截器（interceptor 全局异常可捕获）>ArgumentResolvers（参数转换)>AOP（全局异常不可捕获）
- * 拦截器>执行Controller定义（非方法体，就是如果controller有注解如非空校验reqparam或notblank就会执行，他会先执行方法的定义加载到内存）>AOP>aop放行后才会执行controller中具体的方法体，里面的代码逻辑
+ * 拦截器>执行Controller定义（非方法体，就是如果controller有注解如非空校验reqparam或notblank就会执行，他会先执行方法的定义加载到内存）>AOP>AOP放行后才会执行controller中具体的方法体，里面的代码逻辑
  *
  * <p>
  * 关于aop执行说明
