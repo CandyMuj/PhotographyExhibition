@@ -148,7 +148,9 @@ public class AuthInterceptor implements HandlerInterceptor {
         boolean res = exclude(uri);
 
         if (!res) {
-            if (AuthUtil.realAuthSplit(authorization) && AuthUtil.getAuthToken().equals(AuthUtil.getAuthToken(authorization))) {
+            // 先验证是否是basictoken，如果是则校验是否正确；若不是才会执行后面的bearertoken校验，因为用的是||符号，此时校验通过也意味着接口鉴权成功，而且是处于登录状态的成功
+            // 而且鉴权返回成功与否，到上一层的时候也依然会返回403错误，因此此处理方法可以保证登录后的token依然有失效的验证处理
+            if ((AuthUtil.realAuthSplit(authorization) && AuthUtil.getAuthToken().equals(AuthUtil.getAuthToken(authorization))) || jwtTokenFactory.validateToken(AuthUtil.getToken(authorization)) != null) {
                 res = true;
             } else {
                 res = false;
