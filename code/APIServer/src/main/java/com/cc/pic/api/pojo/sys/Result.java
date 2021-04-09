@@ -1,6 +1,7 @@
 package com.cc.pic.api.pojo.sys;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.fastjson.JSONObject;
 import com.cc.pic.api.utils.DB;
 import lombok.extern.slf4j.Slf4j;
 
@@ -114,6 +115,11 @@ public class Result<T> {
         // Assert.isTrue(false, msg);
         // throw new RuntimeException(msg);
         return new Result<>(FAIL, data, errcode, msg);
+    }
+
+    @Override
+    public String toString() {
+        return JSONObject.toJSONString(this);
     }
 
 }
