@@ -58,6 +58,18 @@ public class RedisUtil {
     }
 
     /**
+     * 根据正则获取所有key
+     */
+    public Set<String> keys(String pattern) {
+        try {
+            return redisTemplate.keys(pattern);
+        } catch (Exception e) {
+            log.error("RedisUtil Exception...", e);
+            return null;
+        }
+    }
+
+    /**
      * 判断key是否存在
      *
      * @param key 键
