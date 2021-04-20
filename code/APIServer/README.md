@@ -1,5 +1,11 @@
 # PhotographyExhibition APIServer
 
+## 分支说明
+
+单模块架构
+
+
+
 ## 待解决的问题
 
 - [x] （此条废弃，没有如果，就用redis）如果没有redis，或者获取redis连接失败就使用本地缓存（map）作为替代方案
